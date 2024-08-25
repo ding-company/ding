@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version Dependency.dependencyManagementVersion
     kotlin("jvm") version Dependency.kotlinVersion
     kotlin("plugin.spring") version Dependency.kotlinVersion
+    id("io.gitlab.arturbosch.detekt") version Dependency.detektVersion
 }
 
 version = Constant.VERSION
@@ -18,6 +19,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // detekt
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Dependency.detektVersion}")
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions {
@@ -28,4 +32,9 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+
+detekt {
+    autoCorrect = true
 }
