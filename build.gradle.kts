@@ -6,8 +6,10 @@ plugins {
     kotlin("jvm") version Dependency.kotlinVersion
     kotlin("plugin.spring") version Dependency.kotlinVersion
     id("io.gitlab.arturbosch.detekt") version Dependency.detektVersion
+    kotlin("plugin.jpa") version Dependency.kotlinVersion
 }
 
+group = "in.ding"
 version = Constant.VERSION
 java.sourceCompatibility = JavaVersion.toVersion(Dependency.targetJvmVersion)
 
@@ -22,6 +24,11 @@ dependencies {
 
     // detekt
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Dependency.detektVersion}")
+
+    // JPA
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("mysql:mysql-connector-java:${Dependency.mySQLConnectorVersion}")
 }
 
 tasks {

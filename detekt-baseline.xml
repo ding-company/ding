@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+    <ManuallySuppressedIssues></ManuallySuppressedIssues>
+    <CurrentIssues>
+        <ID>SpreadOperator:Application.kt$(*args)</ID>
+        <ID>UnnecessaryAbstractClass:EntityBase.kt$EntityBase$EntityBase</ID>
+        <ID>UnusedPrivateMember:AccountServiceTest.kt$AccountServiceTest$@MockBean private lateinit var openNewAccountCommandHandler: OpenNewAccountCommandHandler</ID>
+        <ID>UnusedPrivateMember:GlobalControllerExceptionHandler.kt$GlobalControllerExceptionHandler$request: ServerHttpRequest</ID>
+    </CurrentIssues>
+</SmellBaseline>

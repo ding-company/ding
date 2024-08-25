@@ -4,6 +4,7 @@ object Dependency {
     const val springBootVersion = "3.2.1"
     const val dependencyManagementVersion = "1.1.0"
     const val detektVersion = "1.23.4"
+    const val mySQLConnectorVersion = "8.0.32"
     const val springCloudVersion = "2023.0.0"
     const val restdocsapiSpecVersion = "0.19.2"
     const val sentryVersion = "6.19.0"
