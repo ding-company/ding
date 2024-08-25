@@ -1,21 +1,31 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    kotlin("jvm") version "2.0.0"
+    id("org.springframework.boot") version Dependency.springBootVersion
+    id("io.spring.dependency-management") version Dependency.dependencyManagementVersion
+    kotlin("jvm") version Dependency.kotlinVersion
+    kotlin("plugin.spring") version Dependency.kotlinVersion
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+version = Constant.VERSION
+java.sourceCompatibility = JavaVersion.toVersion(Dependency.targetJvmVersion)
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = Dependency.targetJvmVersion
+    }
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(21)
 }
