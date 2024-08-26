@@ -1,13 +1,14 @@
 package `in`.ding.user.domain.entity.table
 
-import `in`.ding.user.common.BaseEntity
+import `in`.ding.common.BaseEntity
+import `in`.ding.user.domain.entity.enumerate.UserNationality
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
 
 @Entity
 @Table(name = "users")
-class User(
+class UserEntity(
     @Column(unique = true, length = 36)
     val externalKey: String,
 
@@ -16,7 +17,11 @@ class User(
 
     @Column(unique = true, length = 40)
     val email: String? = null,
-    @Column()
-    val name: String,
+
+    @Column(length = 40)
+    val name: String? = null,
+
+    @Column(length = 40)
+    val nationality: UserNationality? = UserNationality.KR
 
 ) : BaseEntity()
