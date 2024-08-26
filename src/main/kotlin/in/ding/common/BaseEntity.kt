@@ -1,4 +1,4 @@
-package `in`.ding.user.common
+package `in`.ding.common
 
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
