@@ -55,6 +55,38 @@ tasks {
             }
         }
     }
+    bootBuildImage {
+        imageName.set(System.getenv("IMAGE"))
+
+        val profile = "${System.getProperties()["spring.profiles.active"]}"
+
+
+        buildpacks.set(listOf(
+            "urn:cnb:builder:paketo-buildpacks/java"
+        ))
+        var threadCount = "250"
+        if (profile == "stg") {
+            threadCount = "50"
+        }
+        environment.set(
+            mapOf(
+                "BP_JVM_VERSION" to Dependency.targetJvmVersion,
+                "BPE_DELIM_JAVA_TOOL_OPTIONS" to " ",
+                "BPE_SPRING_PROFILES_ACTIVE" to profile,
+                "BPE_DD_VERSION" to Constant.VERSION,
+                "BP_DATADOG_ENABLED" to "true",
+                "BPE_LANG" to "en_US.utf8",
+                "BPE_OVERRIDE_BPL_JVM_THREAD_COUNT" to threadCount,
+            )
+        )
+
+        buildCache {
+            volume {
+                name.set("cache-${rootProject.name}.build")
+            }
+        }
+    }
+
 }
 
 detekt {
