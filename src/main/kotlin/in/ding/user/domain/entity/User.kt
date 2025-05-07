@@ -3,15 +3,20 @@ package `in`.ding.user.domain.entity
 import `in`.ding.common.exception.BadRequestException
 import `in`.ding.user.domain.entity.enumerate.UserNationality
 import `in`.ding.user.infrastructure.db.repository.UserRepository
+import java.time.LocalDateTime
 import java.util.*
 
 class User private constructor(
     private val repository: UserRepository,
-    val externalKey: String,
+    val id: Long? = null,
+    val exKey: UUID,
     val phoneNumber: String? = null,
     val email: String? = null,
     val name: String? = null,
-    val nationality: UserNationality = UserNationality.KR
+    val nationality: UserNationality = UserNationality.KR,
+    val isDeleted: Boolean = false,
+    val deletedAt: LocalDateTime? = null,
+    val registeredAt: LocalDateTime
 ) {
     companion object {
         fun register(
@@ -19,13 +24,16 @@ class User private constructor(
             phoneNumber: String?,
             email: String?,
             name: String?,
+            nationality:UserNationality,
         ): User {
             val user = User(
                 repository = repository,
-                externalKey = UUID.randomUUID().toString(),
+                id = null,
+                exKey = UUID.randomUUID(),
                 phoneNumber = phoneNumber,
                 email = email,
                 name = name,
+                registeredAt = LocalDateTime.now()
             )
             validate(user)
             return user
