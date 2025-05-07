@@ -1,9 +1,9 @@
-package `in`.ding.user.application.dto.enumerate
+package `in`.ding.customer.application.dto
 
 import `in`.ding.user.domain.entity.enumerate.UserNationality
 import io.swagger.v3.oas.annotations.media.Schema
 
-class UserSignupRequest(
+data class PostCustomerRequest(
     @field:Schema(description = "전화번호", example = "01012341234", minLength = 11, maxLength = 11)
     val phoneNumber: String?,
     @field:Schema(description = "이메일", example = "kljadsg@magmkla.com", minLength = 5, maxLength = 50)
