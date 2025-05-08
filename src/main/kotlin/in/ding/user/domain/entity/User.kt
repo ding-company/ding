@@ -33,6 +33,7 @@ class User private constructor(
                 phoneNumber = phoneNumber,
                 email = email,
                 name = name,
+                nationality = nationality,
                 registeredAt = LocalDateTime.now()
             )
             validate(user)
