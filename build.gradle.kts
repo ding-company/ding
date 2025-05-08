@@ -115,8 +115,8 @@ tasks {
         useJUnitPlatform()
     }
     register<Copy>("copyDirectory") {
-        from("skeleton")
-        into("src/main/kotlin/in/ding")
+        from("skeleton/app")
+        into("src/main/kotlin/in/ding/app")
         val appName = project.findProperty("appName") as String? ?: "app"
         doLast {
             val copiedFolder = file("src/main/kotlin/in/ding/app")

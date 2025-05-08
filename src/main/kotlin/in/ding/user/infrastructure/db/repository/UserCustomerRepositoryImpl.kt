@@ -15,7 +15,7 @@ class UserCustomerRepositoryImpl : UserCustomRepository {
         user: User
     ): UserEntity {
         return UserEntity(
-            externalKey = user.externalKey,
+            exKey = user.exKey,
             phoneNumber = user.phoneNumber,
             email = user.email,
             name = user.name,

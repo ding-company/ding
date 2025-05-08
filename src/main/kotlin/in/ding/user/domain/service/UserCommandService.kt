@@ -1,7 +1,6 @@
 package `in`.ding.user.domain.service
 
 import `in`.ding.user.domain.entity.User
-import `in`.ding.user.domain.entity.table.UserEntity
 import `in`.ding.user.domain.service.dto.UserRegisterDTO
 import `in`.ding.user.infrastructure.db.repository.UserRepository
 import org.springframework.stereotype.Service

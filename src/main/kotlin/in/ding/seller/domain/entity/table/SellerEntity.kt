@@ -13,15 +13,24 @@ class SellerEntity(
     @Column(length = 36)
     val userExKey: UUID,
 
-    @Column(unique = true, length = 20)
-    val sellerNumber: String? = null,
-
     @Column(length = 30)
     val storeName: String,
 
     @Column(length = 30)
-    val address: String,
+    val address: String?,
 
     @Column()
     val registeredAt: LocalDateTime,
-) : BaseEntity()
+) : BaseEntity() {
+    companion object {
+        fun register(userExKey: UUID, storeName: String): SellerEntity {
+            return SellerEntity(
+                exKey = UUID.randomUUID(),
+                userExKey = userExKey,
+                storeName = storeName,
+                address = null,
+                registeredAt = LocalDateTime.now(),
+            )
+        }
+    }
+}

@@ -8,7 +8,6 @@ import `in`.ding.user.domain.service.UserCommandService
 import `in`.ding.user.domain.service.dto.UserRegisterDTO
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import java.util.UUID
 
 @Service
 class CustomerAppService(

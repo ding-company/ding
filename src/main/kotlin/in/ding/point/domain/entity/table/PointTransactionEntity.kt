@@ -54,4 +54,4 @@ class PointTransactionEntity(
     @Column()
     val transactionType11: Long,
 
-    ) : BaseEntity()
+) : BaseEntity()
