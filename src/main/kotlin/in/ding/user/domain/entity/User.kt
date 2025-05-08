@@ -24,7 +24,7 @@ class User private constructor(
             phoneNumber: String?,
             email: String?,
             name: String?,
-            nationality:UserNationality,
+            nationality: UserNationality,
         ): User {
             val user = User(
                 repository = repository,

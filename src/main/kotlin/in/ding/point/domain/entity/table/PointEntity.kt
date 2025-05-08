@@ -24,4 +24,4 @@ class PointEntity(
     @Column()
     val totalAccumulatedAmount: BigDecimal = BigDecimal.ZERO,
 
-    ) : BaseEntity()
+) : BaseEntity()

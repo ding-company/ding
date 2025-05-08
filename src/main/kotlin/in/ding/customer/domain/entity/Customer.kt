@@ -23,6 +23,6 @@ class Customer private constructor(
             )
         }
     }
-    fun getPoint(){}
-    fun getPointTxList(){}
+    fun getPoint() {}
+    fun getPointTxList() {}
 }
