@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class UserCustomerRepositoryImpl : UserCustomRepository {
     override fun save(user: User): User {
-        val userEntity = convertEntityToJPAEntity(user = user)
+        convertEntityToJPAEntity(user = user)
         // TODO 구현
         return user
     }

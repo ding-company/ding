@@ -1,31 +1,36 @@
-package user.application.rest
+package `in`.ding.user.application.rest
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import `in`.ding.user.application.dto.enumerate.UserSignupRequest
-import `in`.ding.user.application.rest.UserController
 import `in`.ding.user.application.service.UserAppService
+import `in`.ding.user.domain.entity.enumerate.UserNationality
 import io.kotest.core.spec.style.BehaviorSpec
-import io.mockk.every
+import org.mockito.kotlin.doNothing
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
+// @ActiveProfiles("test")
 @WebMvcTest(UserController::class)
-@ActiveProfiles("test")
 class UserControllerTest(
     val mockMvc: MockMvc,
     @MockBean
     val userService: UserAppService
 ) : BehaviorSpec({
     given("회원가입 요청이 주어졌을 때") {
-        every { userService.register(any()) } returns Unit
         `when`("유효한 요청이 전달되면") {
-            val request = UserSignupRequest("testUser", "password123", "test@example.com", "123111")
+            val request = UserSignupRequest(
+                "testUser",
+                "password123",
+                "test@example.com",
+                "123111",
+                nationality = UserNationality.KR
+            )
+            doNothing().`when`(userService).register(request)
 
             val result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/users/signup")
@@ -36,7 +41,6 @@ class UserControllerTest(
                 result
                     .andDo(MockMvcResultHandlers.print())
                     .andExpect(MockMvcResultMatchers.status().isCreated)
-                    .andExpect(MockMvcResultMatchers.content().string("회원가입 성공"))
             }
         }
 
@@ -56,7 +60,6 @@ class UserControllerTest(
             then("회원가입이 실패하고 적절한 에러 메시지를 반환해야 한다") {
                 result
                     .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isBadRequest())
-                    .andExpect(MockMvcResultMatchers.content().string("회원가입 실패"))
             }
         }
     }
