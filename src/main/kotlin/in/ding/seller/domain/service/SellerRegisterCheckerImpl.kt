@@ -4,7 +4,7 @@ import `in`.ding.seller.domain.exception.DuplicatedSellerNameException
 import `in`.ding.seller.infrastructure.db.repository.SellerRepository
 import java.util.UUID
 
-class SellerRegisterCheckerCheckerImpl(private val repository: SellerRepository) : SellerRegisterChecker {
+class SellerRegisterCheckerImpl(private val repository: SellerRepository) : SellerRegisterChecker {
     override fun check(userExKey: UUID, storeName: String) {
         val existedSeller = repository.findByUserExKeyAndStoreName(userExKey, storeName)
         if (existedSeller != null) {

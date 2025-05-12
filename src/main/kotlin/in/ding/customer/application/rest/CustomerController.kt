@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@RequestMapping("api/v1/sellers/{sid}/customers")
+@RequestMapping("api/v1/sellers/{sellerExKey}/customers")
 @RestController
 class CustomerController(private val service: CustomerAppService) {
     @PostMapping()
