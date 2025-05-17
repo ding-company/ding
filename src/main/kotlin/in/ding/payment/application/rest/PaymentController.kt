@@ -1,5 +1,6 @@
 package `in`.ding.payment.application.rest
 
+import `in`.ding.payment.application.dto.commandquery.AuthCommand
 import `in`.ding.payment.application.dto.commandquery.CaptureCommand
 import `in`.ding.payment.application.service.PaymentAppService
 import org.springframework.http.HttpStatus
@@ -13,13 +14,23 @@ import java.util.UUID
 @RequestMapping("api/v1/sellers/{sellerExKey}/payments")
 @RestController
 class PaymentController(private val service: PaymentAppService) {
-    @PostMapping()
+    @PostMapping("/auth")
     @ResponseStatus(HttpStatus.CREATED)
-    fun postCustomer() {
+    fun postPaymentAuth() {
+        service.auth(
+            AuthCommand(
+                UUID.randomUUID(),
+                BigDecimal.TEN
+            )
+        )
+    }
+
+    @PostMapping("/{exKey}/capture}")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun postPaymentCapture() {
         service.capture(
             CaptureCommand(
                 UUID.randomUUID(),
-                BigDecimal.TEN
             )
         )
     }

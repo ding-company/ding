@@ -138,7 +138,7 @@ complexity:
     ignoreDataClasses: true
     ignoreAnnotatedParameter: []
     excludes:
-      - '**/domain/entity/table/**'
+      - '**/table/**'
       - '**/domain/entity/*'
   MethodOverloading:
     active: false
