@@ -70,9 +70,6 @@ dependencies {
     implementation("io.github.openfeign:feign-okhttp:12.2")
     implementation("io.github.openfeign:feign-jackson:12.2")
 
-    implementation("org.mapstruct:mapstruct:1.5.5.Final")
-    kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
-
     // detekt
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Dependency.detektVersion}")
 

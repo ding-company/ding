@@ -25,7 +25,7 @@ class PaymentController(private val service: PaymentAppService) {
         )
     }
 
-    @PostMapping("/{exKey}/capture}")
+    @PostMapping("/{exKey}/capture")
     @ResponseStatus(HttpStatus.CREATED)
     fun postPaymentCapture() {
         service.capture(
