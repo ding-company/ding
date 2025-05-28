@@ -5,13 +5,12 @@ import jakarta.persistence.Column
 import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.util.UUID
-
 @Table(name = "point_summaries")
 data class PointSummaryEntity(
     @Column(unique = true, length = 36)
     val pointExKey: UUID,
 
-    @Column(length = 36)
+    @Column(length = 36, nullable = false)
     val customerExKey: UUID,
 
     @Column(nullable = false)

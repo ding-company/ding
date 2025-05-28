@@ -13,10 +13,10 @@ data class PointConsumptionEntity(
     val exKey: UUID,
 
     @Column(length = 36, nullable = false)
-    val consumeTxExKey: UUID, // 사용 트랜잭션 키
+    val consumeTxExKey: UUID,
 
     @Column(length = 36, nullable = false)
-    val earnTxExKey: UUID, // 적립 트랜잭션 키
+    val earnTxExKey: UUID,
 
     @Column(nullable = false)
     var amount: BigDecimal,
