@@ -12,10 +12,10 @@ data class PointWalletEntity(
     val customerExKey: UUID,
 
     @Column(nullable = false)
-    var confirmedAmount: BigDecimal = BigDecimal.ZERO, // 실제 사용 가능한 잔액
+    var confirmedAmount: BigDecimal = BigDecimal.ZERO,
 
     @Column(nullable = false)
-    var onHoldAmount: BigDecimal = BigDecimal.ZERO, // 사용 예정 금액 (결제 진행중 등)
+    var onHoldAmount: BigDecimal = BigDecimal.ZERO,
 
     @Column(nullable = false)
     var lastTransactionAt: LocalDateTime = LocalDateTime.now(),

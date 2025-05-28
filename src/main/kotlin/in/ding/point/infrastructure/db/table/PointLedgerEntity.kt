@@ -8,13 +8,12 @@ import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
-
 @Table(name = "point_ledgers")
 data class PointLedgerEntity(
     @Column(unique = true, length = 36)
     val exKey: UUID,
 
-    @Column(length = 36)
+    @Column(length = 36, nullable = false)
     val pointExKey: UUID,
 
     @Column(nullable = false)
