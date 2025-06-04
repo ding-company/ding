@@ -1,29 +1,28 @@
-package `in`.ding.customer.domain.entity.table
+package `in`.ding.user.infrastructure.db.table
 
 import `in`.ding.common.BaseEntity
+import `in`.ding.user.domain.model.enumerate.UserNationality
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 @Entity
-@Table(name = "customers")
-class CustomerEntity(
+@Table(name = "users")
+class UserEntity(
     @Column(unique = true, length = 36)
     val exKey: UUID,
-
-    @Column(length = 36)
-    val userExKey: UUID,
-
-    @Column(length = 36)
-    val sellerExKey: UUID,
 
     @Column(unique = true, length = 20)
     val phoneNumber: String? = null,
 
+    @Column(unique = true, length = 40)
+    val email: String? = null,
+
     @Column(length = 40)
-    val name: String? = null,
+    val nationality: UserNationality? = UserNationality.KR,
+
     @Column()
     val registeredAt: LocalDateTime,
 ) : BaseEntity()

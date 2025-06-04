@@ -1,26 +1,25 @@
 package `in`.ding.customer.application.service
 
 import `in`.ding.customer.application.dto.querycommand.CustomerRegisterCommand
-import `in`.ding.user.domain.service.UserCommandService
-import `in`.ding.user.domain.service.dto.UserRegisterDTO
+import `in`.ding.customer.domain.event.CustomerCreatedEvent
+import `in`.ding.customer.domain.model.Customer
+import `in`.ding.customer.infrastructure.messaging.kafka.CustomerEventPublisher
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class CustomerAppService(
-    private val userCommandService: UserCommandService,
+    private val eventPublisher: CustomerEventPublisher
 ) {
     @Transactional
     fun register(
         command: CustomerRegisterCommand,
     ) {
-        userCommandService.register(
-            dto = UserRegisterDTO(
-                phoneNumber = command.phoneNumber,
-                name = command.name,
-                nationality = command.nationality,
-                email = command.email,
-            )
-        )
+        val userExKey = UUID.randomUUID()
+        val customer = Customer.register(userExKey = userExKey, phoneNumber = command.phoneNumber, name = command.name)
+
+        val event = CustomerCreatedEvent(customer.exKey, userExKey = userExKey)
+        eventPublisher.publish(event)
     }
 }

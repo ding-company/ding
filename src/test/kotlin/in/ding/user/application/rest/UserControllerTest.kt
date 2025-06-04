@@ -3,7 +3,7 @@ package `in`.ding.user.application.rest
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import `in`.ding.user.application.dto.enumerate.UserSignupRequest
 import `in`.ding.user.application.service.UserAppService
-import `in`.ding.user.domain.entity.enumerate.UserNationality
+import `in`.ding.user.domain.model.enumerate.UserNationality
 import io.kotest.core.spec.style.BehaviorSpec
 import org.mockito.kotlin.doNothing
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest

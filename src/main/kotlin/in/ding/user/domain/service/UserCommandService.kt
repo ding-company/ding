@@ -1,6 +1,6 @@
 package `in`.ding.user.domain.service
 
-import `in`.ding.user.domain.entity.User
+import `in`.ding.user.domain.model.User
 import `in`.ding.user.domain.service.dto.UserRegisterDTO
 import `in`.ding.user.infrastructure.db.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -14,7 +14,6 @@ class UserCommandService(
             repository = repository,
             phoneNumber = dto.phoneNumber,
             email = dto.email,
-            name = dto.name,
             nationality = dto.nationality
         )
         return repository.save(user = user)
