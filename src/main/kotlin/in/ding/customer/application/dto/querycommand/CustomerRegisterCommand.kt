@@ -1,7 +1,7 @@
 package `in`.ding.customer.application.dto.querycommand
 
 import `in`.ding.customer.application.dto.http.PostCustomerRequest
-import `in`.ding.user.domain.entity.enumerate.UserNationality
+import `in`.ding.user.domain.model.enumerate.UserNationality
 import java.util.*
 
 data class CustomerRegisterCommand(

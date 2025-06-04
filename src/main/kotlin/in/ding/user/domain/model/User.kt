@@ -1,18 +1,17 @@
-package `in`.ding.user.domain.entity
+package `in`.ding.user.domain.model
 
 import `in`.ding.common.exception.BadRequestException
-import `in`.ding.user.domain.entity.enumerate.UserNationality
+import `in`.ding.user.domain.model.enumerate.UserNationality
 import `in`.ding.user.infrastructure.db.repository.UserRepository
 import java.time.LocalDateTime
 import java.util.*
 
-class User private constructor(
+data class User(
     private val repository: UserRepository,
     val id: Long? = null,
     val exKey: UUID,
     val phoneNumber: String? = null,
     val email: String? = null,
-    val name: String? = null,
     val nationality: UserNationality = UserNationality.KR,
     val isDeleted: Boolean = false,
     val deletedAt: LocalDateTime? = null,
@@ -23,7 +22,6 @@ class User private constructor(
             repository: UserRepository,
             phoneNumber: String?,
             email: String?,
-            name: String?,
             nationality: UserNationality,
         ): User {
             val user = User(
@@ -32,7 +30,6 @@ class User private constructor(
                 exKey = UUID.randomUUID(),
                 phoneNumber = phoneNumber,
                 email = email,
-                name = name,
                 nationality = nationality,
                 registeredAt = LocalDateTime.now()
             )

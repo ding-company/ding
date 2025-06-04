@@ -1,6 +1,6 @@
 package `in`.ding.user.infrastructure.db.repository
 
-import `in`.ding.user.domain.entity.table.UserEntity
+import `in`.ding.user.infrastructure.db.table.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

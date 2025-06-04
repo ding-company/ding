@@ -65,6 +65,9 @@ dependencies {
     // actuator
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+    // kafka
+    implementation("org.springframework.kafka:spring-kafka")
+
     // OpenFeign
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("io.github.openfeign:feign-okhttp:12.2")

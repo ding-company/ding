@@ -1,10 +1,10 @@
-package `in`.ding.customer.domain.entity
+package `in`.ding.customer.domain.model
 
 import java.time.LocalDateTime
 import java.util.UUID
 
-class Customer private constructor(
-    val externalKey: UUID,
+data class Customer(
+    val exKey: UUID,
     val userExKey: UUID,
     val phoneNumber: String? = null,
     val name: String? = null,
@@ -15,7 +15,7 @@ class Customer private constructor(
     companion object {
         fun register(userExKey: UUID, phoneNumber: String?, name: String?): Customer {
             return Customer(
-                externalKey = UUID.randomUUID(),
+                exKey = UUID.randomUUID(),
                 userExKey = userExKey,
                 phoneNumber = phoneNumber,
                 name = name,

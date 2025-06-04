@@ -1,6 +1,6 @@
 package `in`.ding.user.application.dto.enumerate
 
-import `in`.ding.user.domain.entity.enumerate.UserNationality
+import `in`.ding.user.domain.model.enumerate.UserNationality
 import io.swagger.v3.oas.annotations.media.Schema
 
 class UserSignupRequest(

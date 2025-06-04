@@ -1,7 +1,7 @@
 package `in`.ding.user.infrastructure.db.repository
 
-import `in`.ding.user.domain.entity.User
-import `in`.ding.user.domain.entity.table.UserEntity
+import `in`.ding.user.domain.model.User
+import `in`.ding.user.infrastructure.db.table.UserEntity
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -18,7 +18,6 @@ class UserCustomerRepositoryImpl : UserCustomRepository {
             exKey = user.exKey,
             phoneNumber = user.phoneNumber,
             email = user.email,
-            name = user.name,
             nationality = user.nationality,
             registeredAt = user.registeredAt
         )

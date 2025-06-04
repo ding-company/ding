@@ -1,7 +1,7 @@
 package `in`.ding.user.domain.service.dto
 
 import `in`.ding.user.application.dto.enumerate.UserSignupRequest
-import `in`.ding.user.domain.entity.enumerate.UserNationality
+import `in`.ding.user.domain.model.enumerate.UserNationality
 
 class UserRegisterDTO(
     val phoneNumber: String?,

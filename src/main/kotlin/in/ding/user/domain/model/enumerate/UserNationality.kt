@@ -1,4 +1,4 @@
-package `in`.ding.user.domain.entity.enumerate
+package `in`.ding.user.domain.model.enumerate
 
 enum class UserNationality {
     KR,
