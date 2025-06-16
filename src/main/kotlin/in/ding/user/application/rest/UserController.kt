@@ -1,6 +1,7 @@
 package `in`.ding.user.application.rest
 
-import `in`.ding.user.application.dto.enumerate.UserSignupRequest
+import `in`.ding.user.application.dto.command.UserRegisterCommand
+import `in`.ding.user.application.dto.http.UserSignupRequest
 import `in`.ding.user.application.service.UserAppService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -19,6 +20,7 @@ class UserController(private val userAppService: UserAppService) {
     fun singUp(
         @Valid @RequestBody body: UserSignupRequest
     ) {
-        userAppService.register(request = body)
+        val command = UserRegisterCommand.of(body)
+        userAppService.register(command)
     }
 }

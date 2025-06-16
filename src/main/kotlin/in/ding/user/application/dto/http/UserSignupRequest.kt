@@ -1,4 +1,4 @@
-package `in`.ding.user.application.dto.enumerate
+package `in`.ding.user.application.dto.http
 
 import `in`.ding.user.domain.model.enumerate.UserNationality
 import io.swagger.v3.oas.annotations.media.Schema
