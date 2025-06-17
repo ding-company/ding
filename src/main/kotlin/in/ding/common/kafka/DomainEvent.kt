@@ -1,4 +1,4 @@
-package `in`.ding.common.event
+package `in`.ding.common.kafka
 
 import java.time.LocalDateTime
 
