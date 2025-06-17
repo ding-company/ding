@@ -4,8 +4,13 @@ server:
 spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
-
-
-kafka:
-  topic:
-    customer: customer.events
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+    topic:
+      customer: customer.events
