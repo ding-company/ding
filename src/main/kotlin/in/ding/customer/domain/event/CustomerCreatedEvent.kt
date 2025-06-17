@@ -1,6 +1,6 @@
 package `in`.ding.customer.domain.event
 
-import `in`.ding.common.event.EventType
+import `in`.ding.common.kafka.EventType
 import java.time.LocalDateTime
 import java.util.UUID
 

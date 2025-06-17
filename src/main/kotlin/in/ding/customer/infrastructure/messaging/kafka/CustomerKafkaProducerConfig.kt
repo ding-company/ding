@@ -1,6 +1,6 @@
 package `in`.ding.customer.infrastructure.messaging.kafka
 
-import `in`.ding.config.kafka.KafkaCommonConfig
+import `in`.ding.common.kafka.KafkaCommonConfig
 import `in`.ding.customer.domain.event.CustomerEvent
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

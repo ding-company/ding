@@ -12,5 +12,8 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+      group-id:
+        user: user-service-group
+        point: point-service-group
     topic:
       customer: customer.events

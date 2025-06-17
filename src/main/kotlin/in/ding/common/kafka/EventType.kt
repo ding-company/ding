@@ -1,3 +1,3 @@
-package `in`.ding.common.event
+package `in`.ding.common.kafka
 
 enum class EventType { CREATED, UPDATED, DELETED }
