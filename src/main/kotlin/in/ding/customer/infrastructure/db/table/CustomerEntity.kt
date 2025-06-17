@@ -1,4 +1,4 @@
-package `in`.ding.customer.domain.model.table
+package `in`.ding.customer.infrastructure.db.table
 
 import `in`.ding.common.BaseEntity
 import jakarta.persistence.Column

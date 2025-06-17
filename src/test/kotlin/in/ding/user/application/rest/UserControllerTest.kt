@@ -1,7 +1,8 @@
 package `in`.ding.user.application.rest
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import `in`.ding.user.application.dto.enumerate.UserSignupRequest
+import `in`.ding.user.application.dto.command.UserRegisterCommand
+import `in`.ding.user.application.dto.http.UserSignupRequest
 import `in`.ding.user.application.service.UserAppService
 import `in`.ding.user.domain.model.enumerate.UserNationality
 import io.kotest.core.spec.style.BehaviorSpec
@@ -30,7 +31,7 @@ class UserControllerTest(
                 "123111",
                 nationality = UserNationality.KR
             )
-            doNothing().`when`(userService).register(request)
+            doNothing().`when`(userService).register(UserRegisterCommand.of(request))
 
             val result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/users/signup")
