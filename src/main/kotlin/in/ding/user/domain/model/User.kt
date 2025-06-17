@@ -14,12 +14,13 @@ data class User(
 ) {
     companion object {
         fun register(
+            exKey: UUID = UUID.randomUUID(),
             phoneNumber: String?,
             email: String?,
             nationality: UserNationality
         ): User {
             return User(
-                exKey = UUID.randomUUID(),
+                exKey = exKey,
                 phoneNumber = phoneNumber,
                 email = email,
                 nationality = nationality,

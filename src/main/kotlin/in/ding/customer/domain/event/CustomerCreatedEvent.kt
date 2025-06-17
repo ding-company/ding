@@ -7,6 +7,7 @@ import java.util.UUID
 data class CustomerCreatedEvent(
     val exKey: UUID,
     val userExKey: UUID,
+    val phoneNumber: String?,
     override val eventType: EventType = EventType.CREATED,
     override val occurredAt: LocalDateTime = LocalDateTime.now()
 ) : CustomerEvent
