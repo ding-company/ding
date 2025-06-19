@@ -12,12 +12,14 @@ import org.springframework.data.annotation.LastModifiedDate
 import java.time.LocalDateTime
 import java.util.*
 
+typealias ID = Long
+
 @MappedSuperclass
 abstract class BaseEntity {
     @Id
     @org.springframework.data.annotation.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long? = null
+    open var id: ID? = null
 
     @CreationTimestamp
     @CreatedDate
