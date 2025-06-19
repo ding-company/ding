@@ -1,6 +1,6 @@
 package `in`.ding.payment.infrastructure.db.table
 
-import `in`.ding.common.BaseEntity
+import `in`.ding.common.SoftDeletedBaseEntity
 import `in`.ding.payment.domain.entity.enumerate.PaymentStatus
 import jakarta.persistence.Column
 import jakarta.persistence.EnumType
@@ -33,4 +33,4 @@ class PaymentEntity(
 
     @Column
     var refundedAt: LocalDateTime? = null,
-) : BaseEntity()
+) : SoftDeletedBaseEntity()

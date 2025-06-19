@@ -17,7 +17,12 @@ class CustomerAppService(
         command: CustomerRegisterCommand,
     ) {
         val userExKey = UUID.randomUUID()
-        val customer = Customer.register(userExKey = userExKey, phoneNumber = command.phoneNumber, name = command.name)
+        val customer = Customer.register(
+            userExKey = userExKey,
+            sellerExKey = command.sellerExKey,
+            phoneNumber = command.phoneNumber,
+            name = command.name
+        )
 
         val event = CustomerCreatedEvent(customer.exKey, userExKey = userExKey, phoneNumber = command.phoneNumber)
         eventPublisher.publish(event)

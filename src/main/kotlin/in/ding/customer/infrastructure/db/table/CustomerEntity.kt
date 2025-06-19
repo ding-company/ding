@@ -1,6 +1,6 @@
 package `in`.ding.customer.infrastructure.db.table
 
-import `in`.ding.common.BaseEntity
+import `in`.ding.common.SoftDeletedBaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
@@ -26,4 +26,4 @@ class CustomerEntity(
     val name: String? = null,
     @Column()
     val registeredAt: LocalDateTime,
-) : BaseEntity()
+) : SoftDeletedBaseEntity()

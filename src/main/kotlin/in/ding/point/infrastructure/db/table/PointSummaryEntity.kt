@@ -1,6 +1,6 @@
 package `in`.ding.point.infrastructure.db.table
 
-import `in`.ding.common.BaseEntity
+import `in`.ding.common.SoftDeletedBaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Table
 import java.math.BigDecimal
@@ -27,4 +27,4 @@ data class PointSummaryEntity(
 
     @Column(nullable = false)
     var totalReversedAmount: BigDecimal = BigDecimal.ZERO,
-) : BaseEntity()
+) : SoftDeletedBaseEntity()

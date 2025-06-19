@@ -1,6 +1,6 @@
 package `in`.ding.point.infrastructure.db.table
 
-import `in`.ding.common.BaseEntity
+import `in`.ding.common.SoftDeletedBaseEntity
 import `in`.ding.point.domain.entity.enumerate.PointTransactionType
 import jakarta.persistence.Column
 import jakarta.persistence.Table
@@ -30,4 +30,4 @@ data class CustomerPointHistoryViewEntity(
 
     @Column(nullable = true)
     val refId: String? = null,
-) : BaseEntity()
+) : SoftDeletedBaseEntity()
