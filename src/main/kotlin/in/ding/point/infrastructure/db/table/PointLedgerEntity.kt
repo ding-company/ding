@@ -1,6 +1,6 @@
 package `in`.ding.point.infrastructure.db.table
 
-import `in`.ding.common.BaseEntity
+import `in`.ding.common.SoftDeletedBaseEntity
 import `in`.ding.point.domain.entity.enumerate.PointTransactionSourceType
 import `in`.ding.point.domain.entity.enumerate.PointTransactionType
 import jakarta.persistence.Column
@@ -45,4 +45,4 @@ data class PointLedgerEntity(
 
     @Column(length = 36, nullable = true)
     val relatedTxExKey: UUID? = null,
-) : BaseEntity()
+) : SoftDeletedBaseEntity()

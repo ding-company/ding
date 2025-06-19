@@ -1,15 +1,25 @@
 package `in`.ding.common.kafka
 
 import org.apache.kafka.clients.consumer.ConsumerConfig
+import org.apache.kafka.common.TopicPartition
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.ConsumerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
+import org.springframework.kafka.core.KafkaTemplate
+import org.springframework.kafka.listener.DeadLetterPublishingRecoverer
+import org.springframework.kafka.listener.DefaultErrorHandler
 import org.springframework.kafka.support.serializer.JsonDeserializer
+import org.springframework.util.backoff.FixedBackOff
+
+const val RETRY_COUNT = 3L
+const val RETRY_INTERVAL_MS = 1000L
 
 @Configuration
-open class BaseKafkaConsumerConfig {
+open class BaseKafkaConsumerConfig(
+    private val kafkaTemplate: KafkaTemplate<String, Any>
+) {
 
     @Value("\${spring.kafka.bootstrap-servers}")
     private lateinit var bootstrapServers: String
@@ -40,10 +50,21 @@ open class BaseKafkaConsumerConfig {
         return DefaultKafkaConsumerFactory(config)
     }
 
-    open fun <T : Any> kafkaListenerContainerFactory(groupId: String, valueType: Class<T>):
-        ConcurrentKafkaListenerContainerFactory<String, T> {
+    open fun <T : Any> kafkaListenerContainerFactory(
+        groupId: String,
+        valueType: Class<T>
+    ): ConcurrentKafkaListenerContainerFactory<String, T> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, T>()
         factory.consumerFactory = consumerFactory(groupId, valueType)
+        factory.setCommonErrorHandler(
+            DefaultErrorHandler(
+                DeadLetterPublishingRecoverer(kafkaTemplate) { record, _ ->
+                    TopicPartition(record.topic() + ".DLT", record.partition())
+                },
+                FixedBackOff(RETRY_INTERVAL_MS, RETRY_COUNT)
+            )
+        )
+
         return factory
     }
 }

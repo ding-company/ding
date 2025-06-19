@@ -1,6 +1,6 @@
 package `in`.ding.user.infrastructure.db.table
 
-import `in`.ding.common.BaseEntity
+import `in`.ding.common.SoftDeletedBaseEntity
 import `in`.ding.user.domain.model.enumerate.UserNationality
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -25,4 +25,4 @@ class UserEntity(
 
     @Column()
     val registeredAt: LocalDateTime,
-) : BaseEntity()
+) : SoftDeletedBaseEntity()

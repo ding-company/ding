@@ -1,4 +1,4 @@
-package `in`.ding.point.domain.repository
+package `in`.ding.point.domain
 
 import `in`.ding.point.domain.entity.Point
 import org.springframework.stereotype.Repository

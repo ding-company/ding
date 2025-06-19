@@ -1,6 +1,5 @@
 package `in`.ding.common
 
-import jakarta.persistence.Column
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -28,12 +27,6 @@ abstract class BaseEntity {
     @LastModifiedDate
     open var updatedAt: LocalDateTime = LocalDateTime.now()
 
-    @Column()
-    open var isDeleted: Boolean = false
-
-    @Column()
-    open var deletedAt: LocalDateTime? = null
-
     override fun equals(other: Any?): Boolean {
         if (other == null) {
             return false
@@ -50,7 +43,7 @@ abstract class BaseEntity {
         return if (obj is HibernateProxy) {
             obj.hibernateLazyInitializer.identifier
         } else {
-            (obj as BaseEntity).id
+            (obj as SoftDeletedBaseEntity).id
         }
     }
 

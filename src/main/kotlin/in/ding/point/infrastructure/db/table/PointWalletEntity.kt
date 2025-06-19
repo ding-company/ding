@@ -1,6 +1,6 @@
 package `in`.ding.point.infrastructure.db.table
 
-import `in`.ding.common.BaseEntity
+import `in`.ding.common.SoftDeletedBaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Table
 import java.math.BigDecimal
@@ -19,4 +19,4 @@ data class PointWalletEntity(
 
     @Column(nullable = false)
     var lastTransactionAt: LocalDateTime = LocalDateTime.now(),
-) : BaseEntity()
+) : SoftDeletedBaseEntity()

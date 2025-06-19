@@ -1,7 +1,7 @@
 package `in`.ding.point.application.service
 
+import `in`.ding.point.domain.PointRepository
 import `in`.ding.point.domain.entity.Point
-import `in`.ding.point.domain.repository.PointRepository
 import org.springframework.stereotype.Service
 import java.util.UUID
 
