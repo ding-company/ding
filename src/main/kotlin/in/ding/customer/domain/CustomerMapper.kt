@@ -8,26 +8,30 @@ import org.springframework.stereotype.Component
 
 @Component
 class CustomerMapper {
-    fun toDomain(customer: CustomerEntity): Customer {
+    fun toDomain(entity: CustomerEntity): Customer {
         return Customer(
-            id = DomainID(requireNotNull(customer.id) { ErrorMessage.ID_IS_NULL }),
-            exKey = customer.exKey,
-            name = customer.name,
-            phoneNumber = customer.phoneNumber,
-            sellerExKey = customer.sellerExKey,
-            userExKey = customer.userExKey,
-            registeredAt = customer.registeredAt
+            id = DomainID(requireNotNull(entity.id) { ErrorMessage.ID_IS_NULL }),
+            exKey = entity.exKey,
+            name = entity.name,
+            phoneNumber = entity.phoneNumber,
+            sellerExKey = entity.sellerExKey,
+            userExKey = entity.userExKey,
+            registeredAt = entity.registeredAt
         )
     }
 
-    fun toEntity(customer: Customer): CustomerEntity {
-        return CustomerEntity(
-            exKey = customer.exKey,
-            name = customer.name,
-            sellerExKey = customer.sellerExKey,
-            userExKey = customer.userExKey,
-            phoneNumber = customer.phoneNumber,
-            registeredAt = customer.registeredAt
+    fun toEntity(domain: Customer): CustomerEntity {
+        val entity = CustomerEntity(
+            exKey = domain.exKey,
+            name = domain.name,
+            sellerExKey = domain.sellerExKey,
+            userExKey = domain.userExKey,
+            phoneNumber = domain.phoneNumber,
+            registeredAt = domain.registeredAt
         )
+        if (domain.id.isAssigned()) {
+            entity.id = domain.id.value
+        }
+        return entity
     }
 }

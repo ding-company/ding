@@ -1,7 +1,7 @@
 package `in`.ding.payment.infrastructure.db.table
 
 import `in`.ding.common.SoftDeletedBaseEntity
-import `in`.ding.payment.domain.entity.enumerate.PaymentStatus
+import `in`.ding.payment.domain.model.enumerate.PaymentStatus
 import jakarta.persistence.Column
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated

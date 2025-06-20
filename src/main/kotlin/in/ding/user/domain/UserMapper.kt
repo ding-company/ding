@@ -19,12 +19,16 @@ class UserMapper {
         )
     }
     fun toEntity(domain: User): UserEntity {
-        return UserEntity(
+        val entity = UserEntity(
             exKey = domain.exKey,
             phoneNumber = domain.phoneNumber,
             email = domain.email,
             nationality = domain.nationality,
             registeredAt = domain.registeredAt,
         )
+        if (domain.id.isAssigned()) {
+            entity.id = domain.id.value
+        }
+        return entity
     }
 }
