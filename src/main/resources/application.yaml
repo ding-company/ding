@@ -17,3 +17,4 @@ spring:
         point: point-service-group
     topic:
       customer: customer.events
+      payment: payment.events

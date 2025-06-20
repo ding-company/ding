@@ -1,7 +1,7 @@
 package `in`.ding.user.infrastructure.messaging.kafka
 
 import `in`.ding.customer.domain.event.CustomerCreatedEvent
-import `in`.ding.user.application.consumer.dto.UserRegisterByCustomerEventCommand
+import `in`.ding.user.application.dto.consumer.UserRegisterByCustomerEventCommand
 import `in`.ding.user.application.service.UserAppService
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component

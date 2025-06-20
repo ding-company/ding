@@ -1,4 +1,4 @@
-package `in`.ding.customer.application.dto.querycommand
+package `in`.ding.customer.application.dto.command
 
 import `in`.ding.customer.application.dto.http.PostCustomerRequest
 import `in`.ding.user.domain.model.enumerate.UserNationality
