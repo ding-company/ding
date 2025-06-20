@@ -1,13 +1,15 @@
-package `in`.ding.payment.domain.entity
+package `in`.ding.payment.domain.model
 
-import `in`.ding.payment.domain.entity.enumerate.PaymentStatus
-import `in`.ding.payment.domain.entity.enumerate.PaymentTransactionType
+import `in`.ding.common.DomainID
+import `in`.ding.payment.domain.model.enumerate.PaymentStatus
+import `in`.ding.payment.domain.model.enumerate.PaymentTransactionType
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
 
 data class Payment(
-    val id: UUID,
+    val id: DomainID,
+    val exKey: UUID,
     val sellerExKey: UUID,
     val amount: BigDecimal,
     var status: PaymentStatus,
@@ -15,7 +17,6 @@ data class Payment(
     var capturedAt: LocalDateTime? = null,
     var refundedAt: LocalDateTime? = null,
     private val transactions: MutableList<PaymentTransaction>,
-    private val newTransactions: MutableList<PaymentTransaction> = mutableListOf()
 ) {
 
     companion object {
@@ -24,20 +25,21 @@ data class Payment(
             amount: BigDecimal
         ): Payment {
             require(amount > BigDecimal.ZERO)
-            val paymentId = UUID.randomUUID()
+            val exKey = UUID.randomUUID()
             val authorizedAt = LocalDateTime.now()
             val authTx = PaymentTransaction(
+                id = DomainID.UNASSIGNED,
                 type = PaymentTransactionType.AUTHORIZE,
                 amount = amount,
             )
             return Payment(
-                id = paymentId,
+                id = DomainID.UNASSIGNED,
+                exKey = exKey,
                 sellerExKey = sellerExKey,
                 amount = amount,
                 status = PaymentStatus.AUTHORIZED,
                 authorizedAt = authorizedAt,
-                transactions = mutableListOf(),
-                newTransactions = mutableListOf(authTx)
+                transactions = mutableListOf(authTx),
             )
         }
     }
@@ -45,8 +47,9 @@ data class Payment(
     fun capture() {
         require(status == PaymentStatus.AUTHORIZED)
 
-        newTransactions.add(
+        transactions.add(
             PaymentTransaction(
+                id = DomainID.UNASSIGNED,
                 type = PaymentTransactionType.CAPTURE,
                 amount = amount
             )
@@ -54,10 +57,7 @@ data class Payment(
         this.status = PaymentStatus.CAPTURED
         this.capturedAt = LocalDateTime.now()
     }
-    fun getNewTransactions(): List<PaymentTransaction> {
-        return this.newTransactions
-    }
     fun getTransactions(): List<PaymentTransaction> {
-        return this.newTransactions
+        return this.transactions
     }
 }

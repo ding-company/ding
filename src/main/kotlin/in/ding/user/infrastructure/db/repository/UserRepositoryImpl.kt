@@ -9,9 +9,10 @@ class UserRepositoryImpl(
     private val mapper: UserMapper
 ) : UserRepository {
     override fun save(domain: User): User {
-        val entity = mapper.toEntity(domain)
-        if (domain.id.isAssigned()) {
-            entity.apply { id = domain.id.value }
+        val entity = mapper.toEntity(domain).also {
+            if (domain.id.isAssigned()) {
+                it.id = domain.id.value
+            }
         }
         val saved = jpaRepository.save(entity)
         return mapper.toDomain(saved)

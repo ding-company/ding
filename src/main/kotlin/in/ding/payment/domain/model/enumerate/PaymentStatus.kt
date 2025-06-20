@@ -1,4 +1,4 @@
-package `in`.ding.payment.domain.entity.enumerate
+package `in`.ding.payment.domain.model.enumerate
 
 enum class PaymentStatus {
     AUTHORIZED,

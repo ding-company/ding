@@ -1,14 +1,17 @@
 package `in`.ding.payment.domain
 
-import `in`.ding.payment.domain.entity.Payment
-import `in`.ding.payment.domain.entity.PaymentTransaction
+import `in`.ding.common.DomainID
+import `in`.ding.common.ErrorMessage
+import `in`.ding.payment.domain.model.Payment
+import `in`.ding.payment.domain.model.PaymentTransaction
 import `in`.ding.payment.infrastructure.db.table.PaymentEntity
 import `in`.ding.payment.infrastructure.db.table.PaymentTransactionEntity
 
 class PaymentMapper {
-    fun toEntity(payment: PaymentEntity, paymentTransactions: List<PaymentTransactionEntity>): Payment {
+    fun toDomain(payment: PaymentEntity, paymentTransactions: List<PaymentTransactionEntity>): Payment {
         return Payment(
-            id = payment.exKey,
+            id = DomainID(requireNotNull(payment.id) { ErrorMessage.ID_IS_NULL }),
+            exKey = payment.exKey,
             sellerExKey = payment.sellerExKey,
             amount = payment.amount,
             status = payment.status,
@@ -17,6 +20,7 @@ class PaymentMapper {
             refundedAt = payment.refundedAt,
             transactions = paymentTransactions.map {
                 PaymentTransaction(
+                    id = DomainID(requireNotNull(it.id) { ErrorMessage.ID_IS_NULL }),
                     exKey = it.exKey,
                     amount = it.amount,
                     type = it.type,
@@ -25,19 +29,19 @@ class PaymentMapper {
             }.toMutableList()
         )
     }
-    fun toJpaPayment(entity: Payment): PaymentEntity {
+    fun toEntity(domain: Payment): PaymentEntity {
         return PaymentEntity(
-            exKey = entity.id,
-            amount = entity.amount,
-            sellerExKey = entity.sellerExKey,
-            status = entity.status,
-            authorizedAt = entity.authorizedAt,
-            capturedAt = entity.capturedAt,
-            refundedAt = entity.refundedAt,
+            exKey = domain.exKey,
+            amount = domain.amount,
+            sellerExKey = domain.sellerExKey,
+            status = domain.status,
+            authorizedAt = domain.authorizedAt,
+            capturedAt = domain.capturedAt,
+            refundedAt = domain.refundedAt,
         )
     }
-    fun toJpaPaymentTransactions(entities: List<PaymentTransaction>): List<PaymentTransactionEntity> {
-        return entities.map {
+    fun toJpaPaymentTransactions(domains: List<PaymentTransaction>): List<PaymentTransactionEntity> {
+        return domains.map {
             PaymentTransactionEntity(
                 exKey = it.exKey,
                 paymentExKey = it.exKey,

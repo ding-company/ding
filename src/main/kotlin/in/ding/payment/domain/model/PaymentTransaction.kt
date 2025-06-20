@@ -1,11 +1,14 @@
-package `in`.ding.payment.domain.entity
+package `in`.ding.payment.domain.model
 
-import `in`.ding.payment.domain.entity.enumerate.PaymentTransactionType
+import `in`.ding.common.DomainID
+import `in`.ding.payment.domain.model.enumerate.PaymentTransactionType
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
 
 class PaymentTransaction(
+    val id: DomainID,
+
     val exKey: UUID = UUID.randomUUID(),
 
     val amount: BigDecimal,
@@ -13,4 +16,6 @@ class PaymentTransaction(
     val type: PaymentTransactionType,
 
     val transactionAt: LocalDateTime = LocalDateTime.now(),
-)
+) {
+    fun isNew(): Boolean = !id.isAssigned()
+}
