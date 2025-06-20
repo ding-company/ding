@@ -1,7 +1,7 @@
 package `in`.ding.user.application.service
 
-import `in`.ding.user.application.consumer.dto.UserRegisterByCustomerEventCommand
 import `in`.ding.user.application.dto.command.UserRegisterCommand
+import `in`.ding.user.application.dto.consumer.UserRegisterByCustomerEventCommand
 import `in`.ding.user.domain.UserRepository
 import `in`.ding.user.domain.model.User
 import `in`.ding.user.domain.model.enumerate.UserNationality

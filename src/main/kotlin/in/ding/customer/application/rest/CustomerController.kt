@@ -1,7 +1,7 @@
 package `in`.ding.customer.application.rest
 
+import `in`.ding.customer.application.dto.command.CustomerRegisterCommand
 import `in`.ding.customer.application.dto.http.PostCustomerRequest
-import `in`.ding.customer.application.dto.querycommand.CustomerRegisterCommand
 import `in`.ding.customer.application.service.CustomerAppService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PathVariable

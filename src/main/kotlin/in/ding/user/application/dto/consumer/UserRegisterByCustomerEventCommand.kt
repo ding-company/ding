@@ -1,6 +1,6 @@
-package `in`.ding.user.application.consumer.dto
+package `in`.ding.user.application.dto.consumer
 
-import java.util.*
+import java.util.UUID
 
 class UserRegisterByCustomerEventCommand(
     val exKey: UUID,
