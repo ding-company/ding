@@ -1,7 +1,7 @@
 package `in`.ding.user.domain.service
 
 import `in`.ding.common.exception.BadRequestException
-import `in`.ding.user.infrastructure.db.repository.UserRepository
+import `in`.ding.user.domain.UserRepository
 import org.springframework.stereotype.Service
 
 @Service

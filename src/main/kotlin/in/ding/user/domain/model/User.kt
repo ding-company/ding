@@ -1,15 +1,16 @@
 package `in`.ding.user.domain.model
 
+import `in`.ding.common.DomainID
 import `in`.ding.user.domain.model.enumerate.UserNationality
 import java.time.LocalDateTime
 import java.util.*
+
 data class User(
+    val id: DomainID,
     val exKey: UUID,
     val phoneNumber: String? = null,
     val email: String? = null,
     val nationality: UserNationality = UserNationality.KR,
-    val isDeleted: Boolean = false,
-    val deletedAt: LocalDateTime? = null,
     val registeredAt: LocalDateTime
 ) {
     companion object {
@@ -20,6 +21,7 @@ data class User(
             nationality: UserNationality
         ): User {
             return User(
+                id = DomainID.UNASSIGNED,
                 exKey = exKey,
                 phoneNumber = phoneNumber,
                 email = email,

@@ -21,7 +21,7 @@ class UserEntity(
     val email: String? = null,
 
     @Column(length = 40)
-    val nationality: UserNationality? = UserNationality.KR,
+    val nationality: UserNationality = UserNationality.KR,
 
     @Column()
     val registeredAt: LocalDateTime,
