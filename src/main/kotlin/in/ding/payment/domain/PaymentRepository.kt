@@ -6,6 +6,6 @@ import java.util.UUID
 
 @Repository
 interface PaymentRepository {
-    fun save(domain: Payment)
+    fun save(domain: Payment): Payment
     fun findByExKey(exKey: UUID): Payment?
 }

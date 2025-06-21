@@ -1,4 +1,4 @@
-package `in`.ding.payment.application.dto.commandquery
+package `in`.ding.payment.application.dto.command
 
 import java.util.*
 
