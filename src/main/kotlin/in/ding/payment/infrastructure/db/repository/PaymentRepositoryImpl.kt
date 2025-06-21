@@ -8,7 +8,7 @@ import java.util.*
 class PaymentRepositoryImpl(
     private val paymentMapper: PaymentMapper,
     private val paymentRepository: PaymentJpaRepository,
-    private val transactionRepository: PaymentJpaTransactionRepository
+    private val transactionRepository: PaymentTransactionJpaRepository,
 ) : PaymentRepository {
 
     override fun save(domain: Payment) {
@@ -17,7 +17,6 @@ class PaymentRepositoryImpl(
                 it.id = domain.id.value
             }
         }
-
         val newTransactions = domain.getTransactions()
             .filter { it.isNew() }
             .let(paymentMapper::toJpaPaymentTransactions)
@@ -28,7 +27,7 @@ class PaymentRepositoryImpl(
 
     override fun findByExKey(exKey: UUID): Payment? {
         val paymentEntity = paymentRepository.findByExKey(exKey) ?: return null
-        val transactions = transactionRepository.findAllByPaymentExKeyIn(exKey)
+        val transactions = transactionRepository.findAllByPaymentExKey(exKey)
         return paymentMapper.toDomain(paymentEntity, transactions)
     }
 }
