@@ -16,7 +16,8 @@ class CustomerMapper {
             phoneNumber = entity.phoneNumber,
             sellerExKey = entity.sellerExKey,
             userExKey = entity.userExKey,
-            registeredAt = entity.registeredAt
+            registeredAt = entity.registeredAt,
+            status = entity.status
         )
     }
 
@@ -27,7 +28,8 @@ class CustomerMapper {
             sellerExKey = domain.sellerExKey,
             userExKey = domain.userExKey,
             phoneNumber = domain.phoneNumber,
-            registeredAt = domain.registeredAt
+            registeredAt = domain.registeredAt,
+            status = domain.status,
         )
         if (domain.id.isAssigned()) {
             entity.id = domain.id.value

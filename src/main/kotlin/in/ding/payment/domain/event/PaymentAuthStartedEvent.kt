@@ -9,6 +9,7 @@ import java.util.UUID
 data class PaymentAuthStartedEvent(
     val paymentExKey: UUID,
     val customerPhoneNumber: String?,
+    val sellerExKey: UUID,
     val amount: BigDecimal,
 
     val usedPointAmount: BigDecimal = BigDecimal.ZERO,
@@ -26,6 +27,7 @@ data class PaymentAuthStartedEvent(
         fun of(paymentExKey: UUID, command: AuthCommand): PaymentAuthStartedEvent {
             return PaymentAuthStartedEvent(
                 paymentExKey = paymentExKey,
+                sellerExKey = command.sellerExKey,
                 customerPhoneNumber = command.customerPhoneNumber,
                 amount = command.amount,
                 usedPointAmount = command.usedPointAmount,

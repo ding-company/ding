@@ -1,8 +1,11 @@
 package `in`.ding.customer.infrastructure.db.table
 
 import `in`.ding.common.SoftDeletedBaseEntity
+import `in`.ding.customer.domain.model.enumerate.CustomerStatus
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 import java.time.LocalDateTime
 import java.util.UUID
@@ -24,6 +27,11 @@ class CustomerEntity(
 
     @Column(length = 40)
     val name: String? = null,
+
+    @Column(length = 40)
+    @Enumerated(EnumType.STRING)
+    val status: CustomerStatus,
+
     @Column()
     val registeredAt: LocalDateTime,
 ) : SoftDeletedBaseEntity()

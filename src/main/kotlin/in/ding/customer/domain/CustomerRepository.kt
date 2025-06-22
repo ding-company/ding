@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CustomerRepository {
     fun save(domain: Customer): Customer
+    fun findByPhoneNumber(phoneNumber: String): Customer?
 }

@@ -3,6 +3,7 @@ package `in`.ding.customer.infrastructure.db.repository
 import `in`.ding.customer.domain.CustomerMapper
 import `in`.ding.customer.domain.CustomerRepository
 import `in`.ding.customer.domain.model.Customer
+import `in`.ding.customer.domain.model.enumerate.CustomerStatus
 
 class CustomerRepositoryImpl(
     private val jpaRepository: CustomerJpaRepository,
@@ -16,5 +17,9 @@ class CustomerRepositoryImpl(
         }
         val saved = jpaRepository.save(entity)
         return mapper.toDomain(saved)
+    }
+    override fun findByPhoneNumber(phoneNumber: String): Customer? {
+        val entity = jpaRepository.findByPhoneNumberAndStatusAndIsDeleted(phoneNumber, CustomerStatus.REGISTERED, false)
+        return mapper.toDomain(entity)
     }
 }

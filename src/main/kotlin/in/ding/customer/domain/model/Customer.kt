@@ -1,6 +1,7 @@
 package `in`.ding.customer.domain.model
 
 import `in`.ding.common.DomainID
+import `in`.ding.customer.domain.model.enumerate.CustomerStatus
 import java.time.LocalDateTime
 import java.util.*
 
@@ -13,10 +14,11 @@ data class Customer(
     val name: String? = null,
     val registeredAt: LocalDateTime,
     val isDeleted: Boolean = false,
+    val status: CustomerStatus = CustomerStatus.TEMPORARY,
     val deletedAt: LocalDateTime? = null
 ) {
     companion object {
-        fun register(userExKey: UUID, sellerExKey: UUID, phoneNumber: String?, name: String?): Customer {
+        fun createTemporary(userExKey: UUID, sellerExKey: UUID, phoneNumber: String?, name: String?): Customer {
             return Customer(
                 id = DomainID.UNASSIGNED,
                 exKey = UUID.randomUUID(),
@@ -24,8 +26,16 @@ data class Customer(
                 sellerExKey = sellerExKey,
                 phoneNumber = phoneNumber,
                 name = name,
+                status = CustomerStatus.TEMPORARY,
                 registeredAt = LocalDateTime.now()
             )
         }
     }
-}
+
+    fun register(): Customer {
+        require(status == CustomerStatus.TEMPORARY) { "이미 정식 등록된 고객입니다." }
+
+        return this.copy(
+            status = CustomerStatus.REGISTERED
+        )
+    } }
