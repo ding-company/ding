@@ -9,9 +9,8 @@ import `in`.ding.payment.domain.model.Payment
 import `in`.ding.payment.infrastructure.kafka.messaging.PaymentEventPublisher
 
 class PaymentAppServiceImpl(
-    val repository: PaymentRepository,
-
-    private val eventPublisher: PaymentEventPublisher
+    private val repository: PaymentRepository,
+    private val eventPublisher: PaymentEventPublisher,
 ) : PaymentAppService {
     override fun auth(command: AuthCommand) {
         val payment = Payment.authorize(sellerExKey = command.sellerExKey, amount = command.amount)
