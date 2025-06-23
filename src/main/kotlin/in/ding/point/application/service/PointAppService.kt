@@ -9,6 +9,6 @@ import java.util.UUID
 class PointAppService(private val repository: PointRepository) {
     fun initPoint(customerExKey: UUID) {
         repository.findByCustomerExKey(customerExKey)
-            ?: repository.save(Point(customerExKey = customerExKey))
+            ?: repository.save(Point.init(customerExKey = customerExKey))
     }
 }

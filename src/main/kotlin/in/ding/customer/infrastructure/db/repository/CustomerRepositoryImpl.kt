@@ -1,9 +1,9 @@
 package `in`.ding.customer.infrastructure.db.repository
 
-import `in`.ding.customer.domain.CustomerMapper
 import `in`.ding.customer.domain.CustomerRepository
 import `in`.ding.customer.domain.model.Customer
 import `in`.ding.customer.domain.model.enumerate.CustomerStatus
+import `in`.ding.customer.infrastructure.mapper.CustomerMapper
 
 class CustomerRepositoryImpl(
     private val jpaRepository: CustomerJpaRepository,

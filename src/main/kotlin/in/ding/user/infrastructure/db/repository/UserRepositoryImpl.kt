@@ -1,8 +1,8 @@
 package `in`.ding.user.infrastructure.db.repository
 
-import `in`.ding.user.domain.UserMapper
 import `in`.ding.user.domain.UserRepository
 import `in`.ding.user.domain.model.User
+import `in`.ding.user.infrastructure.mapper.UserMapper
 
 class UserRepositoryImpl(
     private val jpaRepository: UserJpaRepository,

@@ -1,8 +1,8 @@
 package `in`.ding.payment.infrastructure.db.repository
 
-import `in`.ding.payment.domain.PaymentMapper
 import `in`.ding.payment.domain.PaymentRepository
 import `in`.ding.payment.domain.model.Payment
+import `in`.ding.payment.infrastructure.mapper.PaymentMapper
 import java.util.UUID
 
 class PaymentRepositoryImpl(

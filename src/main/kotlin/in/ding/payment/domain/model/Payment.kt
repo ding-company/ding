@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class Payment(
-    val id: DomainID,
+    val id: PaymentID,
     val exKey: UUID,
     val sellerExKey: UUID,
     val amount: BigDecimal,
@@ -33,7 +33,7 @@ data class Payment(
                 amount = amount,
             )
             return Payment(
-                id = DomainID.UNASSIGNED,
+                id = PaymentID.UNASSIGNED,
                 exKey = exKey,
                 sellerExKey = sellerExKey,
                 amount = amount,
