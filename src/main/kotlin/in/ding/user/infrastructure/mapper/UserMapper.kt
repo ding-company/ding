@@ -1,8 +1,8 @@
-package `in`.ding.user.domain
+package `in`.ding.user.infrastructure.mapper
 
-import `in`.ding.common.DomainID
 import `in`.ding.common.ErrorMessage
 import `in`.ding.user.domain.model.User
+import `in`.ding.user.domain.model.UserID
 import `in`.ding.user.infrastructure.db.table.UserEntity
 import org.springframework.stereotype.Component
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class UserMapper {
     fun toDomain(entity: UserEntity): User {
         return User(
-            DomainID(requireNotNull(entity.id) { ErrorMessage.ID_IS_NULL }),
+            UserID(requireNotNull(entity.id) { ErrorMessage.ID_IS_NULL }),
             exKey = entity.exKey,
             phoneNumber = entity.phoneNumber,
             email = entity.email,

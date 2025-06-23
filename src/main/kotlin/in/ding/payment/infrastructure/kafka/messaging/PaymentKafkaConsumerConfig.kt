@@ -16,7 +16,7 @@ class PaymentKafkaConsumerConfig(
     private lateinit var groupId: String
 
     @Bean
-    fun paymentKafkaListenerContainerFactory():
+    fun paymentAuthStartedKafkaListenerContainerFactory():
         ConcurrentKafkaListenerContainerFactory<String, PaymentAuthStartedEvent> {
         return base.kafkaListenerContainerFactory(groupId, PaymentAuthStartedEvent::class.java)
     }

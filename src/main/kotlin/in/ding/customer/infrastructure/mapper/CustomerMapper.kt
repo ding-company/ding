@@ -1,8 +1,8 @@
-package `in`.ding.customer.domain
+package `in`.ding.customer.infrastructure.mapper
 
-import `in`.ding.common.DomainID
 import `in`.ding.common.ErrorMessage
 import `in`.ding.customer.domain.model.Customer
+import `in`.ding.customer.domain.model.CustomerID
 import `in`.ding.customer.infrastructure.db.table.CustomerEntity
 import org.springframework.stereotype.Component
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class CustomerMapper {
     fun toDomain(entity: CustomerEntity): Customer {
         return Customer(
-            id = DomainID(requireNotNull(entity.id) { ErrorMessage.ID_IS_NULL }),
+            id = CustomerID(requireNotNull(entity.id) { ErrorMessage.ID_IS_NULL }),
             exKey = entity.exKey,
             name = entity.name,
             phoneNumber = entity.phoneNumber,

@@ -1,8 +1,9 @@
-package `in`.ding.payment.domain
+package `in`.ding.payment.infrastructure.mapper
 
 import `in`.ding.common.DomainID
 import `in`.ding.common.ErrorMessage
 import `in`.ding.payment.domain.model.Payment
+import `in`.ding.payment.domain.model.PaymentID
 import `in`.ding.payment.domain.model.PaymentTransaction
 import `in`.ding.payment.infrastructure.db.table.PaymentEntity
 import `in`.ding.payment.infrastructure.db.table.PaymentTransactionEntity
@@ -10,7 +11,7 @@ import `in`.ding.payment.infrastructure.db.table.PaymentTransactionEntity
 class PaymentMapper {
     fun toDomain(payment: PaymentEntity, paymentTransactions: List<PaymentTransactionEntity>): Payment {
         return Payment(
-            id = DomainID(requireNotNull(payment.id) { ErrorMessage.ID_IS_NULL }),
+            id = PaymentID(requireNotNull(payment.id) { ErrorMessage.ID_IS_NULL }),
             exKey = payment.exKey,
             sellerExKey = payment.sellerExKey,
             amount = payment.amount,

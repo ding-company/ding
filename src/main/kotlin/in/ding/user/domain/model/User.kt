@@ -1,12 +1,11 @@
 package `in`.ding.user.domain.model
 
-import `in`.ding.common.DomainID
 import `in`.ding.user.domain.model.enumerate.UserNationality
 import java.time.LocalDateTime
 import java.util.*
 
 data class User(
-    val id: DomainID,
+    val id: UserID,
     val exKey: UUID,
     val phoneNumber: String? = null,
     val email: String? = null,
@@ -21,7 +20,7 @@ data class User(
             nationality: UserNationality
         ): User {
             return User(
-                id = DomainID.UNASSIGNED,
+                id = UserID.UNASSIGNED,
                 exKey = exKey,
                 phoneNumber = phoneNumber,
                 email = email,
