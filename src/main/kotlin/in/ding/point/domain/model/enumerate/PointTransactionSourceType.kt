@@ -1,4 +1,4 @@
-package `in`.ding.point.domain.entity.enumerate
+package `in`.ding.point.domain.model.enumerate
 
 enum class PointTransactionSourceType {
     REVIEW,

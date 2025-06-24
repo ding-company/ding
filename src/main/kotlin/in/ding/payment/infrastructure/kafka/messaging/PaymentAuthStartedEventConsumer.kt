@@ -1,6 +1,6 @@
 package `in`.ding.payment.infrastructure.kafka.messaging
 
-import `in`.ding.payment.application.service.PaymentAuthorizationHandler
+import `in`.ding.payment.application.handler.PaymentAuthorizationHandler
 import `in`.ding.payment.domain.event.PaymentAuthStartedEvent
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
