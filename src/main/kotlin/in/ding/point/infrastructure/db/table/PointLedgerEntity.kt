@@ -1,8 +1,8 @@
 package `in`.ding.point.infrastructure.db.table
 
 import `in`.ding.common.SoftDeletedBaseEntity
-import `in`.ding.point.domain.entity.enumerate.PointTransactionSourceType
-import `in`.ding.point.domain.entity.enumerate.PointTransactionType
+import `in`.ding.point.domain.model.enumerate.PointTransactionSourceType
+import `in`.ding.point.domain.model.enumerate.PointTransactionType
 import jakarta.persistence.Column
 import jakarta.persistence.Table
 import java.math.BigDecimal

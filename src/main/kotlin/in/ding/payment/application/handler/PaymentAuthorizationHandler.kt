@@ -1,14 +1,14 @@
-package `in`.ding.payment.application.service
+package `in`.ding.payment.application.handler
 
 import `in`.ding.customer.domain.CustomerRepository
 import `in`.ding.customer.domain.model.Customer
 import `in`.ding.payment.domain.event.PaymentAuthEvent
 import `in`.ding.payment.domain.event.PaymentAuthStartedEvent
 import `in`.ding.payment.infrastructure.kafka.messaging.PaymentEventPublisher
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 import java.util.UUID
 
-@Service
+@Component
 class PaymentAuthorizationHandler(
     private val customerRepository: CustomerRepository,
     private val eventPublisher: PaymentEventPublisher
@@ -18,7 +18,7 @@ class PaymentAuthorizationHandler(
         var customer = customerRepository.findByPhoneNumber(event.customerPhoneNumber)
         if (customer == null) {
             val userExKey = UUID.randomUUID()
-            customer = Customer.createTemporary(
+            customer = Customer.Companion.createTemporary(
                 userExKey = userExKey,
                 sellerExKey = event.sellerExKey,
                 phoneNumber = event.customerPhoneNumber,
@@ -27,7 +27,7 @@ class PaymentAuthorizationHandler(
         }
         customerRepository.save(customer)
         eventPublisher.publish(
-            PaymentAuthEvent.of(
+            PaymentAuthEvent.Companion.of(
                 customerExKey = customer.exKey,
                 event
             )
