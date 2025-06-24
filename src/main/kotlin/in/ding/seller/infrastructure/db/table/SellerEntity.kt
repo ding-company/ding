@@ -1,4 +1,4 @@
-package `in`.ding.seller.domain.entity.table
+package `in`.ding.seller.infrastructure.db.table
 
 import `in`.ding.common.SoftDeletedBaseEntity
 import jakarta.persistence.Column
@@ -21,16 +21,4 @@ class SellerEntity(
 
     @Column()
     val registeredAt: LocalDateTime,
-) : SoftDeletedBaseEntity() {
-    companion object {
-        fun register(userExKey: UUID, storeName: String): SellerEntity {
-            return SellerEntity(
-                exKey = UUID.randomUUID(),
-                userExKey = userExKey,
-                storeName = storeName,
-                address = null,
-                registeredAt = LocalDateTime.now(),
-            )
-        }
-    }
-}
+) : SoftDeletedBaseEntity()
