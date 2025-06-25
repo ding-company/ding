@@ -17,7 +17,7 @@ class UserController(private val userAppService: UserAppService) {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
-    fun singUp(
+    fun signUp(
         @Valid @RequestBody body: UserSignupRequest
     ) {
         val command = UserRegisterCommand.of(body)
