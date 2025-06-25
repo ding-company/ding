@@ -1,6 +1,9 @@
 package `in`.ding.user.application.rest
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import `in`.ding.common.auth.JwtAuthenticationFilter
+import `in`.ding.common.auth.JwtTokenProvider
+import `in`.ding.common.auth.SecurityConfig
 import `in`.ding.user.application.dto.command.UserRegisterCommand
 import `in`.ding.user.application.dto.http.UserSignupRequest
 import `in`.ding.user.application.service.UserAppService
@@ -9,13 +12,14 @@ import io.kotest.core.spec.style.BehaviorSpec
 import org.mockito.kotlin.doNothing
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-// @ActiveProfiles("test")
+@Import(SecurityConfig::class, JwtAuthenticationFilter::class, JwtTokenProvider::class)
 @WebMvcTest(UserController::class)
 class UserControllerTest(
     val mockMvc: MockMvc,
