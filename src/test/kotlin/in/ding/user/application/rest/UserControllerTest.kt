@@ -4,10 +4,11 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import `in`.ding.common.auth.JwtAuthenticationFilter
 import `in`.ding.common.auth.JwtTokenProvider
 import `in`.ding.common.auth.SecurityConfig
-import `in`.ding.user.application.dto.command.UserRegisterCommand
-import `in`.ding.user.application.dto.http.UserSignupRequest
-import `in`.ding.user.application.service.UserAppService
-import `in`.ding.user.domain.model.enumerate.UserNationality
+import `in`.ding.user.user.application.dto.command.UserRegisterCommand
+import `in`.ding.user.user.application.dto.http.UserOtpRequest
+import `in`.ding.user.user.application.rest.UserController
+import `in`.ding.user.user.application.service.UserAppServiceImpl
+import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import io.kotest.core.spec.style.BehaviorSpec
 import org.mockito.kotlin.doNothing
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -24,15 +25,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 class UserControllerTest(
     val mockMvc: MockMvc,
     @MockBean
-    val userService: UserAppService
+    val userService: UserAppServiceImpl
 ) : BehaviorSpec({
     given("회원가입 요청이 주어졌을 때") {
         `when`("유효한 요청이 전달되면") {
-            val request = UserSignupRequest(
+            val request = UserOtpRequest(
                 "testUser",
                 "password123",
-                "test@example.com",
-                "123111",
                 nationality = UserNationality.KR
             )
             doNothing().`when`(userService).register(UserRegisterCommand.of(request))
