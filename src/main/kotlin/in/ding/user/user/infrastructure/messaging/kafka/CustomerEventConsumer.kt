@@ -2,13 +2,13 @@ package `in`.ding.user.user.infrastructure.messaging.kafka
 
 import `in`.ding.customer.domain.event.CustomerCreatedEvent
 import `in`.ding.user.user.application.dto.consumer.UserRegisterByCustomerEventCommand
-import `in`.ding.user.user.application.service.UserAppServiceImpl
+import `in`.ding.user.user.application.service.UserAppService
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 
 @Component
 class CustomerEventConsumer(
-    private val userService: UserAppServiceImpl
+    private val userService: UserAppService
 ) {
     @KafkaListener(
         topics = ["\${spring.kafka.topic.customer}"],

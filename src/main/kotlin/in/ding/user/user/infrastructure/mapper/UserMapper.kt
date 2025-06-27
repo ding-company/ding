@@ -1,6 +1,8 @@
 package `in`.ding.user.user.infrastructure.mapper
 
 import `in`.ding.common.ErrorMessage
+import `in`.ding.user.user.domain.model.Email
+import `in`.ding.user.user.domain.model.PhoneNumber
 import `in`.ding.user.user.domain.model.User
 import `in`.ding.user.user.domain.model.UserID
 import `in`.ding.user.user.infrastructure.db.table.UserEntity
@@ -9,11 +11,13 @@ import org.springframework.stereotype.Component
 @Component
 class UserMapper {
     fun toDomain(entity: UserEntity): User {
+        val phoneNumberValue = entity.phoneNumber?.let { PhoneNumber(it) }
+        val emailValue = entity.email?.let { Email(it) }
         return User(
             UserID(requireNotNull(entity.id) { ErrorMessage.ID_IS_NULL }),
             exKey = entity.exKey,
-            phoneNumber = entity.phoneNumber,
-            email = entity.email,
+            phoneNumber = phoneNumberValue,
+            email = emailValue,
             nationality = entity.nationality,
             registeredAt = entity.registeredAt,
         )
@@ -21,8 +25,8 @@ class UserMapper {
     fun toEntity(domain: User): UserEntity {
         val entity = UserEntity(
             exKey = domain.exKey,
-            phoneNumber = domain.phoneNumber,
-            email = domain.email,
+            phoneNumber = domain.phoneNumber?.value,
+            email = domain.email?.value,
             nationality = domain.nationality,
             registeredAt = domain.registeredAt,
         )

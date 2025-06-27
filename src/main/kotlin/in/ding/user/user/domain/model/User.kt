@@ -7,8 +7,8 @@ import java.util.*
 data class User(
     val id: UserID,
     val exKey: UUID,
-    val phoneNumber: String? = null,
-    val email: String? = null,
+    val phoneNumber: PhoneNumber? = null,
+    val email: Email? = null,
     val nationality: UserNationality = UserNationality.KR,
     val registeredAt: LocalDateTime
 ) {
@@ -19,11 +19,13 @@ data class User(
             email: String?,
             nationality: UserNationality
         ): User {
+            val phoneNumberValue = phoneNumber?.let { PhoneNumber(phoneNumber) }
+            val emailValue = email?.let { Email(email) }
             return User(
                 id = UserID.UNASSIGNED,
                 exKey = exKey,
-                phoneNumber = phoneNumber,
-                email = email,
+                phoneNumber = phoneNumberValue,
+                email = emailValue,
                 nationality = nationality,
                 registeredAt = LocalDateTime.now()
             )
