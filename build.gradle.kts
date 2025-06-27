@@ -66,6 +66,9 @@ dependencies {
     // logback
     implementation("net.logstash.logback:logstash-logback-encoder:7.2")
 
+    // REDIS
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    
     // sentry
     implementation("io.sentry:sentry-spring-boot-starter-jakarta:${Dependency.sentryVersion}")
 

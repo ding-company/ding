@@ -5,13 +5,10 @@ import `in`.ding.user.user.application.dto.consumer.UserRegisterByCustomerEventC
 import `in`.ding.user.user.domain.UserRepository
 import `in`.ding.user.user.domain.model.User
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
-import `in`.ding.user.user.domain.service.UserRegisterValidator
 
-class UserAppServiceImpl(private val repository: UserRepository, private val userValidator: UserRegisterValidator) :
+class UserAppServiceImpl(private val repository: UserRepository) :
     UserAppService {
     override fun register(command: UserRegisterCommand) {
-        userValidator.validateUniqueEmail(email = command.email)
-        userValidator.validateUniquePhoneNumber(phoneNumber = command.phoneNumber)
         val user = User.register(
             phoneNumber = command.phoneNumber,
             email = command.email,
@@ -20,7 +17,6 @@ class UserAppServiceImpl(private val repository: UserRepository, private val use
         repository.save(user)
     }
     override fun registerFromCustomer(command: UserRegisterByCustomerEventCommand) {
-        userValidator.validateUniquePhoneNumber(phoneNumber = command.phoneNumber)
         val user = User.register(
             exKey = command.exKey,
             phoneNumber = command.phoneNumber,

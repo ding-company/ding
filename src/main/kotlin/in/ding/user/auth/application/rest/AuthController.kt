@@ -1,5 +1,6 @@
 package `in`.ding.user.auth.application.rest
 
+import `in`.ding.common.http.RequestId
 import `in`.ding.user.auth.application.dto.command.OtpIssueCommand
 import `in`.ding.user.auth.application.dto.command.OtpVerifyCommand
 import `in`.ding.user.auth.application.dto.request.OtpIssueRequest
@@ -14,12 +15,15 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/auth")
 class AuthController(val service: OtpService) {
     @PostMapping("/otp/issue")
-    fun issueOtp(@RequestBody request: OtpIssueRequest) {
-        service.issue(OtpIssueCommand.of(request))
+    fun issueOtp(
+        @RequestBody body: OtpIssueRequest,
+        @RequestId requestId: String
+    ) {
+        service.issue(OtpIssueCommand.of(body, requestId))
     }
 
     @PostMapping("/otp/verify")
-    fun verifyOtp(@RequestBody request: OtpVerifyRequest) {
-        service.verify(OtpVerifyCommand.of(request))
+    fun verifyOtp(@RequestBody body: OtpVerifyRequest) {
+        service.verify(OtpVerifyCommand.of(body))
     }
 }
