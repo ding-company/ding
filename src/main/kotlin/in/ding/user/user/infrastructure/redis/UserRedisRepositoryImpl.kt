@@ -1,18 +1,19 @@
 package `in`.ding.user.user.infrastructure.redis
 
 import `in`.ding.user.user.domain.UserRedisRepository
+import `in`.ding.user.user.domain.model.User
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
 
 @Repository
 class UserRedisRepositoryImpl(
-    private val redisTemplate: RedisTemplate<String, String>
+    private val redisTemplate: RedisTemplate<String, Any>
 ) : UserRedisRepository {
     companion object {
         private const val USER_KEY_PREFIX = "user:"
         private const val USER_TTL = 5L
     }
-    override fun saveTemporaryUser(contact: String, userData: String) {
+    override fun saveTemporaryUser(contact: String, userData: User) {
         redisTemplate.opsForValue().set(
             "$USER_KEY_PREFIX$contact",
             userData,
@@ -21,7 +22,7 @@ class UserRedisRepositoryImpl(
     }
 
     // 유저 정보 조회
-    override fun findTemporaryUser(contact: String): String? {
+    override fun findTemporaryUser(contact: String): Any? {
         return redisTemplate.opsForValue().get("$USER_KEY_PREFIX$contact")
     }
 
