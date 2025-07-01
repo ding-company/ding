@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 interface UserRedisRepository {
     fun saveTemporaryUser(contact: String, userData: User)
 
-    fun findTemporaryUser(contact: String): Any?
+    fun findTemporaryUser(contact: String): User?
 
     fun deleteTemporaryUser(contact: String)
 }

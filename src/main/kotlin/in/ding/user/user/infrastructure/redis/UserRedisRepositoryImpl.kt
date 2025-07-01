@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class UserRedisRepositoryImpl(
-    private val redisTemplate: RedisTemplate<String, Any>
+    private val redisTemplate: RedisTemplate<String, User>
 ) : UserRedisRepository {
     companion object {
         private const val USER_KEY_PREFIX = "user:"
@@ -22,7 +22,7 @@ class UserRedisRepositoryImpl(
     }
 
     // 유저 정보 조회
-    override fun findTemporaryUser(contact: String): Any? {
+    override fun findTemporaryUser(contact: String): User? {
         return redisTemplate.opsForValue().get("$USER_KEY_PREFIX$contact")
     }
 
