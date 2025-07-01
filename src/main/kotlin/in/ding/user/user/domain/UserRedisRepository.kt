@@ -1,9 +1,13 @@
 package `in`.ding.user.user.domain
 
-interface UserRedisRepository {
-    fun saveTemporaryUser(contact: String, userData: String)
+import `in`.ding.user.user.domain.model.User
+import org.springframework.stereotype.Repository
 
-    fun findTemporaryUser(contact: String): String?
+@Repository
+interface UserRedisRepository {
+    fun saveTemporaryUser(contact: String, userData: User)
+
+    fun findTemporaryUser(contact: String): Any?
 
     fun deleteTemporaryUser(contact: String)
 }
