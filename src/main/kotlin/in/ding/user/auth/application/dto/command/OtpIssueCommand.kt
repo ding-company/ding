@@ -4,16 +4,14 @@ import `in`.ding.user.auth.application.dto.request.OtpIssueRequest
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
 
 data class OtpIssueCommand(
-    val phoneNumber: String?,
-    val email: String?,
+    val contact: String,
     val nationality: UserNationality,
     val requestId: String
 ) {
     companion object {
         fun of(request: OtpIssueRequest, requestId: String,): OtpIssueCommand {
             return OtpIssueCommand(
-                phoneNumber = request.phoneNumber,
-                email = request.email,
+                contact = request.contact,
                 nationality = request.nationality,
                 requestId = requestId
             )

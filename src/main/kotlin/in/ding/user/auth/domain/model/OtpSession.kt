@@ -22,13 +22,13 @@ data class OtpSession(
             return OtpSession(contact, code, issuedAt = LocalDateTime.now(), expiredAt)
         }
     }
-    fun verify(input: String): OtpSession {
-        if (this.code.value != input) throw BadRequestException()
+    fun verify(otpCode: String): OtpSession {
+        if (this.code.value != otpCode) throw BadRequestException()
         if (isExpired()) throw BadRequestException()
         return this.copy(verified = true)
     }
 
-    fun isExpired(): Boolean = issuedAt.plusMinutes(EXPIRED_CONDITION_IN_MIN).isBefore(LocalDateTime.now())
+    private fun isExpired(): Boolean = issuedAt.plusMinutes(EXPIRED_CONDITION_IN_MIN).isBefore(LocalDateTime.now())
 
     fun incrementTry(): OtpSession = this.copy(tryCount = tryCount + 1)
 
