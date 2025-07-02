@@ -20,10 +20,10 @@ class OtpIssuanceHandler(
     fun handle(event: OtpRequestedEvent) {
         val otpCode = OtpCode.generate()
         val otp = OtpSession.create(contact = event.contact, code = otpCode)
-        val user = User.register(phoneNumber = event.contact, email = event.contact, nationality = event.nationality)
+        val contactType = contactPolicy.determineContactType(nationality = event.nationality)
+        val user = User.register(contact = event.contact, contactType = contactType, nationality = event.nationality)
         otpRedisRepository.saveOtp(contact = event.contact, otp = otp)
         userRedisRepository.saveTemporaryUser(contact = event.contact, userData = user)
-        val contactType = contactPolicy.determineContactType(nationality = event.nationality)
         publisher.publish(otp.toOtpIssuedEvent(contactType))
     }
 }

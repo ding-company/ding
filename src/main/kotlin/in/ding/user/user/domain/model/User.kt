@@ -1,5 +1,6 @@
 package `in`.ding.user.user.domain.model
 
+import `in`.ding.user.user.domain.model.enumerate.ContactType
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import java.time.LocalDateTime
 import java.util.*
@@ -15,17 +16,17 @@ data class User(
     companion object {
         fun register(
             exKey: UUID = UUID.randomUUID(),
-            phoneNumber: String?,
-            email: String?,
+            contact: String,
+            contactType: ContactType,
             nationality: UserNationality
         ): User {
-            val phoneNumberValue = phoneNumber?.let { PhoneNumber(phoneNumber) }
-            val emailValue = email?.let { Email(email) }
+            val phoneNumber = contact.takeUnless { contactType != ContactType.PHONE_NUMBER }?.let { PhoneNumber(it) }
+            val email = contact.takeUnless { contactType != ContactType.EMAIL }?.let { Email(it) }
             return User(
                 id = UserID.UNASSIGNED,
                 exKey = exKey,
-                phoneNumber = phoneNumberValue,
-                email = emailValue,
+                phoneNumber = phoneNumber,
+                email = email,
                 nationality = nationality,
                 registeredAt = LocalDateTime.now()
             )

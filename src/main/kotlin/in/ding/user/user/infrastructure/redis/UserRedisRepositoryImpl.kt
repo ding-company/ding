@@ -11,7 +11,7 @@ class UserRedisRepositoryImpl(
 ) : UserRedisRepository {
     companion object {
         private const val USER_KEY_PREFIX = "user:"
-        private const val USER_TTL = 5L
+        private const val USER_TTL = 60L
     }
     override fun saveTemporaryUser(contact: String, userData: User) {
         redisTemplate.opsForValue().set(
