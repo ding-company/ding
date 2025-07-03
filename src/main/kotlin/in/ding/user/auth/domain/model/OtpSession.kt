@@ -1,7 +1,8 @@
 package `in`.ding.user.auth.domain.model
 
-import `in`.ding.common.exception.BadRequestException
 import `in`.ding.user.auth.domain.event.OtpIssuedEvent
+import `in`.ding.user.auth.domain.exception.ExpiredOtpException
+import `in`.ding.user.auth.domain.exception.InvalidOtpException
 import `in`.ding.user.auth.domain.model.vo.OtpCode
 import `in`.ding.user.user.domain.model.enumerate.ContactType
 import java.time.LocalDateTime
@@ -23,8 +24,8 @@ data class OtpSession(
         }
     }
     fun verify(otpCode: String): OtpSession {
-        if (this.code.value != otpCode) throw BadRequestException()
-        if (isExpired()) throw BadRequestException()
+        if (this.code.value != otpCode) throw InvalidOtpException()
+        if (isExpired()) throw ExpiredOtpException()
         return this.copy(verified = true)
     }
 
