@@ -19,7 +19,7 @@ class UserAppServiceImpl(private val repository: UserRepository) :
 //        repository.save(user)
     }
     override fun registerFromCustomer(command: UserRegisterByCustomerEventCommand) {
-        val user = User.register(
+        val user = User.makeTempUser(
             exKey = command.exKey,
             contact = command.phoneNumber!!,
             contactType = ContactType.PHONE_NUMBER,
