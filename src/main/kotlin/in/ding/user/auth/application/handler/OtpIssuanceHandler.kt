@@ -21,7 +21,11 @@ class OtpIssuanceHandler(
         val otpCode = OtpCode.generate()
         val otp = OtpSession.create(contact = event.contact, code = otpCode)
         val contactType = contactPolicy.determineContactType(nationality = event.nationality)
-        val user = User.register(contact = event.contact, contactType = contactType, nationality = event.nationality)
+        val user = User.makeTempUser(
+            contact = event.contact,
+            contactType = contactType,
+            nationality = event.nationality
+        )
         otpRedisRepository.saveOtp(contact = event.contact, otp = otp)
         userRedisRepository.saveTemporaryUser(contact = event.contact, userData = user)
         publisher.publish(otp.toOtpIssuedEvent(contactType))

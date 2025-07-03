@@ -19,6 +19,7 @@ class UserMapper {
             phoneNumber = phoneNumberValue,
             email = emailValue,
             nationality = entity.nationality,
+            status = entity.status,
             registeredAt = entity.registeredAt,
         )
     }
@@ -28,6 +29,7 @@ class UserMapper {
             phoneNumber = domain.phoneNumber?.value,
             email = domain.email?.value,
             nationality = domain.nationality,
+            status = domain.status,
             registeredAt = domain.registeredAt,
         )
         if (domain.id.isAssigned()) {
