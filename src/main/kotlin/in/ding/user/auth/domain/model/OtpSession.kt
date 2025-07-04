@@ -14,8 +14,10 @@ data class OtpSession(
     val expiredAt: LocalDateTime,
     val tryCount: Int = 0,
     val verified: Boolean = false,
+    val lockedUntil: LocalDateTime? = null,
 ) {
     companion object {
+        const val MAX_TRY_COUNT = 5
         private const val EXPIRED_CONDITION_IN_MIN = 5L
         fun create(contact: String, code: OtpCode): OtpSession {
             val issuedAt = LocalDateTime.now()

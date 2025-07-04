@@ -3,11 +3,14 @@ package `in`.ding.user.auth.application.service
 import `in`.ding.common.exception.BaseHttpException
 import `in`.ding.user.auth.application.dto.command.OtpIssueCommand
 import `in`.ding.user.auth.application.dto.command.OtpVerifyCommand
+import `in`.ding.user.auth.domain.RedisOtpBlockRepository
 import `in`.ding.user.auth.domain.RedisOtpRepository
+import `in`.ding.user.auth.domain.event.OtpAbuseDetectedEvent
 import `in`.ding.user.auth.domain.event.OtpRequestedEvent
 import `in`.ding.user.auth.domain.exception.ExpiredOtpException
 import `in`.ding.user.auth.domain.exception.InvalidOtpException
 import `in`.ding.user.auth.domain.exception.OtpNotFound
+import `in`.ding.user.auth.domain.exception.TooManyOtpAttemptsException
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import `in`.ding.user.user.domain.UserRedisRepository
 import `in`.ding.user.user.domain.UserRepository
@@ -20,10 +23,20 @@ import `in`.ding.user.user.domain.model.enumerate.ContactType
 class OtpServiceImpl(
     private val publisher: AuthEventPublisher,
     private val otpRedisOtpRepository: RedisOtpRepository,
+    private val blockRepository: RedisOtpBlockRepository,
     private val userRepository: UserRepository,
     private val userRedisRepository: UserRedisRepository,
 ) : OtpService {
     override fun issue(command: OtpIssueCommand) {
+        if (blockRepository.isBlocked(command.contact)) {
+            publisher.publish(
+                OtpAbuseDetectedEvent(
+                    contact = command.contact,
+                )
+            )
+            throw TooManyOtpAttemptsException()
+        }
+
         val contactType = determineContactType(command.nationality)
         val contact = when (contactType) {
             ContactType.PHONE_NUMBER -> PhoneNumber(command.contact)
