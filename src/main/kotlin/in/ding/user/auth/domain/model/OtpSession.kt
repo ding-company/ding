@@ -14,7 +14,6 @@ data class OtpSession(
     val expiredAt: LocalDateTime,
     val tryCount: Int = 0,
     val verified: Boolean = false,
-    val lockedUntil: LocalDateTime? = null,
 ) {
     companion object {
         const val MAX_TRY_COUNT = 5
@@ -34,6 +33,8 @@ data class OtpSession(
     private fun isExpired(): Boolean = issuedAt.plusMinutes(EXPIRED_CONDITION_IN_MIN).isBefore(LocalDateTime.now())
 
     fun incrementTry(): OtpSession = this.copy(tryCount = tryCount + 1)
+
+    fun isLockable(): Boolean = tryCount >= MAX_TRY_COUNT
 
     fun toOtpIssuedEvent(contactType: ContactType): OtpIssuedEvent {
         return OtpIssuedEvent(
