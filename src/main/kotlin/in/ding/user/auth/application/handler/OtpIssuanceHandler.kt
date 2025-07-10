@@ -1,9 +1,10 @@
 package `in`.ding.user.auth.application.handler
 
-import `in`.ding.user.auth.domain.RedisOtpRepository
+import `in`.ding.user.auth.domain.event.OtpIssuedEvent
 import `in`.ding.user.auth.domain.event.OtpRequestedEvent
 import `in`.ding.user.auth.domain.model.OtpSession
 import `in`.ding.user.auth.domain.model.vo.OtpCode
+import `in`.ding.user.auth.domain.repository.RedisOtpRepository
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import `in`.ding.user.user.domain.UserRedisRepository
 import `in`.ding.user.user.domain.model.ContactPolicy
@@ -26,8 +27,8 @@ class OtpIssuanceHandler(
             contactType = contactType,
             nationality = event.nationality
         )
-        otpRedisRepository.saveOtp(contact = event.contact, otp = otp)
+        otpRedisRepository.saveOtp(contact = event.contact, otp = otp, OtpSession.getOtpTtl())
         userRedisRepository.saveTemporaryUser(contact = event.contact, userData = user)
-        publisher.publish(otp.toOtpIssuedEvent(contactType))
+        publisher.publish(OtpIssuedEvent.of(otp, contactType))
     }
 }

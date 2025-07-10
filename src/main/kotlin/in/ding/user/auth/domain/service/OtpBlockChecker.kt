@@ -1,9 +1,9 @@
 package `in`.ding.user.auth.domain.service
 
-import `in`.ding.user.auth.domain.RedisOtpBlockRepository
 import `in`.ding.user.auth.domain.event.OtpAbuseDetectedEvent
 import `in`.ding.user.auth.domain.exception.TooManyOtpAttemptsException
 import `in`.ding.user.auth.domain.model.OtpSession
+import `in`.ding.user.auth.domain.repository.RedisOtpBlockRepository
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import java.time.Duration
 
@@ -12,7 +12,7 @@ class OtpBlockChecker(
     private val publisher: AuthEventPublisher
 ) {
     companion object {
-        const val BLOCK_TTL = 10L
+        private val BLOCK_DURATION = Duration.ofHours(1)
     }
     fun check(contact: String) {
         if (blockRepository.isBlocked(contact)) {
@@ -23,7 +23,7 @@ class OtpBlockChecker(
 
     fun blockIfExceedsLimit(contact: String, tryCount: Int) {
         if (tryCount >= OtpSession.MAX_TRY_COUNT) {
-            blockRepository.block(contact, Duration.ofMinutes(BLOCK_TTL))
+            blockRepository.block(contact, BLOCK_DURATION)
             publisher.publish(OtpAbuseDetectedEvent(contact))
             throw TooManyOtpAttemptsException()
         }

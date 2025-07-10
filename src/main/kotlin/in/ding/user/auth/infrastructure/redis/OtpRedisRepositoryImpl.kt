@@ -1,7 +1,7 @@
 package `in`.ding.user.auth.infrastructure.redis
 
-import `in`.ding.user.auth.domain.RedisOtpRepository
 import `in`.ding.user.auth.domain.model.OtpSession
+import `in`.ding.user.auth.domain.repository.RedisOtpRepository
 import org.springframework.data.redis.core.RedisTemplate
 import java.time.Duration
 
@@ -10,14 +10,13 @@ class OtpRedisRepositoryImpl(
 ) : RedisOtpRepository {
     companion object {
         private const val OTP_KEY_PREFIX = "otp:"
-        private const val OTP_TTL = 5L
     }
 
-    override fun saveOtp(contact: String, otp: OtpSession) {
+    override fun saveOtp(contact: String, otp: OtpSession, ttl: Duration) {
         redisTemplate.opsForValue().set(
             "$OTP_KEY_PREFIX$contact",
             otp,
-            Duration.ofMinutes(OTP_TTL)
+            ttl
         )
     }
 
