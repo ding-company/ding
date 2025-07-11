@@ -32,5 +32,5 @@ class UserEntity(
     val status: UserStatus = UserStatus.TEMPORARY,
 
     @Column()
-    val registeredAt: LocalDateTime,
+    val registeredAt: LocalDateTime?,
 ) : SoftDeletedBaseEntity()

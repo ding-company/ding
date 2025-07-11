@@ -4,9 +4,9 @@ import java.security.Principal
 import java.util.UUID
 
 data class AuthUser(
-    val userExKey: UUID
+    val exKey: UUID
 ) : Principal {
     override fun getName(): String {
-        return userExKey.toString()
+        return exKey.toString()
     }
 }
