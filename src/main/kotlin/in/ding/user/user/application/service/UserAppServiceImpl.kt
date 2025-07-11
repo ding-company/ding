@@ -2,13 +2,20 @@ package `in`.ding.user.user.application.service
 
 import `in`.ding.user.user.application.dto.command.UserRegisterCommand
 import `in`.ding.user.user.application.dto.consumer.UserRegisterByCustomerEventCommand
+import `in`.ding.user.user.application.dto.http.UserResponse
 import `in`.ding.user.user.domain.UserRepository
+import `in`.ding.user.user.domain.exception.NotFoundUserException
 import `in`.ding.user.user.domain.model.User
 import `in`.ding.user.user.domain.model.enumerate.ContactType
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
+import java.util.UUID
 
 class UserAppServiceImpl(private val repository: UserRepository) :
     UserAppService {
+    override fun getByExKey(exKey: UUID): UserResponse {
+        val user = repository.findByExKey(exKey) ?: throw NotFoundUserException()
+        return UserResponse(user.exKey, user.status)
+    }
     override fun register(command: UserRegisterCommand) {
         throw NotImplementedError()
 //        val user = User.register(

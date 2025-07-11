@@ -7,10 +7,12 @@ import `in`.ding.user.auth.domain.event.OtpRequestedEvent
 import `in`.ding.user.auth.domain.service.OtpVerifier
 import `in`.ding.user.auth.domain.service.TokenIssuer
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
+import `in`.ding.user.user.domain.UserRepository
 
 class OtpServiceImpl(
     private val otpVerifier: OtpVerifier,
     private val tokenIssuer: TokenIssuer,
+    private val userRepository: UserRepository,
     private val publisher: AuthEventPublisher,
 ) {
     fun issue(command: OtpIssueCommand) {
@@ -29,6 +31,7 @@ class OtpServiceImpl(
         otpVerifier.checkAvailability(command.contact)
 
         val user = otpVerifier.verifyOtp(command)
-        return OtpVerifyResponse.of(tokenIssuer.issueTokens(user.exKey))
+        val savedUser = userRepository.save(user)
+        return OtpVerifyResponse.of(tokenIssuer.issueTokens(savedUser.exKey))
     }
 }

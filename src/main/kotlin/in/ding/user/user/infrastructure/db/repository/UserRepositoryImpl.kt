@@ -3,6 +3,7 @@ package `in`.ding.user.user.infrastructure.db.repository
 import `in`.ding.user.user.domain.UserRepository
 import `in`.ding.user.user.domain.model.User
 import `in`.ding.user.user.infrastructure.mapper.UserMapper
+import java.util.UUID
 
 class UserRepositoryImpl(
     private val jpaRepository: UserJpaRepository,
@@ -24,5 +25,9 @@ class UserRepositoryImpl(
 
     override fun findByPhoneNumber(phoneNumber: String): User? {
         return jpaRepository.findByPhoneNumber(phoneNumber)?.let { entity -> mapper.toDomain(entity) }
+    }
+
+    override fun findByExKey(exKey: UUID): User? {
+        return jpaRepository.findByExKey(exKey)?.let { entity -> mapper.toDomain(entity) }
     }
 }

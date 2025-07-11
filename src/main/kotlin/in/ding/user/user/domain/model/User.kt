@@ -13,7 +13,7 @@ data class User(
     val email: Email? = null,
     val nationality: UserNationality = UserNationality.KR,
     val status: UserStatus,
-    val registeredAt: LocalDateTime
+    val registeredAt: LocalDateTime?
 ) {
     companion object {
         fun makeTempUser(
