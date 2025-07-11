@@ -1,4 +1,4 @@
-package `in`.ding.user.auth.domain
+package `in`.ding.user.auth.domain.repository
 
 import org.springframework.stereotype.Repository
 import java.time.Duration

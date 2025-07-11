@@ -2,6 +2,7 @@ package `in`.ding.user.application.rest
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import `in`.ding.common.auth.JwtAuthenticationFilter
+import `in`.ding.common.auth.JwtConfig
 import `in`.ding.common.auth.JwtTokenProvider
 import `in`.ding.common.auth.SecurityConfig
 import `in`.ding.user.user.application.dto.command.UserRegisterCommand
@@ -20,7 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-@Import(SecurityConfig::class, JwtAuthenticationFilter::class, JwtTokenProvider::class)
+@Import(SecurityConfig::class, JwtAuthenticationFilter::class, JwtTokenProvider::class, JwtConfig::class)
 @WebMvcTest(UserController::class)
 class UserControllerTest(
     val mockMvc: MockMvc,
