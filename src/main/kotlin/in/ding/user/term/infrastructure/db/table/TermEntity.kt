@@ -10,7 +10,6 @@ import jakarta.persistence.Table
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.*
-
 @Entity
 @Table(name = "terms")
 class TermEntity(
@@ -25,15 +24,14 @@ class TermEntity(
     val content: String,
 
     @Column()
-    val isRequired: Boolean,
-
-    @Column()
     val version: Int,
 
     @Column()
     val effectiveFrom: LocalDateTime,
+
     @Column()
     val effectiveTo: LocalDateTime? = null,
+
     @Column()
     val defaultAgreementValidityPeriod: Duration? = null
 ) : SoftDeletedBaseEntity()

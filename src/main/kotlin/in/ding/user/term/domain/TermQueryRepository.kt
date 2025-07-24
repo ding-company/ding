@@ -1,9 +1,9 @@
 package `in`.ding.user.term.domain
 
+import `in`.ding.user.term.application.dto.query.TermAgreementFormQuery
 import org.springframework.stereotype.Repository
-import java.util.UUID
 
 @Repository
 interface TermQueryRepository {
-    fun findRequiredTermsNotAgreedBy(userExKey: UUID): List<RequiredTermForm>
+    fun findRequiredTermsNotAgreedBy(query: TermAgreementFormQuery): List<RequiredTermForm>
 }
