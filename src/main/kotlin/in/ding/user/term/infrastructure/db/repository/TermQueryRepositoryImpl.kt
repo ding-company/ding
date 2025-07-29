@@ -1,43 +1,45 @@
 package `in`.ding.user.term.infrastructure.db.repository
 
+import com.querydsl.jpa.impl.JPAQueryFactory
 import `in`.ding.user.term.application.dto.query.TermAgreementFormQuery
 import `in`.ding.user.term.domain.RequiredTermForm
 import `in`.ding.user.term.domain.TermQueryRepository
-import jakarta.persistence.EntityManager
-import java.time.LocalDateTime
+import `in`.ding.user.term.infrastructure.db.table.QTermAgreementEntity
+import `in`.ding.user.term.infrastructure.db.table.QTermConditionEntity
+import `in`.ding.user.term.infrastructure.db.table.QTermEntity
 
 class TermQueryRepositoryImpl(
-    private val em: EntityManager
+    private val queryFactory: JPAQueryFactory
 ) : TermQueryRepository {
     override fun findRequiredTermsNotAgreedBy(query: TermAgreementFormQuery): List<RequiredTermForm> {
-        val now = LocalDateTime.now()
+        val term = QTermEntity.termEntity
+        val agreement = QTermAgreementEntity.termAgreementEntity
+        val termCondition = QTermConditionEntity.termConditionEntity
 
-        // 2. 조건에 맞는 Term + TermCondition + TermAgreement 조인해서 가져오기
-        val queryString = em.createQuery(
-            """
-            SELECT NEW in.ding.user.term.domain.RequiredTermForm(
-                t.exKey,
-                t.title,
-                t.content,
-                t.version,
-                tc.isRequired,
-                t.defaultAgreementValidityPeriod
+        return queryFactory
+            .select(
+                RequiredTermForm(
+                    term.exKey,
+                    term.title,
+                    term.content,
+                    term.required,
+                    term.version,
+                    term.country,
+                    agreement.exKey.isNotNull
+                )
             )
-            FROM TermEntity t
-            JOIN TermConditionEntity tc ON tc.term.id = t.id
-            LEFT JOIN TermAgreementEntity ta ON ta.term.id = t.id AND ta.userExKey = :userExKey
-            WHERE tc.appType = :appType
-              AND tc.userType = :userType
-              AND (tc.country IS NULL OR tc.country = :countryCode)
-            """.trimIndent(),
-            RequiredTermForm::class.java
-        )
-            .setParameter("appType", query.appType)
-            .setParameter("userType", query.userType)
-            .setParameter("countryCode", query.country)
-            .setParameter("now", now)
-            .setParameter("userExKey", query.userExKey)
-
-        return queryString.resultList
+            .from(termCondition)
+            .leftJoin(agreement)
+            .on(
+                agreement.termExKey.eq(term.exKey)
+                    .and(agreement.userExKey.eq(query.userExKey))
+            )
+            .where(
+                term.userType.eq(query.userType),
+                term.appType.eq(query.appType),
+                term.country.isNull.or(term.country.eq(query.country)) // 공통 + 해당 국가
+            )
+            .orderBy(term.required.desc(), term.createdAt.asc())
+            .fetch()
     }
 }

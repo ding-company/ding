@@ -56,8 +56,9 @@ dependencies {
     // Querydsl
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
 
-    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
-    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    kapt("jakarta.persistence:jakarta.persistence-api")
+    kapt("jakarta.annotation:jakarta.annotation-api")
 
     // jackson
     implementation("com.fasterxml.jackson.core:jackson-databind")
