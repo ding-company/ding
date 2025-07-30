@@ -1,5 +1,7 @@
-package `in`.ding.common
+package `in`.ding.common.http
 
+import `in`.ding.common.MetaCode
+import `in`.ding.common.ResponseDTO
 import `in`.ding.common.exception.BadRequestException
 import org.springframework.core.MethodParameter
 import org.springframework.http.HttpStatus
