@@ -4,6 +4,6 @@ import `in`.ding.common.MetaCode
 
 open class BadRequestException(message: String? = null, data: Any? = null) : BaseHttpException(
     metaCode = MetaCode.BAD_REQUEST,
-    message = message ?: "BAD REQUEST",
+    message = message ?: MetaCode.BAD_REQUEST.toString(),
     data = data
 )
