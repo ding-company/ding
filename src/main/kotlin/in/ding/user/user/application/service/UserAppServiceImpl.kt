@@ -17,13 +17,9 @@ class UserAppServiceImpl(private val repository: UserRepository) :
         return UserResponse(user.exKey, user.status)
     }
     override fun register(command: UserRegisterCommand) {
+        val user = repository.findByExKey(command.userExKey) ?: throw NotFoundUserException()
+        user.register()
         throw NotImplementedError()
-//        val user = User.register(
-//            phoneNumber = command.phoneNumber,
-//            email = command.email,
-//            nationality = command.nationality
-//        )
-//        repository.save(user)
     }
     override fun registerFromCustomer(command: UserRegisterByCustomerEventCommand) {
         val user = User.makeTempUser(
