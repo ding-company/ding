@@ -12,7 +12,7 @@ data class User(
     val phoneNumber: PhoneNumber? = null,
     val email: Email? = null,
     val nationality: UserNationality = UserNationality.KR,
-    val status: UserStatus,
+    var status: UserStatus,
     val registeredAt: LocalDateTime?
 ) {
     companion object {
@@ -34,5 +34,8 @@ data class User(
                 registeredAt = LocalDateTime.now()
             )
         }
+    }
+    fun register() {
+        this.status = UserStatus.REGISTERED
     }
 }

@@ -1,19 +1,19 @@
 package `in`.ding.user.user.application.dto.command
 
-import `in`.ding.user.user.application.dto.http.UserOtpRequest
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
+import `in`.ding.user.user.application.dto.http.RegisterUserRequest
+import `in`.ding.user.user.application.dto.http.TermsAgreementRequest
+import java.util.UUID
 
 class UserRegisterCommand(
-    val phoneNumber: String?,
-    val email: String?,
-    val nationality: UserNationality,
+    val userExKey: UUID,
+    val termsAgreement: List<TermsAgreementRequest>
+
 ) {
     companion object {
-        fun of(request: UserOtpRequest): UserRegisterCommand {
+        fun of(request: RegisterUserRequest, userExKey: UUID): UserRegisterCommand {
             return UserRegisterCommand(
-                phoneNumber = request.phoneNumber,
-                email = request.email,
-                nationality = request.nationality
+                userExKey = userExKey,
+                termsAgreement = request.termsAgreement
             )
         }
     }

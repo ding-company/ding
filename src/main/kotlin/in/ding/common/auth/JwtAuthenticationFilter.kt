@@ -17,7 +17,7 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        if (request.requestURI == "/api/v1/users/signup") {
+        if (request.requestURI == "/api/v1/users/register") {
             filterChain.doFilter(request, response)
             return
         }
