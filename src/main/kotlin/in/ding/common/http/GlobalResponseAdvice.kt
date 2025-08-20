@@ -37,16 +37,16 @@ class GlobalResponseAdvice : ResponseBodyAdvice<Any> {
         val servletResponse = (response as? ServletServerHttpResponse)?.servletResponse
         val statusCode = servletResponse?.status ?: HttpStatus.OK
         val result = when (statusCode) {
-            HttpStatus.OK -> {
+            HttpStatus.OK.value() -> {
                 ResponseDTO(data = body, meta = ResponseDTO.Meta(MetaCode.SUCCESS))
             }
-            HttpStatus.CREATED -> {
+            HttpStatus.CREATED.value() -> {
                 ResponseDTO(data = body, meta = ResponseDTO.Meta(MetaCode.CREATED))
             }
-            HttpStatus.ACCEPTED -> {
+            HttpStatus.ACCEPTED.value() -> {
                 ResponseDTO(data = body, meta = ResponseDTO.Meta(MetaCode.ACCEPTED))
             }
-            HttpStatus.NO_CONTENT -> {
+            HttpStatus.NO_CONTENT.value() -> {
                 null
             }
             else -> throw BadRequestException()
