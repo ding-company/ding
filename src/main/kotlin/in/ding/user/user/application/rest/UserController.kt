@@ -25,6 +25,7 @@ class UserController(private val userAppService: UserAppService) {
         userAppService.getByExKey(user.exKey)
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/register")
     fun registerUser(
         @RequestBody request: RegisterUserRequest,

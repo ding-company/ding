@@ -1,7 +1,6 @@
-logging:
-  config: "classpath:logback-local.xml"
-
 spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
   main:
     allow-bean-definition-overriding: true
     banner-mode: "off"
