@@ -5,10 +5,8 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
-@Component
 class JwtAuthenticationFilter(
     private val jwtTokenProvider: JwtTokenProvider
 ) : OncePerRequestFilter() {
@@ -17,7 +15,8 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        if (request.requestURI == "/api/v1/users/register") {
+        val exceptionUri = arrayOf("/api/v1/auth/otp/issue", "/api/v1/auth/otp/verify")
+        if (request.requestURI in exceptionUri) {
             filterChain.doFilter(request, response)
             return
         }
