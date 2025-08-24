@@ -2,10 +2,6 @@ package `in`.ding.user.application.rest
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import `in`.ding.common.auth.AuthUser
-import `in`.ding.common.auth.JwtAuthenticationFilter
-import `in`.ding.common.auth.JwtConfig
-import `in`.ding.common.auth.JwtTokenProvider
-import `in`.ding.common.auth.SecurityConfig
 import `in`.ding.user.user.application.dto.command.UserRegisterCommand
 import `in`.ding.user.user.application.dto.http.RegisterUserRequest
 import `in`.ding.user.user.application.rest.UserController
@@ -14,7 +10,6 @@ import io.kotest.core.spec.style.BehaviorSpec
 import org.mockito.Mockito.doNothing
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
@@ -25,7 +20,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import java.util.UUID
 
-@Import(SecurityConfig::class, JwtAuthenticationFilter::class, JwtTokenProvider::class, JwtConfig::class)
 @WebMvcTest(UserController::class)
 @ActiveProfiles("test")
 class UserControllerTest(
@@ -48,7 +42,9 @@ class UserControllerTest(
                 MockMvcRequestBuilders.post("/api/v1/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(jacksonObjectMapper().writeValueAsString(request))
-                    .with(SecurityMockMvcRequestPostProcessors.authentication(authentication))
+                    .with(
+                        SecurityMockMvcRequestPostProcessors.authentication(authentication)
+                    ).with(SecurityMockMvcRequestPostProcessors.csrf())
             )
             then("회원가입이 성공하고 상태코드 200을 반환해야 한다") {
                 result
@@ -69,6 +65,9 @@ class UserControllerTest(
                 MockMvcRequestBuilders.post("/api/v1/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(invalidRequestJson)
+                    .with(
+                        SecurityMockMvcRequestPostProcessors.authentication(authentication)
+                    ).with(SecurityMockMvcRequestPostProcessors.csrf())
             )
             then("회원가입이 실패하고 적절한 에러 메시지를 반환해야 한다") {
                 result

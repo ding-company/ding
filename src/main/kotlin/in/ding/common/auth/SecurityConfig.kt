@@ -10,8 +10,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter
-) {
+    private val jwtTokenProvider: JwtTokenProvider
+) { @Bean
+fun jwtAuthenticationFilter(): JwtAuthenticationFilter {
+    return JwtAuthenticationFilter(jwtTokenProvider)
+}
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -19,10 +22,10 @@ class SecurityConfig(
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it
-                    .requestMatchers("/api/v1/users/register").permitAll()
+                    .requestMatchers("/api/v1/auth/otp/issue", "/api/v1/auth/otp/verify").permitAll()
                     .anyRequest().authenticated()
             }
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
