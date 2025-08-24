@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ding-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ding-app
+  template:
+    metadata:
+      labels:
+        app: ding-app
+    spec:
+      containers:
+        - name: ding-app
+          image: dingwan0331/ding-app:1.0
+          ports:
+            - containerPort: 8080
