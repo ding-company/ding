@@ -15,7 +15,7 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val exceptionUri = arrayOf("/api/v1/auth/otp/issue", "/api/v1/auth/otp/verify")
+        val exceptionUri = arrayOf("/api/v1/auth/otp/issue", "/api/v1/auth/otp/verify", "/actuator/health")
         if (request.requestURI in exceptionUri) {
             filterChain.doFilter(request, response)
             return
