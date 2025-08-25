@@ -22,7 +22,11 @@ fun jwtAuthenticationFilter(): JwtAuthenticationFilter {
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it
-                    .requestMatchers("/api/v1/auth/otp/issue", "/api/v1/auth/otp/verify").permitAll()
+                    .requestMatchers(
+                        "/api/v1/auth/otp/issue",
+                        "/api/v1/auth/otp/verify",
+                        "/actuator/health"
+                    ).permitAll()
                     .anyRequest().authenticated()
             }
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
