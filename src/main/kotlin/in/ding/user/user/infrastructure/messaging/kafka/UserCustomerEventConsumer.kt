@@ -7,7 +7,7 @@ import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 
 @Component
-class CustomerEventConsumer(
+class UserCustomerEventConsumer(
     private val userService: UserAppService
 ) {
     @KafkaListener(

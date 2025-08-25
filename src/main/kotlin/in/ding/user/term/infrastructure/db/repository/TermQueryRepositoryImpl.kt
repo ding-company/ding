@@ -9,7 +9,9 @@ import `in`.ding.user.term.domain.model.enumerate.AppType
 import `in`.ding.user.term.infrastructure.db.table.QTermAgreementEntity
 import `in`.ding.user.term.infrastructure.db.table.QTermConditionEntity
 import `in`.ding.user.term.infrastructure.db.table.QTermEntity
+import org.springframework.stereotype.Repository
 
+@Repository
 class TermQueryRepositoryImpl(
     private val queryFactory: JPAQueryFactory
 ) : TermQueryRepository {

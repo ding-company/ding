@@ -17,7 +17,6 @@ typealias ID = Long
 @MappedSuperclass
 abstract class BaseEntity {
     @Id
-    @org.springframework.data.annotation.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: ID? = null
 

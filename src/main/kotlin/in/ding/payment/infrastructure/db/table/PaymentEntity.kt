@@ -3,6 +3,7 @@ package `in`.ding.payment.infrastructure.db.table
 import `in`.ding.common.SoftDeletedBaseEntity
 import `in`.ding.payment.domain.model.enumerate.PaymentStatus
 import jakarta.persistence.Column
+import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
@@ -10,6 +11,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
 
+@Entity
 @Table(name = "payments")
 class PaymentEntity(
     @Column(unique = true, length = 36)

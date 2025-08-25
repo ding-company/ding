@@ -7,7 +7,9 @@ import `in`.ding.payment.domain.model.PaymentID
 import `in`.ding.payment.domain.model.PaymentTransaction
 import `in`.ding.payment.infrastructure.db.table.PaymentEntity
 import `in`.ding.payment.infrastructure.db.table.PaymentTransactionEntity
+import org.springframework.stereotype.Component
 
+@Component
 class PaymentMapper {
     fun toDomain(payment: PaymentEntity, paymentTransactions: List<PaymentTransactionEntity>): Payment {
         return Payment(

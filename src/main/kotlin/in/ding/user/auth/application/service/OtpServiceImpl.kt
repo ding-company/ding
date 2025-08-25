@@ -8,14 +8,16 @@ import `in`.ding.user.auth.domain.service.OtpVerifier
 import `in`.ding.user.auth.domain.service.TokenIssuer
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import `in`.ding.user.user.domain.UserRepository
+import org.springframework.stereotype.Service
 
+@Service
 class OtpServiceImpl(
     private val otpVerifier: OtpVerifier,
     private val tokenIssuer: TokenIssuer,
     private val userRepository: UserRepository,
     private val publisher: AuthEventPublisher,
-) {
-    fun issue(command: OtpIssueCommand) {
+) : OtpService {
+    override fun issue(command: OtpIssueCommand) {
         otpVerifier.checkAvailability(command.contact)
 
         publisher.publish(
@@ -27,7 +29,7 @@ class OtpServiceImpl(
         )
     }
 
-    fun verify(command: OtpVerifyCommand): OtpVerifyResponse {
+    override fun verify(command: OtpVerifyCommand): OtpVerifyResponse {
         otpVerifier.checkAvailability(command.contact)
 
         val user = otpVerifier.verifyOtp(command)

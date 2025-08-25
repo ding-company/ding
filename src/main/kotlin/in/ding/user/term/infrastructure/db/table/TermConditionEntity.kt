@@ -1,5 +1,6 @@
 package `in`.ding.user.term.infrastructure.db.table
 
+import `in`.ding.common.SoftDeletedBaseEntity
 import `in`.ding.user.term.domain.model.enumerate.AppType
 import `in`.ding.user.term.domain.model.enumerate.UserType
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
@@ -33,4 +34,4 @@ class TermConditionEntity(
 
     @Column(nullable = false)
     val isRequired: Boolean,
-)
+) : SoftDeletedBaseEntity()

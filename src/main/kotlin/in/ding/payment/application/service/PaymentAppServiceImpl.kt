@@ -7,7 +7,9 @@ import `in`.ding.payment.domain.PaymentRepository
 import `in`.ding.payment.domain.event.PaymentAuthStartedEvent
 import `in`.ding.payment.domain.model.Payment
 import `in`.ding.payment.infrastructure.kafka.messaging.PaymentEventPublisher
+import org.springframework.stereotype.Service
 
+@Service
 class PaymentAppServiceImpl(
     private val repository: PaymentRepository,
     private val eventPublisher: PaymentEventPublisher,

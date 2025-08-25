@@ -4,7 +4,9 @@ import `in`.ding.seller.application.dto.SellerRegisterCommand
 import `in`.ding.seller.domain.SellerRepository
 import `in`.ding.seller.domain.model.Seller
 import `in`.ding.seller.domain.service.SellerRegisterChecker
+import org.springframework.stereotype.Service
 
+@Service
 class SellerRegisterServiceImpl(
     private val sellerRegisterChecker: SellerRegisterChecker,
     private val repository: SellerRepository

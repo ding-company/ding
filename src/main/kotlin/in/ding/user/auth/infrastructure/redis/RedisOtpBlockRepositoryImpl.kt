@@ -2,8 +2,10 @@ package `in`.ding.user.auth.infrastructure.redis
 
 import `in`.ding.user.auth.domain.repository.RedisOtpBlockRepository
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.stereotype.Repository
 import java.time.Duration
 
+@Repository
 class RedisOtpBlockRepositoryImpl(
     private val redisTemplate: RedisTemplate<String, Any>
 ) : RedisOtpBlockRepository {

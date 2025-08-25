@@ -5,7 +5,7 @@ import `in`.ding.point.application.handler.PointInitHandler
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 @Component
-class CustomerEventConsumer(
+class PointCustomerEventConsumer(
     private val pointInitHandler: PointInitHandler
 ) {
     @KafkaListener(

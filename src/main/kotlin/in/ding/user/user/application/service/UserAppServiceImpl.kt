@@ -8,8 +8,10 @@ import `in`.ding.user.user.domain.exception.NotFoundUserException
 import `in`.ding.user.user.domain.model.User
 import `in`.ding.user.user.domain.model.enumerate.ContactType
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
+import org.springframework.stereotype.Service
 import java.util.UUID
 
+@Service
 class UserAppServiceImpl(private val repository: UserRepository) :
     UserAppService {
     override fun getByExKey(exKey: UUID): UserResponse {

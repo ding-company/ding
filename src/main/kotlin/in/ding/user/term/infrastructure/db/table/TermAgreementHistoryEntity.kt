@@ -2,7 +2,6 @@ package `in`.ding.user.term.infrastructure.db.table
 
 import `in`.ding.common.SoftDeletedBaseEntity
 import `in`.ding.user.term.domain.model.enumerate.TermAgreementStatus
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -20,11 +19,11 @@ class TermAgreementHistoryEntity(
     @Column(unique = true, length = 36)
     val exKey: UUID,
 
-    @ManyToOne(cascade = [(CascadeType.ALL)], fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "term_id")
     val term: TermEntity,
 
-    @Column(length = 5000)
+    @Column(length = 36)
     val userExKey: UUID,
 
     @Enumerated(EnumType.STRING)

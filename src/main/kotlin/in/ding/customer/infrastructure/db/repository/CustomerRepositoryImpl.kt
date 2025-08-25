@@ -4,7 +4,9 @@ import `in`.ding.customer.domain.CustomerRepository
 import `in`.ding.customer.domain.model.Customer
 import `in`.ding.customer.domain.model.enumerate.CustomerStatus
 import `in`.ding.customer.infrastructure.mapper.CustomerMapper
+import org.springframework.stereotype.Repository
 
+@Repository
 class CustomerRepositoryImpl(
     private val jpaRepository: CustomerJpaRepository,
     private val mapper: CustomerMapper
