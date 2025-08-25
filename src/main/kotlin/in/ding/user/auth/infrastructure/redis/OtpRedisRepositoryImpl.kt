@@ -2,10 +2,15 @@ package `in`.ding.user.auth.infrastructure.redis
 
 import `in`.ding.user.auth.domain.model.OtpSession
 import `in`.ding.user.auth.domain.repository.RedisOtpRepository
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.stereotype.Repository
 import java.time.Duration
 
+@Repository
 class OtpRedisRepositoryImpl(
+
+    @Qualifier("otpSessionRedisTemplate")
     private val redisTemplate: RedisTemplate<String, OtpSession>
 ) : RedisOtpRepository {
     companion object {

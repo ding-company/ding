@@ -3,7 +3,9 @@ package `in`.ding.seller.infrastructure.db.repository
 import `in`.ding.seller.domain.SellerRepository
 import `in`.ding.seller.domain.model.Seller
 import `in`.ding.seller.infrastructure.mapper.SellerMapper
+import org.springframework.stereotype.Repository
 
+@Repository
 class SellerRepositoryImpl(
     private val mapper: SellerMapper,
     private val jpaRepository: SellerJpaRepository

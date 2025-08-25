@@ -24,7 +24,7 @@ class TermAgreementEntity(
     @JoinColumn(name = "term_id")
     val term: TermEntity,
 
-    @Column(length = 5000)
+    @Column(length = 36)
     val userExKey: UUID,
     @Column
     val agreedAt: LocalDateTime,

@@ -4,7 +4,9 @@ import `in`.ding.common.ErrorMessage
 import `in`.ding.seller.domain.model.Seller
 import `in`.ding.seller.domain.model.SellerId
 import `in`.ding.seller.infrastructure.db.table.SellerEntity
+import org.springframework.stereotype.Component
 
+@Component
 class SellerMapper {
     fun toDomain(entity: SellerEntity): Seller {
         return Seller(

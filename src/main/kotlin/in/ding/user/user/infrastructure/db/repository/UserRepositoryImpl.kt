@@ -3,8 +3,10 @@ package `in`.ding.user.user.infrastructure.db.repository
 import `in`.ding.user.user.domain.UserRepository
 import `in`.ding.user.user.domain.model.User
 import `in`.ding.user.user.infrastructure.mapper.UserMapper
+import org.springframework.stereotype.Repository
 import java.util.UUID
 
+@Repository
 class UserRepositoryImpl(
     private val jpaRepository: UserJpaRepository,
     private val mapper: UserMapper

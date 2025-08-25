@@ -3,8 +3,10 @@ package `in`.ding.payment.infrastructure.db.repository
 import `in`.ding.payment.domain.PaymentRepository
 import `in`.ding.payment.domain.model.Payment
 import `in`.ding.payment.infrastructure.mapper.PaymentMapper
+import org.springframework.stereotype.Repository
 import java.util.UUID
 
+@Repository
 class PaymentRepositoryImpl(
     private val mapper: PaymentMapper,
     private val paymentRepository: PaymentJpaRepository,

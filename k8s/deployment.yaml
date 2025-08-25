@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: ding-app
-          image: dingwan0331/ding-app:1.0
+          image: dingwan0331/ding:latest
           ports:
             - containerPort: 8080
