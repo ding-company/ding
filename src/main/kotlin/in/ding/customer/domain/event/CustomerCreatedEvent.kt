@@ -8,6 +8,7 @@ data class CustomerCreatedEvent(
     val exKey: UUID,
     val userExKey: UUID,
     val phoneNumber: String?,
+    override val eventName: String = "customer_created_event",
     override val eventType: EventType = EventType.CREATED,
     override val occurredAt: LocalDateTime = LocalDateTime.now()
 ) : CustomerEvent

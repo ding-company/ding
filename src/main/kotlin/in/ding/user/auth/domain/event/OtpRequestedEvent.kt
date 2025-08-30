@@ -8,6 +8,7 @@ data class OtpRequestedEvent(
     val contact: String,
     val nationality: UserNationality,
     val requestId: String,
+    override val eventName: String = "otp_requested_event",
     override val eventType: EventType = EventType.CREATED,
     override val occurredAt: LocalDateTime = LocalDateTime.now()
 ) : AuthEvent

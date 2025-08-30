@@ -10,6 +10,7 @@ data class OtpIssuedEvent(
     val otpCode: String,
     val contactType: ContactType,
     val otpExpiredAt: LocalDateTime,
+    override val eventName: String = "otp_issued_event",
     override val eventType: EventType = EventType.CREATED,
     override val occurredAt: LocalDateTime = LocalDateTime.now()
 ) : AuthEvent {

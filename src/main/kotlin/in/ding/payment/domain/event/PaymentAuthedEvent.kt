@@ -5,7 +5,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
 
-data class PaymentAuthEvent(
+data class PaymentAuthedEvent(
     val paymentExKey: UUID,
     val customerExKey: UUID,
     val sellerExKey: UUID,
@@ -19,12 +19,13 @@ data class PaymentAuthEvent(
 
     val isUseAutoPointReward: Boolean = false,
     val isUseAutoStampReward: Boolean = false,
+    override val eventName: String = "payment_authed_event",
     override val eventType: EventType = EventType.CREATED,
     override val occurredAt: LocalDateTime = LocalDateTime.now(),
 ) : PaymentEvent {
     companion object {
-        fun of(customerExKey: UUID, authStartedEvent: PaymentAuthStartedEvent): PaymentAuthEvent {
-            return PaymentAuthEvent(
+        fun of(customerExKey: UUID, authStartedEvent: PaymentAuthStartedEvent): PaymentAuthedEvent {
+            return PaymentAuthedEvent(
                 paymentExKey = authStartedEvent.paymentExKey,
                 sellerExKey = authStartedEvent.sellerExKey,
                 customerExKey = customerExKey,
