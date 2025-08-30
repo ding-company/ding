@@ -20,6 +20,7 @@ data class PaymentAuthStartedEvent(
 
     val isUseAutoPointReward: Boolean = false,
     val isUseAutoStampReward: Boolean = false,
+    override val eventName: String = "payment_auth_started_event",
     override val eventType: EventType = EventType.CREATED,
     override val occurredAt: LocalDateTime = LocalDateTime.now(),
 ) : PaymentEvent {
