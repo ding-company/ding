@@ -2,7 +2,6 @@ package `in`.ding.payment.domain.event
 
 import `in`.ding.common.kafka.EventType
 import java.math.BigDecimal
-import java.time.LocalDateTime
 import java.util.UUID
 
 data class PaymentAuthedEvent(
@@ -21,8 +20,7 @@ data class PaymentAuthedEvent(
     val isUseAutoStampReward: Boolean = false,
     override val eventName: String = "payment_authed_event",
     override val eventType: EventType = EventType.CREATED,
-    override val occurredAt: LocalDateTime = LocalDateTime.now(),
-) : PaymentEvent {
+) : PaymentEvent(eventName, eventType) {
     companion object {
         fun of(customerExKey: UUID, authStartedEvent: PaymentAuthStartedEvent): PaymentAuthedEvent {
             return PaymentAuthedEvent(

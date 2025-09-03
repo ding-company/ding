@@ -12,8 +12,7 @@ data class OtpIssuedEvent(
     val otpExpiredAt: LocalDateTime,
     override val eventName: String = "otp_issued_event",
     override val eventType: EventType = EventType.CREATED,
-    override val occurredAt: LocalDateTime = LocalDateTime.now()
-) : AuthEvent {
+) : AuthEvent(eventName, eventType) {
     companion object {
         fun of(otp: OtpSession, contactType: ContactType): OtpIssuedEvent {
             return OtpIssuedEvent(

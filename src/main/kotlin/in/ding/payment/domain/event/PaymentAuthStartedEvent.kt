@@ -3,7 +3,6 @@ package `in`.ding.payment.domain.event
 import `in`.ding.common.kafka.EventType
 import `in`.ding.payment.application.dto.command.AuthCommand
 import java.math.BigDecimal
-import java.time.LocalDateTime
 import java.util.UUID
 
 data class PaymentAuthStartedEvent(
@@ -22,8 +21,7 @@ data class PaymentAuthStartedEvent(
     val isUseAutoStampReward: Boolean = false,
     override val eventName: String = "payment_auth_started_event",
     override val eventType: EventType = EventType.CREATED,
-    override val occurredAt: LocalDateTime = LocalDateTime.now(),
-) : PaymentEvent {
+) : PaymentEvent(eventName, eventType) {
     companion object {
         fun of(paymentExKey: UUID, command: AuthCommand): PaymentAuthStartedEvent {
             return PaymentAuthStartedEvent(
