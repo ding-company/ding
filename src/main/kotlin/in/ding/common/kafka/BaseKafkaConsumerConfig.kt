@@ -1,5 +1,4 @@
 package `in`.ding.common.kafka
-
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.TopicPartition
 import org.springframework.beans.factory.annotation.Value
@@ -12,9 +11,6 @@ import org.springframework.kafka.listener.DeadLetterPublishingRecoverer
 import org.springframework.kafka.listener.DefaultErrorHandler
 import org.springframework.kafka.support.serializer.JsonDeserializer
 import org.springframework.util.backoff.FixedBackOff
-
-const val RETRY_COUNT = 3L
-const val RETRY_INTERVAL_MS = 1000L
 
 @Configuration
 open class BaseKafkaConsumerConfig(
@@ -36,7 +32,11 @@ open class BaseKafkaConsumerConfig(
     @Value("\${spring.kafka.consumer.properties.spring.json.trusted.packages}")
     private lateinit var trustedPackages: String
 
-    open fun <T : Any> consumerFactory(groupId: String, valueType: Class<T>): ConsumerFactory<String, T> {
+    companion object {
+        private const val RETRY_INTERVAL_MS = 5000L
+        private const val RETRY_COUNT = 5L
+    }
+    fun <T : Any> consumerFactory(groupId: String, valueType: Class<T>): ConsumerFactory<String, T> {
         val config = mapOf(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to bootstrapServers,
             ConsumerConfig.GROUP_ID_CONFIG to groupId,
@@ -46,11 +46,9 @@ open class BaseKafkaConsumerConfig(
             JsonDeserializer.TRUSTED_PACKAGES to trustedPackages,
             JsonDeserializer.VALUE_DEFAULT_TYPE to valueType.name
         )
-
         return DefaultKafkaConsumerFactory(config)
     }
-
-    open fun <T : Any> kafkaListenerContainerFactory(
+    fun <T : Any> kafkaListenerContainerFactory(
         groupId: String,
         valueType: Class<T>
     ): ConcurrentKafkaListenerContainerFactory<String, T> {
@@ -64,7 +62,6 @@ open class BaseKafkaConsumerConfig(
                 FixedBackOff(RETRY_INTERVAL_MS, RETRY_COUNT)
             )
         )
-
         return factory
     }
 }
