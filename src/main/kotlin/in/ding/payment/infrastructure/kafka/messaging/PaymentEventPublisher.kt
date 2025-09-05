@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class PaymentEventPublisher(
-    private val kafkaTemplate: KafkaTemplate<String, PaymentEvent>
+    private val kafkaTemplate: KafkaTemplate<String, Any>
 ) {
     private val topic = "payment.events"
 

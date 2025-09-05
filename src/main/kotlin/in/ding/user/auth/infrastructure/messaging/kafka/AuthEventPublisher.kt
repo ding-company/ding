@@ -5,7 +5,7 @@ import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 @Component
 class AuthEventPublisher(
-    private val kafkaTemplate: KafkaTemplate<String, AuthEvent>
+    private val kafkaTemplate: KafkaTemplate<String, Any>
 ) {
     private val topic = "auth.events"
 
