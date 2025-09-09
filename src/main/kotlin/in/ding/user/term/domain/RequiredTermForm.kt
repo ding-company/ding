@@ -2,6 +2,7 @@ package `in`.ding.user.term.domain
 
 import `in`.ding.user.term.domain.model.enumerate.TermTitle
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
+import java.time.LocalDateTime
 import java.util.UUID
 
 data class RequiredTermForm(
@@ -11,5 +12,6 @@ data class RequiredTermForm(
     val isRequired: Boolean,
     val version: String,
     val country: UserNationality?,
-    val agreementExKey: UUID?
+    val agreementExKey: UUID?,
+    val expiredAt: LocalDateTime
 )

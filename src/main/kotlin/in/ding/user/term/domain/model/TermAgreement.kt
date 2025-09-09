@@ -11,7 +11,7 @@ data class TermAgreement(
     val userExKey: UUID,
     val termId: TermId,
     val agreedAt: LocalDateTime,
-    val expiresAt: LocalDateTime? = null,
+    val expiredAt: LocalDateTime? = null,
     val status: TermAgreementStatus,
     val withdrawnAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
