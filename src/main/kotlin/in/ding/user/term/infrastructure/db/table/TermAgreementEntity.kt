@@ -29,7 +29,7 @@ class TermAgreementEntity(
     @Column
     val agreedAt: LocalDateTime,
     @Column
-    val expiresAt: LocalDateTime? = null,
+    val expiredAt: LocalDateTime? = null,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

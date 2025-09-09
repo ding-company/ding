@@ -30,7 +30,8 @@ class TermQueryRepositoryImpl(
                     termCondition.isRequired,
                     term.version,
                     termCondition.country,
-                    agreement.exKey
+                    agreement.exKey,
+                    agreement.expiredAt
                 )
             )
             .from(termCondition)
