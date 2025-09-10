@@ -18,8 +18,12 @@ class RedisConfig(
     fun redisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
         val template = RedisTemplate<String, Any>()
         template.setConnectionFactory(connectionFactory)
+
+        val serializer = Jackson2JsonRedisSerializer(objectMapper, Any::class.java)
+
         template.keySerializer = StringRedisSerializer()
-        template.valueSerializer = Jackson2JsonRedisSerializer(Any::class.java)
+        template.valueSerializer = serializer
+
         return template
     }
 
@@ -28,10 +32,10 @@ class RedisConfig(
         val template = RedisTemplate<String, OtpSession>()
         template.setConnectionFactory(connectionFactory)
 
-        val jackson2JsonRedisSerializer = Jackson2JsonRedisSerializer(objectMapper, OtpSession::class.java)
+        val serializer = Jackson2JsonRedisSerializer(objectMapper, OtpSession::class.java)
 
         template.keySerializer = StringRedisSerializer()
-        template.valueSerializer = jackson2JsonRedisSerializer
+        template.valueSerializer = serializer
         return template
     }
 
@@ -40,10 +44,10 @@ class RedisConfig(
         val template = RedisTemplate<String, User>()
         template.setConnectionFactory(connectionFactory)
 
-        val jackson2JsonRedisSerializer = Jackson2JsonRedisSerializer(objectMapper, User::class.java)
+        val serializer = Jackson2JsonRedisSerializer(objectMapper, User::class.java)
 
         template.keySerializer = StringRedisSerializer()
-        template.valueSerializer = jackson2JsonRedisSerializer
+        template.valueSerializer = serializer
         return template
     }
 }

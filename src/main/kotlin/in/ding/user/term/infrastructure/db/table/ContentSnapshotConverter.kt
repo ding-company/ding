@@ -5,8 +5,9 @@ import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
 
 @Converter
-class ContentSnapshotConverter : AttributeConverter<ContentSnapshot, String> {
-    private val objectMapper = ObjectMapper()
+class ContentSnapshotConverter(
+    private val objectMapper: ObjectMapper
+) : AttributeConverter<ContentSnapshot, String> {
 
     override fun convertToDatabaseColumn(attribute: ContentSnapshot?): String? {
         return attribute?.let { objectMapper.writeValueAsString(it) }

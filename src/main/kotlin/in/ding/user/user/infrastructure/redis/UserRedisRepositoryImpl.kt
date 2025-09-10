@@ -2,13 +2,11 @@ package `in`.ding.user.user.infrastructure.redis
 
 import `in`.ding.user.user.domain.UserRedisRepository
 import `in`.ding.user.user.domain.model.User
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
 
 @Repository
 class UserRedisRepositoryImpl(
-    @Qualifier("userRedisTemplate")
     private val redisTemplate: RedisTemplate<String, User>
 ) : UserRedisRepository {
     companion object {
