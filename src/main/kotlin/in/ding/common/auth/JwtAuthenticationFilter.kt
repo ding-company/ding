@@ -15,11 +15,6 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val exceptionUri = arrayOf("/api/v1/auth/otp/issue", "/api/v1/auth/otp/verify", "/actuator/health")
-        if (request.requestURI in exceptionUri) {
-            filterChain.doFilter(request, response)
-            return
-        }
         val token = resolveToken(request)
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
@@ -28,10 +23,6 @@ class JwtAuthenticationFilter(
 
             val authentication = UsernamePasswordAuthenticationToken(authUser, null, emptyList())
             SecurityContextHolder.getContext().authentication = authentication
-        } else {
-            response.status = HttpServletResponse.SC_UNAUTHORIZED
-            response.writer.write("Unauthorized: JWT token is invalid or expired")
-            return
         }
 
         filterChain.doFilter(request, response)
