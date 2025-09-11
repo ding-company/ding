@@ -9,6 +9,7 @@ import `in`.ding.user.auth.domain.service.TokenIssuer
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import `in`.ding.user.user.domain.UserRepository
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class OtpServiceImpl(
@@ -35,5 +36,9 @@ class OtpServiceImpl(
         val user = otpVerifier.verifyOtp(command)
         val savedUser = userRepository.save(user)
         return OtpVerifyResponse.of(tokenIssuer.issueTokens(savedUser.exKey))
+    }
+
+    override fun issueTokenForTest(userExKey: UUID): OtpVerifyResponse {
+        return OtpVerifyResponse.of(tokenIssuer.issueTokens(userExKey))
     }
 }

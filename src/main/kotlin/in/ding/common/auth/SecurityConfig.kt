@@ -25,7 +25,8 @@ fun jwtAuthenticationFilter(): JwtAuthenticationFilter {
                     .requestMatchers(
                         "/api/v1/auth/otp/issue",
                         "/api/v1/auth/otp/verify",
-                        "/actuator/health"
+                        "/actuator/health",
+                        "/api/v1/auth/users/*/token"
                     ).permitAll()
                     .anyRequest().authenticated()
             }
