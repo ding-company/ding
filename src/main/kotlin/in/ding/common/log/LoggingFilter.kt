@@ -1,6 +1,5 @@
 package `in`.ding.common.log
 
-import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -12,11 +11,14 @@ import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.ContentCachingResponseWrapper
 
 @Component
-class LoggingFilter : OncePerRequestFilter() {
+class LoggingFilter(
+    private val objectMapper: ObjectMapper
+) : OncePerRequestFilter() {
 
     companion object {
-        private val objectMapper: ObjectMapper =
-            ObjectMapper().apply { setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY) }
+        // TODO 왜 하는지 찾아야함
+//        private val objectMapper: ObjectMapper =
+//            ObjectMapper().apply { setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY) }
 
         private val SUPPORTED_MEDIA_TYPE: List<String> = listOf(
             MediaType.TEXT_HTML_VALUE,

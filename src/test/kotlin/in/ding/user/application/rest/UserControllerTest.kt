@@ -1,6 +1,6 @@
 package `in`.ding.user.application.rest
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
 import `in`.ding.common.auth.AuthUser
 import `in`.ding.user.user.application.dto.command.UserRegisterCommand
 import `in`.ding.user.user.application.dto.http.RegisterUserRequest
@@ -25,7 +25,8 @@ import java.util.UUID
 class UserControllerTest(
     val mockMvc: MockMvc,
     @MockBean
-    val userService: UserAppServiceImpl
+    val userService: UserAppServiceImpl,
+    private val objectMapper: ObjectMapper
 ) : BehaviorSpec({
     given("회원가입 요청이 주어졌을 때") {
         val authUser = AuthUser(UUID.randomUUID())
@@ -41,7 +42,7 @@ class UserControllerTest(
             val result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(request))
+                    .content(objectMapper.writeValueAsString(request))
                     .with(
                         SecurityMockMvcRequestPostProcessors.authentication(authentication)
                     ).with(SecurityMockMvcRequestPostProcessors.csrf())
