@@ -14,6 +14,12 @@ jobs:
       - name: Set TAG (short sha)
         run: echo "IMAGE_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
       - name: Build (Gradle)
         run: ./gradlew clean build -x test
 
@@ -43,14 +49,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ding-company/deployment
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_TOKEN }}
           path: deployment
 
       - name: Create / update branch and update image tag
         run: |
           cd deployment
           BRANCH=update-spring-${IMAGE_TAG}
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/ding-company/deployment.git
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/ding-company/deployment.git
           # create or update branch
           if git ls-remote --exit-code --heads origin ${BRANCH}; then
             git fetch origin ${BRANCH}
