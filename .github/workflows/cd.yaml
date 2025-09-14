@@ -70,24 +70,28 @@ jobs:
           cd deployment-repo
           BRANCH=update-ding-${IMAGE_TAG}
           git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/ding-company/deployment.git
-          # create or update branch
+          
+          # Create or update branch
           if git ls-remote --exit-code --heads origin ${BRANCH}; then
             git fetch origin ${BRANCH}
             git checkout ${BRANCH}
           else
             git checkout -b ${BRANCH}
           fi
-          # replace image tag in the YAML file
+          
+          # Replace image tag in the YAML file
           sed -i "s|image: .*ding:.*|image: ${IMG}:${IMAGE_TAG}|" ding/overlays/patches.yaml
           
           # Check for changes before committing and pushing
-          if ! git diff-index --quiet HEAD --; then
-            git add ding/overlays/patches.yaml
+          git add ding/overlays/patches.yaml
+          
+          # Check if a file was actually added to the index
+          if git diff-index --quiet HEAD --; then
+            echo "No changes in patches.yaml, skipping commit and push."
+          else
             git commit -m "chore: update ding image to ${IMAGE_TAG}"
             git push --set-upstream origin ${BRANCH}
             echo "New changes found and pushed."
-          else
-            echo "No changes in patches.yaml, skipping commit and push."
           fi
 
       - name: Create PR (if not exists)
