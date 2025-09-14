@@ -65,8 +65,8 @@ jobs:
             git checkout -b ${BRANCH}
           fi
           # replace image in overlays/patches.yaml (경로는 본인 repo 기준으로 변형)
-          sed -i "s|image: .*spring-app:.*|image: ${IMG}:${IMAGE_TAG}|" deployment/ding/overlays/patches.yaml
-          git add deployment/ding/overlays/patches.yaml
+          sed -i "s|image: .*spring-app:.*|image: ${IMG}:${IMAGE_TAG}|" ding/overlays/patches.yaml
+          git add ding/overlays/patches.yaml
           git commit -m "chore: update spring-app image to ${IMAGE_TAG}" || echo "no changes"
           git push --set-upstream origin ${BRANCH}
 
