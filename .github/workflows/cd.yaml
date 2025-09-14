@@ -109,14 +109,14 @@ jobs:
           
           # 1. 기존 PR이 있는지 확인
           PR_CHECK=$(curl -s "${GITHUB_API_HEADERS[@]}" \
-            "https://api.github.com/repos/ding-company/deployment/pulls?head=ding-company-${BRANCH}&state=open")
+            "https://api.github.com/repos/ding-company/deployment/pulls?head=${BRANCH}&state=open")
           
           if [ "$(echo "$PR_CHECK" | jq 'length')" = "0" ]; then
             echo "No open PR found. Creating a new one."
           
             PR_JSON=$(jq -n \
               --arg t "chore: update ding image to ${IMAGE_TAG}" \
-              --arg h "ding-company-${BRANCH}" \
+              --arg h "${BRANCH}" \
               --arg b "main" \
               '{title:$t, head:$h, base:$b, body:"automated image update"}'
             )
