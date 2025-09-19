@@ -1,10 +1,13 @@
 package `in`.ding.user.auth.domain.model
 
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnore
 import `in`.ding.user.auth.domain.exception.ExpiredOtpException
 import `in`.ding.user.auth.domain.exception.InvalidOtpException
 import `in`.ding.user.auth.domain.model.vo.OtpCode
 import java.time.Duration
 import java.time.LocalDateTime
+
 data class OtpSession(
     val contact: String,
     val code: OtpCode,
@@ -26,6 +29,27 @@ data class OtpSession(
         fun getOtpTtl(): Duration = Duration.ofMinutes(OTP_TTL_MIN)
         fun getRetryTrackTtl(): Duration = Duration.ofMinutes(RETRY_TRACK_TTL_MIN)
         fun getBlockDuration(): Duration = Duration.ofMinutes(BLOCK_DURATION_MIN)
+
+        @Suppress("UnusedPrivateMember", "LongParameterList")
+        @JsonCreator
+        @JvmStatic
+        private fun jsonCreator(
+            contact: String,
+            code: String,
+            issuedAt: LocalDateTime,
+            expiredAt: LocalDateTime,
+            tryCount: Int,
+            verified: Boolean
+        ): OtpSession {
+            return OtpSession(
+                contact = contact,
+                code = OtpCode(code),
+                issuedAt = issuedAt,
+                expiredAt = expiredAt,
+                tryCount = tryCount,
+                verified = verified
+            )
+        }
     }
 
     fun verify(otpCode: String): OtpSession {
@@ -39,5 +63,6 @@ data class OtpSession(
 
     fun incrementTry(): OtpSession = this.copy(tryCount = tryCount + 1)
 
+    @JsonIgnore
     fun isLockable(): Boolean = tryCount >= MAX_TRY_COUNT
 }

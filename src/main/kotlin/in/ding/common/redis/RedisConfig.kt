@@ -14,40 +14,32 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 class RedisConfig(
     private val objectMapper: ObjectMapper
 ) {
-    @Bean
-    fun redisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
-        val template = RedisTemplate<String, Any>()
+    private fun <T> createTemplate(
+        connectionFactory: RedisConnectionFactory,
+        type: Class<T>
+    ): RedisTemplate<String, T> {
+        val template = RedisTemplate<String, T>()
         template.setConnectionFactory(connectionFactory)
 
-        val serializer = Jackson2JsonRedisSerializer(objectMapper, Any::class.java)
-
+        val serializer = Jackson2JsonRedisSerializer(objectMapper, type)
         template.keySerializer = StringRedisSerializer()
         template.valueSerializer = serializer
 
         return template
+    }
+
+    @Bean
+    fun redisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
+        return createTemplate(connectionFactory, Any::class.java)
     }
 
     @Bean
     fun otpSessionRedisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, OtpSession> {
-        val template = RedisTemplate<String, OtpSession>()
-        template.setConnectionFactory(connectionFactory)
-
-        val serializer = Jackson2JsonRedisSerializer(objectMapper, OtpSession::class.java)
-
-        template.keySerializer = StringRedisSerializer()
-        template.valueSerializer = serializer
-        return template
+        return createTemplate(connectionFactory, OtpSession::class.java)
     }
 
     @Bean
     fun userRedisTemplate(connectionFactory: RedisConnectionFactory): RedisTemplate<String, User> {
-        val template = RedisTemplate<String, User>()
-        template.setConnectionFactory(connectionFactory)
-
-        val serializer = Jackson2JsonRedisSerializer(objectMapper, User::class.java)
-
-        template.keySerializer = StringRedisSerializer()
-        template.valueSerializer = serializer
-        return template
+        return createTemplate(connectionFactory, User::class.java)
     }
 }
