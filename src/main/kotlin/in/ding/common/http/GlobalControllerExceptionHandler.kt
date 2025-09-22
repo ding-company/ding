@@ -47,6 +47,7 @@ class GlobalControllerExceptionHandler {
             is ConflictException -> HttpStatus.CONFLICT
             is NotFoundException -> HttpStatus.NOT_FOUND
             is InternalServerException -> HttpStatus.INTERNAL_SERVER_ERROR
+            //  TODO internal server error가 아닌 다르것으로 처리해야함
             else -> HttpStatus.INTERNAL_SERVER_ERROR
         }
 
