@@ -4,6 +4,7 @@ import `in`.ding.user.user.domain.UserRedisRepository
 import `in`.ding.user.user.domain.model.User
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
+import java.time.Duration
 
 @Repository
 class UserRedisRepositoryImpl(
@@ -11,7 +12,9 @@ class UserRedisRepositoryImpl(
 ) : UserRedisRepository {
     companion object {
         private const val USER_KEY_PREFIX = "user:"
-        private const val USER_TTL = 60L
+
+        // TODO ttl은 서비스에서 정하도록 변경해야함
+        private val USER_TTL = Duration.ofMinutes(60L)
     }
     override fun saveTemporaryUser(contact: String, userData: User) {
         redisTemplate.opsForValue().set(
