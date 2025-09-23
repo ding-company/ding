@@ -105,7 +105,7 @@ jobs:
           
           PR_CHECK=$(curl -s "${GITHUB_API_HEADERS[@]}" \
             "https://api.github.com/repos/ding-company/deployment/pulls?head=ding-company:${BRANCH}&state=open")
-          
+          echo "${PR_CHECK}"
           if [ "$(echo "$PR_CHECK" | jq 'length')" = "0" ]; then
             echo "No open PR found. Creating a new one."
           
