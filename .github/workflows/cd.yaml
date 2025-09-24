@@ -109,7 +109,7 @@ jobs:
       # 11. Create PR if not exists
       - name: Create PR
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           BRANCH=update-ding-${IMAGE_TAG}
 
