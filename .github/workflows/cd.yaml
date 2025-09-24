@@ -28,6 +28,7 @@ jobs:
         with:
           repository: ding-company/deployment
           path: deployment-repo
+          ref: main
           token: ${{ github.token }}
 
       # 3. Git config (봇 계정으로 커밋)
