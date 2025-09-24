@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: main-repo
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
 
       # 2. Checkout deployment repo
       - name: Checkout deployment repo
@@ -28,7 +28,7 @@ jobs:
         with:
           repository: ding-company/deployment
           path: deployment-repo
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
 
       # 3. Git config (봇 계정으로 커밋)
       - name: Configure Git
@@ -109,7 +109,7 @@ jobs:
       # 11. Create PR if not exists
       - name: Create PR
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           BRANCH=update-ding-${IMAGE_TAG}
 
