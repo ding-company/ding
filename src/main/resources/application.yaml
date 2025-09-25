@@ -16,6 +16,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        type:
+          preferred_uuid_jdbc_type: char
   redis:
     connection:
       host: localhost
@@ -46,6 +48,6 @@ spring:
 
 # TODO 환경변수
 jwt:
-  secret: test-secret
+  secret: asdfafdsljgkljweiorupaoigupaiusdpfa
   access-token-validity: 15m
   refresh-token-validity: 7d

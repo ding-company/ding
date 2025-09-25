@@ -8,6 +8,7 @@ import `in`.ding.user.auth.domain.service.OtpVerifier
 import `in`.ding.user.auth.domain.service.TokenIssuer
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import `in`.ding.user.user.domain.UserRepository
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -30,9 +31,9 @@ class OtpServiceImpl(
         )
     }
 
+    @Transactional
     override fun verify(command: OtpVerifyCommand): OtpVerifyResponse {
         otpVerifier.checkAvailability(command.contact)
-
         val user = otpVerifier.verifyOtp(command)
         val savedUser = userRepository.save(user)
         return OtpVerifyResponse.of(tokenIssuer.issueTokens(savedUser.exKey))
