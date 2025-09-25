@@ -13,7 +13,6 @@ import `in`.ding.user.auth.domain.repository.RedisOtpBlockRepository
 import `in`.ding.user.auth.domain.repository.RedisOtpRepository
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import `in`.ding.user.user.domain.UserRedisRepository
-import `in`.ding.user.user.domain.UserRepository
 import `in`.ding.user.user.domain.exception.NotFoundUserException
 import `in`.ding.user.user.domain.model.User
 import org.springframework.stereotype.Component
@@ -24,7 +23,6 @@ class OtpVerifier(
     private val userRedisRepository: UserRedisRepository,
     private val blockRepository: RedisOtpBlockRepository,
     private val blacklistRepository: RedisOtpBlockRepository,
-    private val userRepository: UserRepository,
     private val publisher: AuthEventPublisher
 ) {
     fun checkAvailability(contact: String) {
@@ -45,7 +43,7 @@ class OtpVerifier(
         try {
             val verifiedOtp = otp.verify(command.otpCode)
             otpRepository.saveOtp(command.contact, verifiedOtp, OtpSession.getOtpTtl())
-            return userRepository.save(user)
+            return user
         } catch (e: BaseHttpException) {
             when (e) {
                 is InvalidOtpException, is ExpiredOtpException -> {
