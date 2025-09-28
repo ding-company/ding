@@ -1,5 +1,6 @@
 package `in`.ding.common.auth
 
+import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -14,25 +15,26 @@ class JwtTokenProvider(
 ) {
     private val secretKey: Key = Keys.hmacShaKeyFor(jwtProperties.secret.toByteArray(StandardCharsets.UTF_8))
 
-    fun generateAccessToken(userExKey: UUID): String {
-        val claims = Jwts.claims().setSubject(userExKey.toString())
+    fun generateAccessToken(userExKey: UUID, status: UserStatus): String {
         val now = Date()
-        val validity = Date(now.time + jwtProperties.accessTokenValidity.toMillis())
-
-        return Jwts.builder()
-            .setClaims(claims)
-            .setIssuedAt(now)
-            .setExpiration(validity)
-            .signWith(secretKey, SignatureAlgorithm.HS256) // 2. 생성된 Key 객체 사용
-            .compact()
-    }
-
-    fun generateRefreshToken(userExKey: UUID): String {
-        val now = Date()
-        val validity = Date(now.time + jwtProperties.refreshTokenValidity.toMillis())
+        val validity = Date(now.time + jwtProperties.accessTokenValidity.toDays())
 
         return Jwts.builder()
             .setSubject(userExKey.toString())
+            .claim("status", status.name)
+            .setIssuedAt(now)
+            .setExpiration(validity)
+            .signWith(secretKey, SignatureAlgorithm.HS256)
+            .compact()
+    }
+
+    fun generateRefreshToken(userExKey: UUID, status: UserStatus): String {
+        val now = Date()
+        val validity = Date(now.time + jwtProperties.refreshTokenValidity.toDays())
+
+        return Jwts.builder()
+            .setSubject(userExKey.toString())
+            .claim("status", status.name)
             .setIssuedAt(now)
             .setExpiration(validity)
             .signWith(secretKey, SignatureAlgorithm.HS256)
@@ -45,7 +47,6 @@ class JwtTokenProvider(
             val claims = Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
-
             !claims.body.expiration.before(Date())
         } catch (e: Exception) {
             false
