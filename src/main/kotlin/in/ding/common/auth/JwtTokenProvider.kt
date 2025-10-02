@@ -4,6 +4,8 @@ import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
 import java.nio.charset.StandardCharsets
 import java.security.Key
@@ -42,22 +44,27 @@ class JwtTokenProvider(
     }
 
     @Suppress("SwallowedException", "TooGenericExceptionCaught")
-    fun validateToken(token: String): Boolean {
-        return try {
-            val claims = Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-            !claims.body.expiration.before(Date())
-        } catch (e: Exception) {
-            false
-        }
+    fun validateToken(token: String): Boolean = try {
+        val claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
+        !claims.body.expiration.before(Date())
+    } catch (e: Exception) {
+        false
+    }
+
+    fun getAuthentication(token: String): Authentication {
+        val userExKey = extractUserExKey(token)
+        val userStatus = extractUserStatus(token)
+        val principal = AuthUser(userExKey, userStatus)
+        return UsernamePasswordAuthenticationToken(principal, null, emptyList())
     }
 
     fun extractUserExKey(token: String): UUID {
-        val claims = Jwts.parser()
-            .setSigningKey(secretKey)
-            .parseClaimsJws(token)
+        val claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
+        return claims.body["userExKey"] as UUID
+    }
 
-        return UUID.fromString(claims.body["sub"] as String)
+    fun extractUserStatus(token: String): UserStatus {
+        val claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
+        return UserStatus.valueOf(claims.body["status"].toString())
     }
 }

@@ -10,7 +10,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jwtTokenProvider: JwtTokenProvider
+    private val jwtTokenProvider: JwtTokenProvider,
+    private val userStatusFilter: UserStatusFilter,
+    private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint
 ) { @Bean
 fun jwtAuthenticationFilter(): JwtAuthenticationFilter {
     return JwtAuthenticationFilter(jwtTokenProvider)
@@ -30,8 +32,9 @@ fun jwtAuthenticationFilter(): JwtAuthenticationFilter {
                     ).permitAll()
                     .anyRequest().authenticated()
             }
+            .exceptionHandling { it.authenticationEntryPoint(jwtAuthenticationEntryPoint) }
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
-
+            .addFilterAfter(userStatusFilter, JwtAuthenticationFilter::class.java)
         return http.build()
     }
 }
