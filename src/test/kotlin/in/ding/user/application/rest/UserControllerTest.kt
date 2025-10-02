@@ -6,6 +6,7 @@ import `in`.ding.user.user.application.dto.command.UserRegisterCommand
 import `in`.ding.user.user.application.dto.http.RegisterUserRequest
 import `in`.ding.user.user.application.rest.UserController
 import `in`.ding.user.user.application.service.UserAppServiceImpl
+import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import io.kotest.core.spec.style.BehaviorSpec
 import org.mockito.Mockito.doNothing
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -29,7 +30,7 @@ class UserControllerTest(
     private val objectMapper: ObjectMapper
 ) : BehaviorSpec({
     given("회원가입 요청이 주어졌을 때") {
-        val authUser = AuthUser(UUID.randomUUID())
+        val authUser = AuthUser(UUID.randomUUID(), status = UserStatus.TEMPORARY)
         val authentication = UsernamePasswordAuthenticationToken(authUser, null, emptyList())
 
         `when`("유효한 요청이 전달되면") {

@@ -3,7 +3,6 @@ package `in`.ding.common.auth
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 
@@ -18,10 +17,7 @@ class JwtAuthenticationFilter(
         val token = resolveToken(request)
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
-            val userExKey = jwtTokenProvider.extractUserExKey(token)
-            val authUser = AuthUser(userExKey)
-
-            val authentication = UsernamePasswordAuthenticationToken(authUser, null, emptyList())
+            val authentication = jwtTokenProvider.getAuthentication(token)
             SecurityContextHolder.getContext().authentication = authentication
         }
 
