@@ -35,7 +35,7 @@ class OtpVerifier(
         val otp = otpRepository.findOtp(command.contact) ?: throw OtpNotFound()
 
         try {
-            val verifiedOtp = otp.verify(command.otpCode)
+            val verifiedOtp = otp.verify(command.otpCode, command.nationality)
             otpRepository.saveOtp(command.contact, verifiedOtp, OtpSession.getOtpTtl())
 
             return true
