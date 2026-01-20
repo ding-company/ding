@@ -1,15 +1,8 @@
 package `in`.ding.user.auth.application.service
 
-import `in`.ding.user.auth.application.dto.command.OtpIssueCommand
 import `in`.ding.user.auth.application.dto.command.OtpVerifyCommand
 import `in`.ding.user.auth.application.dto.response.OtpVerifyResponse
-import `in`.ding.user.auth.domain.event.OtpAbuseDetectedEvent
-import `in`.ding.user.auth.domain.event.OtpRequestedEvent
 import `in`.ding.user.auth.domain.exception.InvalidOtpException
-import `in`.ding.user.auth.domain.exception.OtpBlacklistedException
-import `in`.ding.user.auth.domain.exception.TooManyOtpAttemptsException
-import `in`.ding.user.auth.domain.repository.RedisBlacklistRepository
-import `in`.ding.user.auth.domain.repository.RedisOtpBlockRepository
 import `in`.ding.user.auth.domain.service.OtpVerifier
 import `in`.ding.user.auth.domain.service.TokenIssuer
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
@@ -26,29 +19,7 @@ class OtpServiceImpl(
     private val tokenIssuer: TokenIssuer,
     private val publisher: AuthEventPublisher,
     private val userRedisRepository: UserRedisRepository,
-    private val blockRepository: RedisOtpBlockRepository,
-    private val blacklistRepository: RedisBlacklistRepository
 ) : OtpService {
-    private fun ensureAvailable(contact: String) {
-        if (blockRepository.isBlocked(contact)) {
-            publisher.publish(OtpAbuseDetectedEvent(contact))
-            throw TooManyOtpAttemptsException()
-        }
-        if (blacklistRepository.isBlacklisted(contact)) {
-            throw OtpBlacklistedException()
-        }
-    }
-    override fun issue(command: OtpIssueCommand) {
-        ensureAvailable(command.contact)
-
-        publisher.publish(
-            OtpRequestedEvent(
-                contact = command.contact,
-                nationality = command.nationality,
-                requestId = command.requestId
-            )
-        )
-    }
 
     @Transactional
     override fun verify(command: OtpVerifyCommand): OtpVerifyResponse {

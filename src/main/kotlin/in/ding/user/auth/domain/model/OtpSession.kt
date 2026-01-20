@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import `in`.ding.common.domain.EventRecorder
 import `in`.ding.user.auth.domain.event.AuthEvent
+import `in`.ding.user.auth.domain.event.OtpIssuedEvent
 import `in`.ding.user.auth.domain.event.OtpVerifiedEvent
 import `in`.ding.user.auth.domain.exception.ExpiredOtpException
 import `in`.ding.user.auth.domain.exception.InvalidOtpException
 import `in`.ding.user.auth.domain.model.vo.OtpCode
+import `in`.ding.user.user.domain.model.enumerate.ContactType
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import java.time.Duration
 import java.time.LocalDateTime
-
 data class OtpSession(
     val contact: String,
     val code: OtpCode,
@@ -21,8 +22,9 @@ data class OtpSession(
     val verified: Boolean = false,
     @JsonIgnore private val events: EventRecorder<AuthEvent> = EventRecorder()
 ) {
-
-    val domainEvents: List<AuthEvent> get() = events.toList()
+    @JsonIgnore
+    fun drainEvents(): List<AuthEvent> = events.drain()
+//    val domainEvents: List<AuthEvent> get() = events.toList()
 
     companion object {
         const val MAX_TRY_COUNT = 5
@@ -30,14 +32,27 @@ data class OtpSession(
         const val RETRY_TRACK_TTL_MIN = 10L
         const val BLOCK_DURATION_MIN = 60L
 
-        fun create(contact: String, code: OtpCode): OtpSession {
+        fun issue(
+            contact: String,
+            code: OtpCode,
+            contactType: ContactType
+        ): OtpSession {
             val now = LocalDateTime.now()
-            return OtpSession(
+            val session = OtpSession(
                 contact = contact,
                 code = code,
                 issuedAt = now,
                 expiredAt = now.plusMinutes(OTP_TTL_MIN)
             )
+
+            session.recordEvent(
+                OtpIssuedEvent.of(
+                    otp = session,
+                    contactType = contactType
+                )
+            )
+
+            return session
         }
 
         fun getOtpTtl(): Duration = Duration.ofMinutes(OTP_TTL_MIN)
@@ -82,5 +97,9 @@ data class OtpSession(
 
     private fun recordEvent(event: AuthEvent) {
         events.add(event)
+    }
+
+    fun clearEvents() {
+        events.clear()
     }
 }

@@ -6,6 +6,7 @@ class EventRecorder<T> {
     fun add(event: T) = events.add(event)
 
     fun toList(): List<T> = events.toList()
+    fun clear() = events.clear()
 
     /**
      * 꺼내고 내부 리스트는 비우기 — ApplicationService에서 사용
