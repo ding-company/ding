@@ -7,7 +7,7 @@ import `in`.ding.user.auth.application.dto.request.OtpIssueRequest
 import `in`.ding.user.auth.application.dto.request.OtpVerifyRequest
 import `in`.ding.user.auth.application.dto.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.service.OtpIssueService
-import `in`.ding.user.auth.application.service.OtpService
+import `in`.ding.user.auth.application.service.OtpVerifyService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -20,7 +20,7 @@ import java.util.UUID
 @RequestMapping("/api/v1/auth")
 class AuthController(
     private val issueService: OtpIssueService,
-    val service: OtpService
+    private val verifyService: OtpVerifyService
 ) {
     @PostMapping("/otp/issue")
     fun issueOtp(
@@ -32,11 +32,11 @@ class AuthController(
 
     @PostMapping("/otp/verify")
     fun verifyOtp(@RequestBody body: OtpVerifyRequest): OtpVerifyResponse {
-        return service.verify(OtpVerifyCommand.of(body))
+        return verifyService.verify(OtpVerifyCommand.of(body))
     }
 
     @GetMapping("/users/{userExKey}/token")
     fun getToken(@PathVariable userExKey: UUID): OtpVerifyResponse {
-        return service.issueTokenForTest(userExKey)
+        return verifyService.issueTokenForTest(userExKey)
     }
 }
