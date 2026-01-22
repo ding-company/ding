@@ -14,26 +14,23 @@ import `in`.ding.user.auth.domain.repository.RedisOtpBlockRepository
 import `in`.ding.user.auth.domain.repository.RedisOtpRepository
 import `in`.ding.user.auth.domain.service.TokenIssuer
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
-import `in`.ding.user.user.domain.UserRedisRepository
-import `in`.ding.user.user.domain.exception.NotFoundUserException
 import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import java.util.UUID
+import java.util.*
 
 @Service
 class OtpVerifyServiceImpl(
     private val availabilityGuard: OtpAvailabilityGuard,
     private val otpRepository: RedisOtpRepository,
     private val blockRepository: RedisOtpBlockRepository,
-    private val userRedisRepository: UserRedisRepository,
+    private val verifiedIdentityService: VerifiedIdentityService,
     private val tokenIssuer: TokenIssuer,
     private val publisher: AuthEventPublisher,
 ) : OtpVerifyService {
 
     @Transactional
     override fun verify(command: OtpVerifyCommand): OtpVerifyResponse {
-        // 1. Availability 체크
         when (availabilityGuard.check(command.contact)) {
             OtpAvailability.BLOCKED -> {
                 publisher.publish(OtpAbuseDetectedEvent(command.contact))
@@ -44,16 +41,10 @@ class OtpVerifyServiceImpl(
             OtpAvailability.OK -> Unit
         }
 
-        // 2. 임시 유저 확인
-        val tempUser = userRedisRepository
-            .findTemporaryUser(command.contact)
-            ?: throw NotFoundUserException()
-
-        // 3. OTP 조회
         val otp = otpRepository.findOtp(command.contact)
             ?: throw OtpNotFound()
 
-        // 4. 검증
+        val verifiedIdentity = verifiedIdentityService.create(command)
         val updatedOtp = try {
             otp.verify(command.otpCode, command.nationality)
         } catch (e: InvalidOtpException) {
@@ -64,19 +55,16 @@ class OtpVerifyServiceImpl(
             throw e
         }
 
-        // 5. 성공 저장
         otpRepository.saveOtp(
             contact = command.contact,
             otp = updatedOtp,
             ttl = OtpSession.getOtpTtl()
         )
 
-        // 6. Domain Event publish
         updatedOtp.drainEvents().forEach(publisher::publish)
 
-        // 7. Token 발급
         return OtpVerifyResponse.of(
-            tokenIssuer.issueTokens(tempUser.exKey, UserStatus.TEMPORARY)
+            tokenIssuer.issueTokens(verifiedIdentity.exKey, UserStatus.TEMPORARY)
         )
     }
 
