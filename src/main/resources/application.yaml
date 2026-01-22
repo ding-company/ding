@@ -51,3 +51,15 @@ jwt:
   secret: asdfafdsljgkljweiorupaoigupaiusdpfa
   access-token-validity: 15m
   refresh-token-validity: 7d
+
+# 환경변수
+otp:
+  expiry:
+    otp-session: 5m
+    verified-identity: 60m
+
+security:
+  expiry:
+    otp-retry-track: 10m
+    otp-block: 60m
+    otp-blacklist: 30d

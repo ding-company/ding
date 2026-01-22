@@ -9,6 +9,7 @@ import `in`.ding.user.auth.domain.event.OtpVerifiedEvent
 import `in`.ding.user.auth.domain.exception.ExpiredOtpException
 import `in`.ding.user.auth.domain.exception.InvalidOtpException
 import `in`.ding.user.auth.domain.model.vo.OtpCode
+import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.user.domain.model.enumerate.ContactType
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import java.time.Duration
@@ -24,24 +25,23 @@ data class OtpSession(
 ) {
     @JsonIgnore
     fun drainEvents(): List<AuthEvent> = events.drain()
-
     companion object {
+        fun lifetime(): DomainLifetime =
+            DomainLifetime.OTP_SESSION
         const val MAX_TRY_COUNT = 5
-        const val OTP_TTL_MIN = 5L
-        const val RETRY_TRACK_TTL_MIN = 10L
-        const val BLOCK_DURATION_MIN = 60L
 
         fun issue(
             contact: String,
             code: OtpCode,
-            contactType: ContactType
+            contactType: ContactType,
+            now: LocalDateTime,
+            expiredCondition: Duration,
         ): OtpSession {
-            val now = LocalDateTime.now()
             val session = OtpSession(
                 contact = contact,
                 code = code,
                 issuedAt = now,
-                expiredAt = now.plusMinutes(OTP_TTL_MIN)
+                expiredAt = now.plusMinutes(expiredCondition.toMinutes()),
             )
 
             session.recordEvent(
@@ -53,10 +53,6 @@ data class OtpSession(
 
             return session
         }
-
-        fun getOtpTtl(): Duration = Duration.ofMinutes(OTP_TTL_MIN)
-        fun getRetryTrackTtl(): Duration = Duration.ofMinutes(RETRY_TRACK_TTL_MIN)
-        fun getBlockDuration(): Duration = Duration.ofMinutes(BLOCK_DURATION_MIN)
 
         @Suppress("UnusedPrivateMember", "LongParameterList")
         @JsonCreator

@@ -1,8 +1,10 @@
 package `in`.ding.user.auth.application.service.policy
 
+import `in`.ding.user.auth.application.expiry.ExpiryResolver
 import `in`.ding.user.auth.domain.event.OtpAbuseDetectedEvent
 import `in`.ding.user.auth.domain.exception.TooManyOtpAttemptsException
 import `in`.ding.user.auth.domain.model.OtpSession
+import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.auth.domain.repository.RedisOtpBlockRepository
 import `in`.ding.user.auth.domain.repository.RedisOtpRepository
 import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
@@ -12,19 +14,23 @@ import org.springframework.stereotype.Component
 class OtpFailureProcessor(
     private val otpRepository: RedisOtpRepository,
     private val blockRepository: RedisOtpBlockRepository,
-    private val publisher: AuthEventPublisher
+    private val publisher: AuthEventPublisher,
+    private val expiryResolver: ExpiryResolver
 ) {
     fun handle(otp: OtpSession, contact: String) {
         val failed = otp.incrementTry()
+        val otpLifeTime = DomainLifetime.OTP_SESSION
+        val otpTtl = expiryResolver.resolve(otpLifeTime)
 
         otpRepository.saveOtp(
             contact,
             failed,
-            OtpSession.getRetryTrackTtl()
+            otpTtl
         )
 
         if (failed.isLockable()) {
-            blockRepository.block(contact, OtpSession.getBlockDuration())
+            val blockTtl = expiryResolver.resolve(SecurityLifetime.OTP_BLOCK)
+            blockRepository.block(contact, blockTtl)
             publisher.publish(OtpAbuseDetectedEvent(contact))
             throw TooManyOtpAttemptsException()
         }
