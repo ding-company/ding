@@ -1,6 +1,7 @@
 package `in`.ding.user.auth.domain.model
 
 import com.fasterxml.jackson.annotation.JsonCreator
+import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.user.domain.model.Email
 import `in`.ding.user.user.domain.model.PhoneNumber
 import `in`.ding.user.user.domain.model.enumerate.ContactType
@@ -16,6 +17,8 @@ data class VerifiedIdentity(
     val registeredAt: LocalDateTime?
 ) {
     companion object {
+        fun lifetime(): DomainLifetime =
+            DomainLifetime.VERIFIED_IDENTITY
         fun generate(
             exKey: UUID = UUID.randomUUID(),
             contact: String,

@@ -1,6 +1,8 @@
 package `in`.ding.user.auth.application.service.support
 
+import `in`.ding.user.auth.application.expiry.ExpiryResolver
 import `in`.ding.user.auth.domain.model.VerifiedIdentity
+import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.auth.domain.repository.RedisVerifiedIdentityRepository
 import `in`.ding.user.user.domain.model.ContactPolicy
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component
 class VerifiedIdentityAppService(
     private val contactPolicy: ContactPolicy,
     private val verifiedIdentityRepository: RedisVerifiedIdentityRepository,
+    private val expiryResolver: ExpiryResolver
 ) {
     fun create(
         contact: String,
@@ -23,7 +26,10 @@ class VerifiedIdentityAppService(
             nationality = nationality
         )
 
-        verifiedIdentityRepository.saveVerifiedIdentity(contact, identity)
+        val verifiedIdentityLifeTime = DomainLifetime.VERIFIED_IDENTITY
+        val ttl = expiryResolver.resolve(verifiedIdentityLifeTime)
+
+        verifiedIdentityRepository.saveVerifiedIdentity(contact, identity, ttl)
         return identity
     }
 }

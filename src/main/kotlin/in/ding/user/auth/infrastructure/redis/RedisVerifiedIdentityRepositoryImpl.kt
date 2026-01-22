@@ -12,15 +12,12 @@ class RedisVerifiedIdentityRepositoryImpl(
 ) : RedisVerifiedIdentityRepository {
     companion object {
         private const val USER_KEY_PREFIX = "user:"
-
-        // TODO ttl은 서비스에서 정하도록 변경해야함
-        private val USER_TTL = Duration.ofMinutes(60L)
     }
-    override fun saveVerifiedIdentity(contact: String, value: VerifiedIdentity) {
+    override fun saveVerifiedIdentity(contact: String, value: VerifiedIdentity, ttl: Duration) {
         redisTemplate.opsForValue().set(
             "$USER_KEY_PREFIX$contact",
             value,
-            USER_TTL
+            ttl
         )
     }
 

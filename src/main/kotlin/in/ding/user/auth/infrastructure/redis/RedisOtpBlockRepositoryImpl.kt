@@ -12,11 +12,12 @@ class RedisOtpBlockRepositoryImpl(
     companion object {
         private const val KEY = "otp:block:"
     }
-    override fun isBlocked(contact: String): Boolean {
-        return redisTemplate.hasKey("$KEY$contact") == true
-    }
 
     override fun block(contact: String, ttl: Duration) {
         redisTemplate.opsForValue().set("$KEY$contact", "1", ttl)
+    }
+
+    override fun isBlocked(contact: String): Boolean {
+        return redisTemplate.hasKey("$KEY$contact") == true
     }
 }
