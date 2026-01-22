@@ -1,6 +1,6 @@
-package `in`.ding.user.auth.application.dto.command
+package `in`.ding.user.auth.application.service.verify
 
-import `in`.ding.user.auth.application.dto.request.OtpVerifyRequest
+import `in`.ding.user.auth.application.rest.request.OtpVerifyRequest
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
 
 data class OtpVerifyCommand(

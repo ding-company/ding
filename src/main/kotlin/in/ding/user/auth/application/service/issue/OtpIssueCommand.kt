@@ -1,6 +1,6 @@
-package `in`.ding.user.auth.application.dto.command
+package `in`.ding.user.auth.application.service.issue
 
-import `in`.ding.user.auth.application.dto.request.OtpIssueRequest
+import `in`.ding.user.auth.application.rest.request.OtpIssueRequest
 import `in`.ding.user.user.domain.model.enumerate.UserNationality
 
 data class OtpIssueCommand(

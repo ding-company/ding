@@ -1,4 +1,4 @@
-package `in`.ding.user.auth.application.service
+package `in`.ding.user.auth.application.service.policy
 
 import `in`.ding.user.auth.domain.event.OtpAbuseDetectedEvent
 import `in`.ding.user.auth.domain.exception.TooManyOtpAttemptsException
@@ -9,7 +9,7 @@ import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import org.springframework.stereotype.Component
 
 @Component
-class OtpFailureHandler(
+class OtpFailureProcessor(
     private val otpRepository: RedisOtpRepository,
     private val blockRepository: RedisOtpBlockRepository,
     private val publisher: AuthEventPublisher
