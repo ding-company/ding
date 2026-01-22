@@ -1,4 +1,4 @@
-package `in`.ding.user.auth.application.dto.response
+package `in`.ding.user.auth.application.rest.response
 
 import `in`.ding.user.auth.domain.service.dto.TokenSet
 

@@ -24,7 +24,6 @@ data class OtpSession(
 ) {
     @JsonIgnore
     fun drainEvents(): List<AuthEvent> = events.drain()
-//    val domainEvents: List<AuthEvent> get() = events.toList()
 
     companion object {
         const val MAX_TRY_COUNT = 5

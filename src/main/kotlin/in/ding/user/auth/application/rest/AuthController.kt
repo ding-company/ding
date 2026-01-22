@@ -1,13 +1,13 @@
 package `in`.ding.user.auth.application.rest
 
 import `in`.ding.common.http.RequestId
-import `in`.ding.user.auth.application.dto.command.OtpIssueCommand
-import `in`.ding.user.auth.application.dto.command.OtpVerifyCommand
-import `in`.ding.user.auth.application.dto.request.OtpIssueRequest
-import `in`.ding.user.auth.application.dto.request.OtpVerifyRequest
-import `in`.ding.user.auth.application.dto.response.OtpVerifyResponse
-import `in`.ding.user.auth.application.service.OtpIssueService
-import `in`.ding.user.auth.application.service.OtpVerifyService
+import `in`.ding.user.auth.application.rest.request.OtpIssueRequest
+import `in`.ding.user.auth.application.rest.request.OtpVerifyRequest
+import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
+import `in`.ding.user.auth.application.service.issue.OtpIssueCommand
+import `in`.ding.user.auth.application.service.issue.OtpIssueService
+import `in`.ding.user.auth.application.service.verify.OtpVerifyCommand
+import `in`.ding.user.auth.application.service.verify.OtpVerifyService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
