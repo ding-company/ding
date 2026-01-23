@@ -5,9 +5,6 @@ import `in`.ding.user.user.application.dto.consumer.UserRegisterByCustomerEventC
 import `in`.ding.user.user.application.dto.http.UserResponse
 import `in`.ding.user.user.domain.UserRepository
 import `in`.ding.user.user.domain.exception.NotFoundUserException
-import `in`.ding.user.user.domain.model.User
-import `in`.ding.user.user.domain.model.enumerate.ContactType
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -20,16 +17,16 @@ class UserAppServiceImpl(private val repository: UserRepository) :
     }
     override fun register(command: UserRegisterCommand) {
         val user = repository.findByExKey(command.userExKey) ?: throw NotFoundUserException()
-        user.register()
+//        user.register()
         throw NotImplementedError()
     }
     override fun registerFromCustomer(command: UserRegisterByCustomerEventCommand) {
-        val user = User.makeTempUser(
-            exKey = command.exKey,
-            contact = command.phoneNumber!!,
-            contactType = ContactType.PHONE_NUMBER,
-            nationality = UserNationality.KR
-        )
-        repository.save(user)
+//        val user = User.makeTempUser(
+//            exKey = command.exKey,
+//            contact = command.phoneNumber!!,
+//            contactType = ContactType.PHONE_NUMBER,
+//            nationality = UserNationality.KR
+//        )
+//        repository.save(user)
     }
 }
