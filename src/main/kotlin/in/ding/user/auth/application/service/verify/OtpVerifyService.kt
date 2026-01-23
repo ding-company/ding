@@ -55,7 +55,4 @@ class OtpVerifyService(
             tokenIssuer.issueTokens(verifiedIdentity.exKey, UserStatus.TEMPORARY)
         )
     }
-    fun issueTokenForTest(userExKey: UUID): OtpVerifyResponse {
-        return OtpVerifyResponse.Companion.of(tokenIssuer.issueTokens(userExKey, UserStatus.REGISTERED))
-    }
 }
