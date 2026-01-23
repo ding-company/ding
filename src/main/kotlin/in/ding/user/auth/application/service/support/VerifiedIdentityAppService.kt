@@ -29,7 +29,7 @@ class VerifiedIdentityAppService(
         val verifiedIdentityLifeTime = DomainLifetime.VERIFIED_IDENTITY
         val ttl = expiryResolver.resolve(verifiedIdentityLifeTime)
 
-        verifiedIdentityRepository.saveVerifiedIdentity(contact, identity, ttl)
+        verifiedIdentityRepository.saveVerifiedIdentity(identity.exKey, identity, ttl)
         return identity
     }
 }

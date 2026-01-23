@@ -1,9 +1,10 @@
 package `in`.ding.user.auth.application.rest
 
+import `in`.ding.common.auth.AuthUser
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
-import `in`.ding.user.auth.application.rest.response.PostAuthStatus
 import `in`.ding.user.auth.application.rest.response.PostAuthStatusResponse
 import `in`.ding.user.auth.application.service.auth.AuthService
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,8 +17,10 @@ class AuthController(
     private val authService: AuthService
 ) {
     @GetMapping("post-auth/status")
-    fun postAuth(): PostAuthStatusResponse {
-        return PostAuthStatusResponse(PostAuthStatus.AUTHENTICATED)
+    fun getAuthStatus(
+        @AuthenticationPrincipal user: AuthUser,
+    ): PostAuthStatusResponse {
+        return authService.getAuthStatus(user.exKey)
     }
 
     @GetMapping("/users/{userExKey}/token")

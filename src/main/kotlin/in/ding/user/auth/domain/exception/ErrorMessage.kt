@@ -6,4 +6,5 @@ object ErrorMessage {
     const val EXPIRED_OTB = "만료된 otp 코드 입니다."
     const val TRIED_OVER_THE_5_TIMES = "otp인증을 5회 이상 실패하였습니다."
     const val BLACKLIST = "OTP 인증이 차단되었습니다."
+    const val VERIFIED_IDENTITY_NOT_FOUND = "Not Found VerifiedIdentity"
 }

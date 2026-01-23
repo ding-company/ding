@@ -2,11 +2,12 @@ package `in`.ding.user.auth.domain.repository
 
 import `in`.ding.user.auth.domain.model.VerifiedIdentity
 import java.time.Duration
+import java.util.UUID
 
 interface RedisVerifiedIdentityRepository {
-    fun saveVerifiedIdentity(contact: String, value: VerifiedIdentity, ttl: Duration)
+    fun saveVerifiedIdentity(exKey: UUID, value: VerifiedIdentity, ttl: Duration)
 
-    fun findVerifiedIdentity(contact: String): VerifiedIdentity?
+    fun findVerifiedIdentity(exKey: UUID): VerifiedIdentity?
 
-    fun deleteVerifiedIdentity(contact: String)
+    fun deleteVerifiedIdentity(exKey: UUID)
 }
