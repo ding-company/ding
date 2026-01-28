@@ -1,7 +1,7 @@
 package `in`.ding.user.auth.application.service.verify
 
 import `in`.ding.user.auth.application.rest.request.OtpVerifyRequest
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
+import `in`.ding.user.domain.enumerate.UserNationality
 
 data class OtpVerifyCommand(
     val contact: String,

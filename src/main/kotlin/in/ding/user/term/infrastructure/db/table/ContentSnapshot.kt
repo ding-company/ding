@@ -5,5 +5,5 @@ import `in`.ding.user.term.domain.model.enumerate.TermTitle
 data class ContentSnapshot(
     val title: TermTitle,
     val body: String,
-    val version: String
+    val version: Int
 )

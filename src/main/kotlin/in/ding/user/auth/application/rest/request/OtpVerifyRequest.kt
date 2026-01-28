@@ -1,6 +1,6 @@
 package `in`.ding.user.auth.application.rest.request
 
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
+import `in`.ding.user.domain.enumerate.UserNationality
 import io.swagger.v3.oas.annotations.media.Schema
 
 data class OtpVerifyRequest(

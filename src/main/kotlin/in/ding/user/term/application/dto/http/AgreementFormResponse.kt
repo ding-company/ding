@@ -1,8 +1,8 @@
 package `in`.ding.user.term.application.dto.http
 
+import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.term.domain.RequiredTermForm
 import `in`.ding.user.term.domain.model.enumerate.TermTitle
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import java.util.*
 
 data class AgreementFormResponse(

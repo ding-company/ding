@@ -1,7 +1,7 @@
 package `in`.ding.user.term.domain
 
+import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.term.domain.model.enumerate.TermTitle
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import java.time.LocalDateTime
 import java.util.UUID
 

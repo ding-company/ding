@@ -1,9 +1,9 @@
 package `in`.ding.user.term.infrastructure.db.table
 
 import `in`.ding.common.SoftDeletedBaseEntity
+import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.term.domain.model.enumerate.AppType
 import `in`.ding.user.term.domain.model.enumerate.UserType
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
