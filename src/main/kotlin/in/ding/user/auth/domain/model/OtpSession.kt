@@ -10,8 +10,8 @@ import `in`.ding.user.auth.domain.exception.ExpiredOtpException
 import `in`.ding.user.auth.domain.exception.InvalidOtpException
 import `in`.ding.user.auth.domain.model.vo.OtpCode
 import `in`.ding.user.auth.domain.policy.DomainLifetime
+import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.user.domain.model.enumerate.ContactType
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import java.time.Duration
 import java.time.LocalDateTime
 data class OtpSession(

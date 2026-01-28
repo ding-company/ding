@@ -1,6 +1,6 @@
 package `in`.ding.user.user.domain.model
 
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
+import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import java.time.LocalDateTime
 import java.util.*

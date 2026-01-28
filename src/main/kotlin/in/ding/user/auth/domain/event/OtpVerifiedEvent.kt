@@ -1,7 +1,7 @@
 package `in`.ding.user.auth.domain.event
 
 import `in`.ding.common.kafka.EventType
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
+import `in`.ding.user.domain.enumerate.UserNationality
 
 data class OtpVerifiedEvent(
     val contact: String,

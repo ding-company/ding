@@ -3,7 +3,6 @@ package `in`.ding.user.term.infrastructure.db.table
 import `in`.ding.common.SoftDeletedBaseEntity
 import `in`.ding.user.term.domain.model.enumerate.TermAgreementStatus
 import jakarta.persistence.Column
-import jakarta.persistence.Convert
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
@@ -36,12 +35,5 @@ class TermAgreementEntity(
     var status: TermAgreementStatus = TermAgreementStatus.AGREED,
 
     @Column
-    var withdrawnAt: LocalDateTime? = null,
-
-    @Column()
-    val version: Int,
-
-    @Column(name = "content_snapshot", columnDefinition = "json")
-    @Convert(converter = ContentSnapshotConverter::class)
-    val contentSnapshot: ContentSnapshot
+    var withdrawnAt: LocalDateTime? = null
 ) : SoftDeletedBaseEntity()

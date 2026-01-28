@@ -1,7 +1,7 @@
 package `in`.ding.user.auth.application.service.issue
 
 import `in`.ding.user.auth.application.rest.request.OtpIssueRequest
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
+import `in`.ding.user.domain.enumerate.UserNationality
 
 data class OtpIssueCommand(
     val contact: String,

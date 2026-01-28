@@ -2,10 +2,10 @@ package `in`.ding.user.auth.domain.model
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import `in`.ding.user.auth.domain.policy.DomainLifetime
+import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.user.domain.model.Email
 import `in`.ding.user.user.domain.model.PhoneNumber
 import `in`.ding.user.user.domain.model.enumerate.ContactType
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import java.time.LocalDateTime
 import java.util.*
 

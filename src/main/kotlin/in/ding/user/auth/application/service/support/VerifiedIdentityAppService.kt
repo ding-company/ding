@@ -4,8 +4,8 @@ import `in`.ding.user.auth.application.expiry.ExpiryResolver
 import `in`.ding.user.auth.domain.model.VerifiedIdentity
 import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.auth.domain.repository.RedisVerifiedIdentityRepository
+import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.user.domain.model.ContactPolicy
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import org.springframework.stereotype.Component
 
 @Component

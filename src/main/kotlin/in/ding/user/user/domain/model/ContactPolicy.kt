@@ -1,7 +1,7 @@
 package `in`.ding.user.user.domain.model
 
+import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.user.domain.model.enumerate.ContactType
-import `in`.ding.user.user.domain.model.enumerate.UserNationality
 import org.springframework.stereotype.Component
 
 @Component
