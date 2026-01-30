@@ -29,6 +29,9 @@ dependencyManagement {
 
 apply(plugin = "kotlin-kapt")
 dependencies {
+    // log
+    implementation("org.springframework.boot:spring-boot-starter-logging")
+
     // kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 

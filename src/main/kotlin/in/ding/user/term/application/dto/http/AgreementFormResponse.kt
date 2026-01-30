@@ -16,7 +16,6 @@ data class AgreementFormResponse(
                         it.termExKey,
                         it.title,
                         it.content,
-                        it.isRequired,
                         it.version,
                         it.country,
                         it.agreementExKey?.let { false } ?: true
@@ -31,7 +30,6 @@ data class TermDto(
     val exKey: UUID,
     val title: TermTitle,
     val content: String,
-    val isRequired: Boolean,
     val version: String,
     val country: UserNationality?,
     val isAgreed: Boolean

@@ -1,38 +1,58 @@
 package `in`.ding.user.term.application.service
 
+import `in`.ding.common.log.errorJson
+import `in`.ding.common.log.logger
 import `in`.ding.user.term.application.dto.http.AgreementFormResponse
 import `in`.ding.user.term.application.dto.http.TermDto
 import `in`.ding.user.term.application.dto.query.TermAgreementFormQuery
 import `in`.ding.user.term.domain.TermQueryRepository
+import `in`.ding.user.term.domain.exception.AgreementTargetUnavailable
+import `in`.ding.user.term.domain.model.enumerate.TermAgreementStatus
+import `in`.ding.user.term.domain.policy.AgreementStatusPolicy
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
 class AgreementQueryService(
-    private val termQueryRepository: TermQueryRepository,
+    private val termQueryRepository: TermQueryRepository
 ) {
-
+    private val logger = logger<AgreementQueryService>()
     fun getUnagreedRequiredTerms(query: TermAgreementFormQuery): AgreementFormResponse {
         val now = LocalDateTime.now()
-        val requiredTerms = termQueryRepository.findRequiredTermsNotAgreedBy(query)
+        val requiredTerms = termQueryRepository.findRequiredTerms(query)
+
+        requiredTerms.forEach {
+            if (it.agreementStatus != null && it.agreementStatus == TermAgreementStatus.DELETED) {
+                logger.errorJson(
+                    mapOf(
+                        "msg" to
+                            "Invariant violation: DELETED agreement accessed",
+                        "detail" to mapOf(
+                            "userExKey" to query.userExKey,
+                            "termExKey" to it.termExKey
+                        )
+                    )
+                )
+                // TODO event publish
+                throw AgreementTargetUnavailable()
+            }
+        }
 
         val terms = requiredTerms.map {
-            val isAgreed = if (it.expiredAt < now) {
-                false
-            } else {
-                it.agreementExKey?.let { true } ?: false
-            }
-
             TermDto(
                 exKey = it.termExKey,
                 title = it.title,
                 content = it.content,
-                isRequired = it.isRequired,
                 version = it.version,
                 country = it.country,
-                isAgreed = isAgreed
+                isAgreed = AgreementStatusPolicy.isAgreed(
+                    it.agreementStatus,
+                    it.expiredAt,
+                    now
+                )
             )
         }
+
         return AgreementFormResponse(terms)
     }
 }
