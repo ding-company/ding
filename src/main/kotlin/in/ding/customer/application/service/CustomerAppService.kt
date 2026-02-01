@@ -1,6 +1,6 @@
 package `in`.ding.customer.application.service
 
-import `in`.ding.common.kafka.EventPublisher
+import `in`.ding.common.infra.event.EventPublisher
 import `in`.ding.customer.application.dto.command.CustomerRegisterCommand
 import `in`.ding.customer.domain.event.CustomerCreatedEvent
 import `in`.ding.customer.domain.model.Customer

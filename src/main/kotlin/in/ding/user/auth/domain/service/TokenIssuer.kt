@@ -1,6 +1,6 @@
 package `in`.ding.user.auth.domain.service
 
-import `in`.ding.common.auth.JwtTokenProvider
+import `in`.ding.common.infra.security.JwtTokenProvider
 import `in`.ding.user.auth.domain.service.dto.TokenSet
 import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import org.springframework.stereotype.Component

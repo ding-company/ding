@@ -1,6 +1,6 @@
 package `in`.ding.payment.infrastructure.kafka.messaging
 
-import `in`.ding.common.kafka.BaseKafkaConsumerConfig
+import `in`.ding.common.infra.kafka.BaseKafkaConsumerConfig
 import `in`.ding.payment.domain.event.PaymentAuthStartedEvent
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean

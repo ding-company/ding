@@ -1,6 +1,6 @@
 package `in`.ding.payment.domain.model
 
-import `in`.ding.common.DomainID
+import `in`.ding.common.domain.event.DomainID
 import `in`.ding.payment.domain.model.enumerate.PaymentStatus
 import `in`.ding.payment.domain.model.enumerate.PaymentTransactionType
 import java.math.BigDecimal

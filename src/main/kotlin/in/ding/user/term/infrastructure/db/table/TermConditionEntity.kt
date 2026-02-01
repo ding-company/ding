@@ -1,6 +1,6 @@
 package `in`.ding.user.term.infrastructure.db.table
 
-import `in`.ding.common.SoftDeletedBaseEntity
+import `in`.ding.common.infra.jpa.SoftDeletedBaseEntity
 import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.term.domain.model.enumerate.AppType
 import `in`.ding.user.term.domain.model.enumerate.UserType

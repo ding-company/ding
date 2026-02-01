@@ -1,6 +1,6 @@
 package `in`.ding.payment.domain.event
 
-import `in`.ding.common.event.EventType
+import `in`.ding.common.domain.event.EventType
 import java.math.BigDecimal
 import java.util.UUID
 

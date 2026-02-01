@@ -1,6 +1,6 @@
 package `in`.ding.payment.application.handler
 
-import `in`.ding.common.kafka.EventPublisher
+import `in`.ding.common.infra.event.EventPublisher
 import `in`.ding.customer.domain.CustomerRepository
 import `in`.ding.customer.domain.model.Customer
 import `in`.ding.payment.domain.event.PaymentAuthStartedEvent

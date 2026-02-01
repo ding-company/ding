@@ -1,6 +1,6 @@
 package `in`.ding.user.auth.application.rest
 
-import `in`.ding.common.http.RequestId
+import `in`.ding.common.infra.http.RequestId
 import `in`.ding.user.auth.application.rest.request.OtpIssueRequest
 import `in`.ding.user.auth.application.rest.request.OtpVerifyRequest
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse

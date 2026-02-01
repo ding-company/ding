@@ -1,6 +1,6 @@
 package `in`.ding.customer.domain.event
 
-import `in`.ding.common.event.EventType
+import `in`.ding.common.domain.event.EventType
 import java.util.UUID
 
 data class CustomerCreatedEvent(

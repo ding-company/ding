@@ -1,6 +1,6 @@
 package `in`.ding.customer.infrastructure.db.table
 
-import `in`.ding.common.SoftDeletedBaseEntity
+import `in`.ding.common.infra.jpa.SoftDeletedBaseEntity
 import `in`.ding.customer.domain.model.enumerate.CustomerStatus
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

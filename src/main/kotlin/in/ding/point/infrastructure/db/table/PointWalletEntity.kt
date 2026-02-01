@@ -1,6 +1,6 @@
 package `in`.ding.point.infrastructure.db.table
 
-import `in`.ding.common.SoftDeletedBaseEntity
+import `in`.ding.common.infra.jpa.SoftDeletedBaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Table
 import java.math.BigDecimal
