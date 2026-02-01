@@ -1,9 +1,9 @@
 package `in`.ding.user.auth.domain.event
 
-import `in`.ding.common.kafka.EventType
+import `in`.ding.common.event.EventType
 
 data class OtpAbuseDetectedEvent(
     val contact: String,
+    override val eventType: EventType = EventType.SYSTEM,
     override val eventName: String = "otp_abuse_detected_event",
-    override val eventType: EventType = EventType.CREATED,
-) : AuthEvent(eventName, eventType)
+) : AuthBaseEvent(eventName, eventType)

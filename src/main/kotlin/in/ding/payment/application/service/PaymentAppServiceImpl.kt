@@ -1,18 +1,18 @@
 package `in`.ding.payment.application.service
 
 import `in`.ding.common.exception.NotFoundException
+import `in`.ding.common.kafka.EventPublisher
 import `in`.ding.payment.application.dto.command.AuthCommand
 import `in`.ding.payment.application.dto.command.CaptureCommand
 import `in`.ding.payment.domain.PaymentRepository
 import `in`.ding.payment.domain.event.PaymentAuthStartedEvent
 import `in`.ding.payment.domain.model.Payment
-import `in`.ding.payment.infrastructure.kafka.messaging.PaymentEventPublisher
 import org.springframework.stereotype.Service
 
 @Service
 class PaymentAppServiceImpl(
     private val repository: PaymentRepository,
-    private val eventPublisher: PaymentEventPublisher,
+    private val eventPublisher: EventPublisher,
 ) : PaymentAppService {
     override fun auth(command: AuthCommand) {
         val payment = Payment.authorize(sellerExKey = command.sellerExKey, amount = command.amount)

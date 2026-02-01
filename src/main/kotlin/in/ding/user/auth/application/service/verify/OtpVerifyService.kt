@@ -1,6 +1,7 @@
 package `in`.ding.user.auth.application.service.verify
 
 import `in`.ding.common.exception.BaseHttpException
+import `in`.ding.common.kafka.EventPublisher
 import `in`.ding.user.auth.application.expiry.ExpiryResolver
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.service.policy.OtpAvailabilityGuard
@@ -10,7 +11,6 @@ import `in`.ding.user.auth.domain.exception.OtpNotFound
 import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.auth.domain.repository.RedisOtpRepository
 import `in`.ding.user.auth.domain.service.TokenIssuer
-import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
@@ -22,7 +22,7 @@ class OtpVerifyService(
     private val otpRepository: RedisOtpRepository,
     private val verifiedIdentityFactory: VerifiedIdentityAppService,
     private val tokenIssuer: TokenIssuer,
-    private val publisher: AuthEventPublisher,
+    private val publisher: EventPublisher,
     private val otpFailureProcessor: OtpFailureProcessor,
     private val expiryResolver: ExpiryResolver
 ) {
@@ -49,6 +49,7 @@ class OtpVerifyService(
         )
 
         val verifiedIdentity = verifiedIdentityFactory.create(command.contact, command.nationality)
+
         updatedOtp.drainEvents().forEach(publisher::publish)
 
         return OtpVerifyResponse.of(

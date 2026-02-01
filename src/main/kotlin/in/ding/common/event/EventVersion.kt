@@ -1,4 +1,4 @@
-package `in`.ding.common.kafka
+package `in`.ding.common.event
 
 enum class EventVersion {
     V1

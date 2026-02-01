@@ -1,5 +1,6 @@
 package `in`.ding.user.auth.application.service.policy
 
+import `in`.ding.common.kafka.EventPublisher
 import `in`.ding.user.auth.application.expiry.ExpiryResolver
 import `in`.ding.user.auth.domain.event.OtpAbuseDetectedEvent
 import `in`.ding.user.auth.domain.exception.TooManyOtpAttemptsException
@@ -7,14 +8,13 @@ import `in`.ding.user.auth.domain.model.OtpSession
 import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.auth.domain.repository.RedisOtpBlockRepository
 import `in`.ding.user.auth.domain.repository.RedisOtpRepository
-import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import org.springframework.stereotype.Component
 
 @Component
 class OtpFailureProcessor(
     private val otpRepository: RedisOtpRepository,
     private val blockRepository: RedisOtpBlockRepository,
-    private val publisher: AuthEventPublisher,
+    private val publisher: EventPublisher,
     private val expiryResolver: ExpiryResolver
 ) {
     fun handle(otp: OtpSession, contact: String) {

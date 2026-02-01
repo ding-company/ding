@@ -1,12 +1,13 @@
-package `in`.ding.common.kafka
+package `in`.ding.common.event
 
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
-interface DomainEvent {
+interface BaseEvent {
     val eventName: String
-    val eventType: EventType
     val eventId: UUID
     val occurredAt: LocalDateTime
     val version: EventVersion
+    val eventType: EventType
+    val eventContext: EventContext
 }

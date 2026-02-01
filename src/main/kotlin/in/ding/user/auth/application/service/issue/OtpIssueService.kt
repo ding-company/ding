@@ -1,12 +1,12 @@
 package `in`.ding.user.auth.application.service.issue
 
+import `in`.ding.common.kafka.EventPublisher
 import `in`.ding.user.auth.application.expiry.ExpiryResolver
 import `in`.ding.user.auth.application.service.policy.OtpAvailabilityGuard
 import `in`.ding.user.auth.domain.model.OtpSession
 import `in`.ding.user.auth.domain.model.vo.OtpCode
 import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.auth.domain.repository.RedisOtpRepository
-import `in`.ding.user.auth.infrastructure.messaging.kafka.AuthEventPublisher
 import `in`.ding.user.user.domain.model.ContactPolicy
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 class OtpIssueService(
     private val availabilityGuard: OtpAvailabilityGuard,
     private val contactPolicy: ContactPolicy,
-    private val publisher: AuthEventPublisher,
+    private val publisher: EventPublisher,
     private val otpRepository: RedisOtpRepository,
     private val expiryResolver: ExpiryResolver
 ) {
