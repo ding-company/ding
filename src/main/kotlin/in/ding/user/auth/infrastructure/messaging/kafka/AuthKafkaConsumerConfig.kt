@@ -1,7 +1,7 @@
 package `in`.ding.user.auth.infrastructure.messaging.kafka
 
 import `in`.ding.common.kafka.BaseKafkaConsumerConfig
-import `in`.ding.user.auth.domain.event.AuthEvent
+import `in`.ding.user.auth.domain.event.AuthBaseEvent
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -16,7 +16,7 @@ class AuthKafkaConsumerConfig(
     private lateinit var groupId: String
 
     @Bean
-    fun authKafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, AuthEvent> {
-        return base.kafkaListenerContainerFactory(groupId, AuthEvent::class.java)
+    fun authKafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, AuthBaseEvent> {
+        return base.kafkaListenerContainerFactory(groupId, AuthBaseEvent::class.java)
     }
 }

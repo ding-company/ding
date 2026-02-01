@@ -41,10 +41,15 @@ spring:
       group-id:
         user: user-service-group
         point: point-service-group
-    topic:
-      customer: customer.events
-      payment: payment.events
-      auth: auth.events
+    topics:
+      domain:
+        auth: auth.domain-events
+        term: term.domain-events
+      application:
+        auth: auth.application-events
+        term: term.application-events
+      system:
+        temp: temp
 
 # TODO 환경변수
 jwt:

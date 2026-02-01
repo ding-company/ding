@@ -1,16 +1,16 @@
 package `in`.ding.customer.application.service
 
+import `in`.ding.common.kafka.EventPublisher
 import `in`.ding.customer.application.dto.command.CustomerRegisterCommand
 import `in`.ding.customer.domain.event.CustomerCreatedEvent
 import `in`.ding.customer.domain.model.Customer
-import `in`.ding.customer.infrastructure.messaging.kafka.CustomerEventPublisher
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class CustomerAppService(
-    private val eventPublisher: CustomerEventPublisher
+    private val eventPublisher: EventPublisher,
 ) {
     @Transactional
     fun register(

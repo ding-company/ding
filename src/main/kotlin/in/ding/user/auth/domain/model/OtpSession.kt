@@ -3,7 +3,7 @@ package `in`.ding.user.auth.domain.model
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import `in`.ding.common.domain.EventRecorder
-import `in`.ding.user.auth.domain.event.AuthEvent
+import `in`.ding.user.auth.domain.event.AuthBaseEvent
 import `in`.ding.user.auth.domain.event.OtpIssuedEvent
 import `in`.ding.user.auth.domain.event.OtpVerifiedEvent
 import `in`.ding.user.auth.domain.exception.ExpiredOtpException
@@ -21,10 +21,10 @@ data class OtpSession(
     val expiredAt: LocalDateTime,
     val tryCount: Int = 0,
     val verified: Boolean = false,
-    @JsonIgnore private val events: EventRecorder<AuthEvent> = EventRecorder()
+    @JsonIgnore private val events: EventRecorder<AuthBaseEvent> = EventRecorder()
 ) {
     @JsonIgnore
-    fun drainEvents(): List<AuthEvent> = events.drain()
+    fun drainEvents(): List<AuthBaseEvent> = events.drain()
     companion object {
         fun lifetime(): DomainLifetime =
             DomainLifetime.OTP_SESSION
@@ -90,7 +90,7 @@ data class OtpSession(
     @JsonIgnore
     fun isLockable(): Boolean = tryCount >= MAX_TRY_COUNT
 
-    private fun recordEvent(event: AuthEvent) {
+    private fun recordEvent(event: AuthBaseEvent) {
         events.add(event)
     }
 

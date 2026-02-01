@@ -1,10 +1,12 @@
 package `in`.ding.user.term.application.service
 
+import `in`.ding.common.kafka.EventPublisher
 import `in`.ding.common.log.errorJson
 import `in`.ding.common.log.logger
 import `in`.ding.user.term.application.dto.http.AgreementFormResponse
 import `in`.ding.user.term.application.dto.http.TermDto
 import `in`.ding.user.term.application.dto.query.TermAgreementFormQuery
+import `in`.ding.user.term.application.event.AgreementBecameOrphanedEvent
 import `in`.ding.user.term.domain.TermQueryRepository
 import `in`.ding.user.term.domain.exception.AgreementTargetUnavailable
 import `in`.ding.user.term.domain.model.enumerate.TermAgreementStatus
@@ -14,7 +16,8 @@ import java.time.LocalDateTime
 
 @Service
 class AgreementQueryService(
-    private val termQueryRepository: TermQueryRepository
+    private val termQueryRepository: TermQueryRepository,
+    private val publisher: EventPublisher,
 ) {
     private val logger = logger<AgreementQueryService>()
     fun getUnagreedRequiredTerms(query: TermAgreementFormQuery): AgreementFormResponse {
@@ -29,11 +32,16 @@ class AgreementQueryService(
                             "Invariant violation: DELETED agreement accessed",
                         "detail" to mapOf(
                             "userExKey" to query.userExKey,
-                            "termExKey" to it.termExKey
+                            "agreementExKey" to it.agreementExKey
                         )
                     )
                 )
-                // TODO event publish
+                publisher.publish(
+                    AgreementBecameOrphanedEvent(
+                        it.agreementExKey,
+                        query.userExKey,
+                    )
+                )
                 throw AgreementTargetUnavailable()
             }
         }

@@ -1,6 +1,6 @@
 package `in`.ding.payment.domain.event
 
-import `in`.ding.common.kafka.EventType
+import `in`.ding.common.event.EventType
 import java.math.BigDecimal
 import java.util.UUID
 
@@ -20,7 +20,7 @@ data class PaymentAuthedEvent(
     val isUseAutoStampReward: Boolean = false,
     override val eventName: String = "payment_authed_event",
     override val eventType: EventType = EventType.CREATED,
-) : PaymentEvent(eventName, eventType) {
+) : PaymentBaseEvent(eventName, eventType) {
     companion object {
         fun of(customerExKey: UUID, authStartedEvent: PaymentAuthStartedEvent): PaymentAuthedEvent {
             return PaymentAuthedEvent(

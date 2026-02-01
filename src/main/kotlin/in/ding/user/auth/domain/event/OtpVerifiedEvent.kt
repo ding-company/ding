@@ -1,6 +1,6 @@
 package `in`.ding.user.auth.domain.event
 
-import `in`.ding.common.kafka.EventType
+import `in`.ding.common.event.EventType
 import `in`.ding.user.domain.enumerate.UserNationality
 
 data class OtpVerifiedEvent(
@@ -8,4 +8,4 @@ data class OtpVerifiedEvent(
     val nationality: UserNationality,
     override val eventName: String = "otp_verified_event",
     override val eventType: EventType = EventType.CREATED,
-) : AuthEvent(eventName, eventType)
+) : AuthBaseEvent(eventName, eventType)
