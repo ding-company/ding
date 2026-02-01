@@ -1,6 +1,6 @@
 package `in`.ding.user.auth.domain.event
 
-import `in`.ding.common.event.EventType
+import `in`.ding.common.domain.event.EventType
 import `in`.ding.user.domain.enumerate.UserNationality
 
 data class OtpVerifiedEvent(

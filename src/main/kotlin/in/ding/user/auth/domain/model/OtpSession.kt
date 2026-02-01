@@ -2,7 +2,7 @@ package `in`.ding.user.auth.domain.model
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
-import `in`.ding.common.domain.EventRecorder
+import `in`.ding.common.domain.event.EventRecorder
 import `in`.ding.user.auth.domain.event.AuthBaseEvent
 import `in`.ding.user.auth.domain.event.OtpIssuedEvent
 import `in`.ding.user.auth.domain.event.OtpVerifiedEvent

@@ -1,7 +1,7 @@
 package `in`.ding.user.auth.application.service.verify
 
-import `in`.ding.common.exception.BaseHttpException
-import `in`.ding.common.kafka.EventPublisher
+import `in`.ding.common.infra.event.EventPublisher
+import `in`.ding.common.infra.http.exception.BaseHttpException
 import `in`.ding.user.auth.application.expiry.ExpiryResolver
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.service.policy.OtpAvailabilityGuard
@@ -14,7 +14,6 @@ import `in`.ding.user.auth.domain.service.TokenIssuer
 import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class OtpVerifyService(

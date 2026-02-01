@@ -1,6 +1,6 @@
 package `in`.ding.user.term.application.event
 
-import `in`.ding.common.event.EventType
+import `in`.ding.common.domain.event.EventType
 import java.util.UUID
 
 data class AgreementBecameOrphanedEvent(

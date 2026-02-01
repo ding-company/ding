@@ -1,0 +1,13 @@
+package `in`.ding.common.domain.event
+
+import java.time.LocalDateTime
+import java.util.UUID
+
+interface BaseEvent {
+    val eventName: String
+    val eventId: UUID
+    val occurredAt: LocalDateTime
+    val version: EventVersion
+    val eventType: EventType
+    val eventContext: EventContext
+}

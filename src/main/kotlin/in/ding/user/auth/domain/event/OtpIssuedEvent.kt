@@ -1,6 +1,6 @@
 package `in`.ding.user.auth.domain.event
 
-import `in`.ding.common.event.EventType
+import `in`.ding.common.domain.event.EventType
 import `in`.ding.user.auth.domain.model.OtpSession
 import `in`.ding.user.user.domain.model.enumerate.ContactType
 import java.time.LocalDateTime

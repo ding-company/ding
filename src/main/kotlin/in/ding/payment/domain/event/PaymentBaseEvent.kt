@@ -1,9 +1,9 @@
 package `in`.ding.payment.domain.event
 
-import `in`.ding.common.event.BaseEvent
-import `in`.ding.common.event.EventContext
-import `in`.ding.common.event.EventType
-import `in`.ding.common.event.EventVersion
+import `in`.ding.common.domain.event.BaseEvent
+import `in`.ding.common.domain.event.EventContext
+import `in`.ding.common.domain.event.EventType
+import `in`.ding.common.domain.event.EventVersion
 import java.time.LocalDateTime
 import java.util.UUID
 

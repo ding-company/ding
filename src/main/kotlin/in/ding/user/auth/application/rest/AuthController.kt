@@ -1,6 +1,6 @@
 package `in`.ding.user.auth.application.rest
 
-import `in`.ding.common.auth.AuthUser
+import `in`.ding.common.infra.security.AuthUser
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.rest.response.PostAuthStatusResponse
 import `in`.ding.user.auth.application.service.auth.AuthService

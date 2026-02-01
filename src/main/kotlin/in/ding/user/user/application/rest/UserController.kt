@@ -1,6 +1,6 @@
 package `in`.ding.user.user.application.rest
 
-import `in`.ding.common.auth.AuthUser
+import `in`.ding.common.infra.security.AuthUser
 import `in`.ding.user.user.application.dto.command.UserRegisterCommand
 import `in`.ding.user.user.application.dto.http.RegisterUserRequest
 import `in`.ding.user.user.application.service.UserAppService

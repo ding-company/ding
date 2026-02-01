@@ -1,6 +1,6 @@
 package `in`.ding.user.term.application.service
 
-import `in`.ding.common.kafka.EventPublisher
+import `in`.ding.common.infra.event.EventPublisher
 import `in`.ding.common.log.errorJson
 import `in`.ding.common.log.logger
 import `in`.ding.user.term.application.dto.http.AgreementFormResponse
