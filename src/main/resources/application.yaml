@@ -41,22 +41,19 @@ spring:
       group-id:
         user: user-service-group
         point: point-service-group
-    topics:
-      domain:
-        auth: auth.domain-events
-        term: term.domain-events
-      application:
-        auth: auth.application-events
-        term: term.application-events
-      system:
-        temp: temp
 
 # TODO 환경변수
 jwt:
   secret: asdfafdsljgkljweiorupaoigupaiusdpfa
   access-token-validity: 15m
   refresh-token-validity: 7d
-
+event:
+  topics:
+    auth: auth.events
+    term: term.events
+    user: user.events
+    payment: payment.events
+    customer: customer.events
 # 환경변수
 otp:
   expiry:
