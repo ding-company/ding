@@ -1,6 +1,6 @@
 package `in`.ding.seller.infrastructure.db.repository
 
-import `in`.ding.common.domain.event.DomainID
+import `in`.ding.common.domain.DomainID
 import `in`.ding.seller.infrastructure.db.table.SellerEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

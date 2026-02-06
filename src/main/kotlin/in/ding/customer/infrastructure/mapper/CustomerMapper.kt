@@ -1,6 +1,6 @@
 package `in`.ding.customer.infrastructure.mapper
 
-import `in`.ding.common.infra.http.ErrorMessage
+import `in`.ding.common.domain.ErrorMessage
 import `in`.ding.customer.domain.model.Customer
 import `in`.ding.customer.domain.model.CustomerID
 import `in`.ding.customer.infrastructure.db.table.CustomerEntity

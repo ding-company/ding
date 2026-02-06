@@ -1,7 +1,7 @@
 package `in`.ding.payment.infrastructure.mapper
 
-import `in`.ding.common.domain.event.DomainID
-import `in`.ding.common.infra.http.ErrorMessage
+import `in`.ding.common.domain.DomainID
+import `in`.ding.common.domain.ErrorMessage
 import `in`.ding.payment.domain.model.Payment
 import `in`.ding.payment.domain.model.PaymentID
 import `in`.ding.payment.domain.model.PaymentTransaction
