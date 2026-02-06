@@ -1,4 +1,4 @@
-package `in`.ding.common.domain.event
+package `in`.ding.common.domain
 
 @JvmInline
 value class DomainID(val value: Long) {

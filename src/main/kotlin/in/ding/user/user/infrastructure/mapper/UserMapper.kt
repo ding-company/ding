@@ -1,6 +1,6 @@
 package `in`.ding.user.user.infrastructure.mapper
 
-import `in`.ding.common.infra.http.ErrorMessage
+import `in`.ding.common.domain.ErrorMessage
 import `in`.ding.user.user.domain.model.Email
 import `in`.ding.user.user.domain.model.PhoneNumber
 import `in`.ding.user.user.domain.model.User

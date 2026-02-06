@@ -1,6 +1,6 @@
 package `in`.ding.seller.infrastructure.mapper
 
-import `in`.ding.common.infra.http.ErrorMessage
+import `in`.ding.common.domain.ErrorMessage
 import `in`.ding.seller.domain.model.Seller
 import `in`.ding.seller.domain.model.SellerId
 import `in`.ding.seller.infrastructure.db.table.SellerEntity
