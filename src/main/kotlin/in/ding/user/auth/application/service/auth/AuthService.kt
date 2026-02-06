@@ -1,11 +1,14 @@
 package `in`.ding.user.auth.application.service.auth
 
+import `in`.ding.common.infra.http.ClientPlatform
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.rest.response.PostAuthStatus
 import `in`.ding.user.auth.application.rest.response.PostAuthStatusResponse
+import `in`.ding.user.auth.domain.exception.VerifiedIdentityNotFound
 import `in`.ding.user.auth.domain.repository.RedisVerifiedIdentityRepository
 import `in`.ding.user.auth.domain.service.TokenIssuer
 import `in`.ding.user.term.application.service.TermQueryService
+import `in`.ding.user.term.domain.model.enumerate.ServiceChannel
 import `in`.ding.user.user.domain.UserRepository
 import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import org.springframework.stereotype.Service
@@ -18,15 +21,31 @@ class AuthService(
     private val termQueryService: TermQueryService,
     private val userRepository: UserRepository
 ) {
-    fun getAuthStatus(userExKey: UUID): PostAuthStatusResponse {
-//        val user = userRepository.findByExKey(userExKey)
-//        val verifiedIdentity = verifiedIdentityRepository.findVerifiedIdentity(userExKey)
-//        if (user == null) {
-//            return PostAuthStatusResponse(PostAuthStatus.NOT_REGISTERED)
-//        } else {
-//            if (termQueryService.isAllRequiredAgreed(userExKey)) {}
-//        }
-        return PostAuthStatusResponse(PostAuthStatus.AUTHENTICATED)
+    fun getAuthStatus(query: GetPostAuthStatusQuery): PostAuthStatusResponse {
+        verifiedIdentityRepository.findVerifiedIdentity(query.userExKey) ?: throw VerifiedIdentityNotFound()
+        val user = userRepository.findByExKey(query.userExKey)
+        val serviceChannel = when (query.clientPlatform) {
+            ClientPlatform.ANDROID -> ServiceChannel.ANDROID
+            ClientPlatform.IOS -> ServiceChannel.IOS
+            else -> null
+        }
+        var result: PostAuthStatusResponse
+        if (user == null) {
+            result = PostAuthStatusResponse(PostAuthStatus.NOT_REGISTERED)
+        } else {
+            if (termQueryService.isAllRequiredAgreed(
+                    query.userExKey,
+                    query.principalType,
+                    serviceChannel,
+                    query.nationality
+                )
+            ) {
+                result = PostAuthStatusResponse(PostAuthStatus.REQUIRE_TERMS)
+            } else {
+                result = PostAuthStatusResponse(PostAuthStatus.AUTHENTICATED)
+            }
+        }
+        return result
     }
     fun issueTokenForTest(userExKey: UUID): OtpVerifyResponse {
         return OtpVerifyResponse.Companion.of(tokenIssuer.issueTokens(userExKey, UserStatus.REGISTERED))

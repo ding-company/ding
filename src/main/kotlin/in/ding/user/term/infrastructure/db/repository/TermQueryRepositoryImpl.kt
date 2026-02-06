@@ -1,6 +1,7 @@
 package `in`.ding.user.term.infrastructure.db.repository
 
 import com.querydsl.core.types.Projections
+import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import `in`.ding.common.infra.jpa.ID
 import `in`.ding.user.domain.enumerate.UserNationality
@@ -62,7 +63,7 @@ class TermQueryRepositoryImpl(
     }
 
     override fun findRequiredTerms(
-        serviceChannel: ServiceChannel,
+        serviceChannel: ServiceChannel?,
         principalType: PrincipalType,
         country: UserNationality
     ): List<TermEntity> {
@@ -72,7 +73,7 @@ class TermQueryRepositoryImpl(
         return queryFactory.select(term).from(termCondition).join(term.termCondition, termCondition)
             .where(
                 termCondition.principalType.eq(principalType),
-                termCondition.serviceChannel.`in`(serviceChannel, ServiceChannel.COMMON),
+                serviceChannelCondition(serviceChannel),
                 termCondition.country.isNull
                     .or(termCondition.country.eq(country)),
                 termCondition.isRequired.isTrue,
@@ -80,13 +81,23 @@ class TermQueryRepositoryImpl(
                 term.effectiveTo.isNull.or(term.effectiveTo.goe(now))
             ).fetch()
     }
-    override
-    fun countAgreedByTermIdsAndUserExKey(termIds: List<ID>, userExKey: UUID): Long {
+    override fun countAgreedByTermIdsAndUserExKey(termIds: List<ID>, userExKey: UUID): Long {
         val agreement = QTermAgreementEntity.termAgreementEntity
 
         return queryFactory.select(agreement).from(agreement).where(
             agreement.term.id.`in`(termIds),
             agreement.userExKey.eq(userExKey)
         ).fetchCount()
+    }
+    private fun serviceChannelCondition(
+        serviceChannel: ServiceChannel?
+    ): BooleanExpression {
+        val tc = QTermConditionEntity.termConditionEntity
+
+        return if (serviceChannel == null) {
+            tc.serviceChannel.eq(ServiceChannel.COMMON)
+        } else {
+            tc.serviceChannel.`in`(serviceChannel, ServiceChannel.COMMON)
+        }
     }
 }
