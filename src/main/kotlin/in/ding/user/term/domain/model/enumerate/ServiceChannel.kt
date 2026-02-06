@@ -1,7 +1,7 @@
 package `in`.ding.user.term.domain.model.enumerate
 
-enum class AppType {
+enum class ServiceChannel {
     IOS,
     ANDROID,
-    ALL
+    COMMON
 }
