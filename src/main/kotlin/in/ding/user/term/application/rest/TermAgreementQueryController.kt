@@ -1,6 +1,6 @@
 package `in`.ding.user.term.application.rest
 
-import `in`.ding.common.infra.security.AuthUser
+import `in`.ding.common.infra.security.principal.AuthPrincipal
 import `in`.ding.user.term.application.dto.http.AgreementFormResponse
 import `in`.ding.user.term.application.dto.http.QueryTermsAgreementFormRequest
 import `in`.ding.user.term.application.dto.query.TermAgreementFormQuery
@@ -17,12 +17,13 @@ class TermAgreementQueryController(
     private val agreementQueryService: TermQueryService
 ) {
 
+    // TODO auth
     @GetMapping("/form")
     fun getForm(
-        @AuthenticationPrincipal user: AuthUser,
+        @AuthenticationPrincipal authPrincipal: AuthPrincipal,
         @ModelAttribute request: QueryTermsAgreementFormRequest
     ): AgreementFormResponse {
-        val query = TermAgreementFormQuery.of(request, user.exKey)
+        val query = TermAgreementFormQuery.of(request, authPrincipal.subject)
         return agreementQueryService.getUnagreedRequiredTerms(query)
     }
 }

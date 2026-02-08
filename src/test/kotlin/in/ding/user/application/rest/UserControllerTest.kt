@@ -1,12 +1,13 @@
 package `in`.ding.user.application.rest
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import `in`.ding.common.infra.security.AuthUser
+import `in`.ding.common.infra.security.jwt.JwtTokenProvider
+import `in`.ding.common.infra.security.jwt.TokenType
+import `in`.ding.common.infra.security.principal.AuthPrincipal
 import `in`.ding.user.user.application.dto.command.UserRegisterCommand
 import `in`.ding.user.user.application.dto.http.RegisterUserRequest
 import `in`.ding.user.user.application.rest.UserController
 import `in`.ding.user.user.application.service.UserAppServiceImpl
-import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import io.kotest.core.spec.style.BehaviorSpec
 import org.mockito.Mockito.doNothing
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -27,18 +28,20 @@ class UserControllerTest(
     val mockMvc: MockMvc,
     @MockBean
     val userService: UserAppServiceImpl,
+    @MockBean
+    val jwtTokenProvider: JwtTokenProvider,
     private val objectMapper: ObjectMapper
 ) : BehaviorSpec({
     given("회원가입 요청이 주어졌을 때") {
-        val authUser = AuthUser(UUID.randomUUID(), status = UserStatus.TEMPORARY)
-        val authentication = UsernamePasswordAuthenticationToken(authUser, null, emptyList())
+        val authPrincipal = AuthPrincipal(UUID.randomUUID(), TokenType.OTP)
+        val authentication = UsernamePasswordAuthenticationToken(authPrincipal, null, emptyList())
 
         `when`("유효한 요청이 전달되면") {
             val request = RegisterUserRequest(
                 termsAgreement =
                 listOf()
             )
-            doNothing().`when`(userService).register(UserRegisterCommand.of(request, authUser.exKey))
+            doNothing().`when`(userService).register(UserRegisterCommand.of(request, authPrincipal.subject))
 
             val result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/users/register")

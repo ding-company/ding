@@ -1,6 +1,6 @@
 package `in`.ding.user.user.application.rest
 
-import `in`.ding.common.infra.security.AuthUser
+import `in`.ding.common.infra.security.principal.AuthPrincipal
 import `in`.ding.user.user.application.dto.command.UserRegisterCommand
 import `in`.ding.user.user.application.dto.http.RegisterUserRequest
 import `in`.ding.user.user.application.service.UserAppService
@@ -17,20 +17,22 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class UserController(private val userAppService: UserAppService) {
 
+    // TODO auth
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/me")
     fun getMe(
-        @AuthenticationPrincipal user: AuthUser,
+        @AuthenticationPrincipal authPrincipal: AuthPrincipal,
     ) {
-        userAppService.getByExKey(user.exKey)
+        userAppService.getByExKey(authPrincipal.subject)
     }
 
+    // TODO auth
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/register")
     fun registerUser(
         @RequestBody request: RegisterUserRequest,
-        @AuthenticationPrincipal user: AuthUser,
+        @AuthenticationPrincipal authPrincipal: AuthPrincipal,
     ) {
-        userAppService.register(UserRegisterCommand.of(request, user.exKey))
+        userAppService.register(UserRegisterCommand.of(request, authPrincipal.subject))
     }
 }

@@ -8,6 +8,7 @@ spring:
   datasource:
     url: jdbc:h2:mem:///test_customer
 jwt:
-  secret: test-secret
-  access-token-validity: 15m
-  refresh-token-validity: 7d
+  secret: "very-very-long-secret-key-at-least-256bit"
+  otp-token-validity: 5m
+  access-token-validity: 30m
+  pre-auth-token-validity: 30m

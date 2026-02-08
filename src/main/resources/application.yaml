@@ -44,9 +44,10 @@ spring:
 
 # TODO 환경변수
 jwt:
-  secret: asdfafdsljgkljweiorupaoigupaiusdpfa
-  access-token-validity: 15m
-  refresh-token-validity: 7d
+  secret: "very-very-long-secret-key-at-least-256bit"
+  otp-token-validity: 5m
+  pre-auth-token-validity: 30m
+  access-token-validity: 30m
 event:
   topics:
     auth: auth.events

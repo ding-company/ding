@@ -1,18 +1,17 @@
 package `in`.ding.user.auth.application.service.auth
 
 import `in`.ding.common.infra.http.ClientPlatform
+import `in`.ding.common.infra.security.jwt.TokenIssuer
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.rest.response.PostAuthStatus
 import `in`.ding.user.auth.application.rest.response.PostAuthStatusResponse
 import `in`.ding.user.auth.domain.exception.VerifiedIdentityNotFound
 import `in`.ding.user.auth.domain.repository.RedisVerifiedIdentityRepository
-import `in`.ding.user.auth.domain.service.TokenIssuer
 import `in`.ding.user.term.application.service.TermQueryService
 import `in`.ding.user.term.domain.model.enumerate.ServiceChannel
 import `in`.ding.user.user.domain.UserRepository
-import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import org.springframework.stereotype.Service
-import java.util.UUID
+import java.util.*
 
 @Service
 class AuthService(
@@ -48,6 +47,6 @@ class AuthService(
         return result
     }
     fun issueTokenForTest(userExKey: UUID): OtpVerifyResponse {
-        return OtpVerifyResponse.Companion.of(tokenIssuer.issueTokens(userExKey, UserStatus.REGISTERED))
+        return OtpVerifyResponse(tokenIssuer.issueOtpToken(userExKey))
     }
 }
