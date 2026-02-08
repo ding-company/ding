@@ -1,7 +1,7 @@
 package `in`.ding.user.auth.application.rest
 
 import `in`.ding.common.infra.http.RequestContextHolder
-import `in`.ding.common.infra.security.AuthUser
+import `in`.ding.common.infra.security.principal.AuthPrincipal
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.rest.response.PostAuthStatusResponse
 import `in`.ding.user.auth.application.service.auth.AuthService
@@ -21,15 +21,17 @@ import java.util.UUID
 class AuthController(
     private val authService: AuthService
 ) {
+
+    // TODO Auth
     @GetMapping("post-auth/status")
     fun getAuthStatus(
-        @AuthenticationPrincipal user: AuthUser,
+        @AuthenticationPrincipal authPrincipal: AuthPrincipal,
         @RequestParam nationality: String
     ): PostAuthStatusResponse {
         val ctx = RequestContextHolder.get()
-        val nationality = UserNationality.from(nationality)
+        val userNationality = UserNationality.from(nationality)
         return authService.getAuthStatus(
-            GetPostAuthStatusQuery(user.exKey, PrincipalType.SELLER, ctx.clientPlatform, nationality)
+            GetPostAuthStatusQuery(authPrincipal.subject, PrincipalType.SELLER, ctx.clientPlatform, userNationality)
         )
     }
 

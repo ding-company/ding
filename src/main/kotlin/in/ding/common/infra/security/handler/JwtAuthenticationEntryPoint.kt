@@ -1,4 +1,4 @@
-package `in`.ding.common.infra.security
+package `in`.ding.common.infra.security.handler
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import `in`.ding.common.infra.http.MetaCode
@@ -8,25 +8,27 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.stereotype.Component
-
 @Component
-class JwtAuthenticationEntryPoint : AuthenticationEntryPoint {
+class JwtAuthenticationEntryPoint(
+    private val objectMapper: ObjectMapper
+) : AuthenticationEntryPoint {
+
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,
         authException: AuthenticationException
     ) {
-        response.contentType = "application/json;charset=UTF-8"
         response.status = HttpServletResponse.SC_UNAUTHORIZED
+        response.contentType = "application/json;charset=UTF-8"
 
-        val dto = ResponseDTO(
+        val body = ResponseDTO(
             meta = ResponseDTO.Meta(
                 code = MetaCode.AUTHENTICATION_FAILED,
-                message = authException.message ?: "AUTHENTICATION FAILED"
+                message = "Authentication required"
             ),
             data = null
         )
 
-        response.writer.write(ObjectMapper().writeValueAsString(dto))
+        response.writer.write(objectMapper.writeValueAsString(body))
     }
 }

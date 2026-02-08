@@ -2,6 +2,7 @@ package `in`.ding.user.auth.application.service.verify
 
 import `in`.ding.common.infra.event.EventPublisher
 import `in`.ding.common.infra.http.exception.BaseHttpException
+import `in`.ding.common.infra.security.jwt.TokenIssuer
 import `in`.ding.user.auth.application.expiry.ExpiryResolver
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.service.policy.OtpAvailabilityGuard
@@ -10,8 +11,6 @@ import `in`.ding.user.auth.application.service.support.VerifiedIdentityAppServic
 import `in`.ding.user.auth.domain.exception.OtpNotFound
 import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.auth.domain.repository.RedisOtpRepository
-import `in`.ding.user.auth.domain.service.TokenIssuer
-import `in`.ding.user.user.domain.model.enumerate.UserStatus
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -51,8 +50,8 @@ class OtpVerifyService(
 
         updatedOtp.drainEvents().forEach(publisher::publish)
 
-        return OtpVerifyResponse.of(
-            tokenIssuer.issueTokens(verifiedIdentity.exKey, UserStatus.TEMPORARY)
+        return OtpVerifyResponse(
+            tokenIssuer.issueOtpToken(verifiedIdentity.exKey)
         )
     }
 }
