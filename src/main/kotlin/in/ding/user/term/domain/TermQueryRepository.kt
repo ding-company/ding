@@ -11,7 +11,7 @@ import java.util.UUID
 interface TermQueryRepository {
     fun findRequiredTerms(query: TermAgreementFormQuery): List<RequiredTermForm>
     fun findRequiredTerms(
-        serviceChannel: ServiceChannel,
+        serviceChannel: ServiceChannel?,
         principalType: PrincipalType,
         country: UserNationality
     ): List<TermEntity>

@@ -72,7 +72,7 @@ class TermQueryService(
     fun isAllRequiredAgreed(
         userExKey: UUID,
         principalType: PrincipalType,
-        serviceChannel: ServiceChannel,
+        serviceChannel: ServiceChannel?,
         nationality: UserNationality
     ): Boolean {
         val requiredTerms = termQueryRepository.findRequiredTerms(serviceChannel, principalType, nationality)
