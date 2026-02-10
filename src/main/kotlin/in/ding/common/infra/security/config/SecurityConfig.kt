@@ -28,24 +28,15 @@ class SecurityConfig(
             }
             .authorizeHttpRequests {
                 it
-                    // 완전 공개
                     .requestMatchers(
                         "/api/v1/auth/otp/issue",
                         "/api/v1/auth/otp/verify",
+                        "/api/v1/auth/post-auth/status",
+                        "/api/v1/auth/terms/**",
+                        "/api/v1/terms/**",
                         "/actuator/health"
                     ).permitAll()
-                    // OTP 토큰만 있어도 접근 가능
-                    .requestMatchers(
-                        "/api/v1/auth/post-auth/status"
-                    ).hasAuthority("TOKEN_OTP")
-                    // 약관 관련 (OTP or PRE_AUTH)
-                    .requestMatchers(
-                        "/api/v1/terms/**",
-                        "/api/v1/auth/terms/**"
-                    ).hasAnyAuthority("TOKEN_OTP", "TOKEN_PRE_AUTH")
-                    // 완전 인증 필요
-                    .anyRequest()
-                    .hasAuthority("TOKEN_AUTHENTICATED")
+                    .anyRequest().authenticated()
             }
             .addFilterBefore(
                 jwtAuthenticationFilter,

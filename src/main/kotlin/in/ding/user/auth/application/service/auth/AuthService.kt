@@ -48,6 +48,6 @@ class AuthService(
         return result
     }
     fun issueTokenForTest(userExKey: UUID): OtpVerifyResponse {
-        return OtpVerifyResponse(tokenIssuer.issue(userExKey, TokenType.OTP))
+        return OtpVerifyResponse(tokenIssuer.issueAuthenticationToken(userExKey, tokenType = TokenType.OTP).token)
     }
 }
