@@ -51,6 +51,8 @@ class OtpVerifyService(
 
         updatedOtp.drainEvents().forEach(publisher::publish)
 
-        return OtpVerifyResponse(tokenIssuer.issue(verifiedIdentity.exKey, TokenType.OTP))
+        return OtpVerifyResponse(
+            tokenIssuer.issueAuthenticationToken(verifiedIdentity.exKey, tokenType = TokenType.OTP).token
+        )
     }
 }
