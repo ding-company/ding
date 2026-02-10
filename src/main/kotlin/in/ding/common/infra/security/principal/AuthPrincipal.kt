@@ -1,6 +1,6 @@
 package `in`.ding.common.infra.security.principal
 
-import `in`.ding.common.infra.security.jwt.TokenType
+import `in`.ding.common.infra.security.jwt.model.TokenType
 import java.security.Principal
 import java.util.UUID
 
