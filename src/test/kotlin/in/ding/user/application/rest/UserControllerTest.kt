@@ -2,7 +2,7 @@ package `in`.ding.user.application.rest
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import `in`.ding.common.infra.security.jwt.JwtTokenProvider
-import `in`.ding.common.infra.security.jwt.TokenType
+import `in`.ding.common.infra.security.jwt.model.TokenType
 import `in`.ding.common.infra.security.principal.AuthPrincipal
 import `in`.ding.user.user.application.dto.command.UserRegisterCommand
 import `in`.ding.user.user.application.dto.http.RegisterUserRequest

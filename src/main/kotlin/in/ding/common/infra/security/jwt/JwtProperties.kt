@@ -5,8 +5,14 @@ import java.time.Duration
 
 @ConfigurationProperties(prefix = "jwt")
 class JwtProperties {
+
     lateinit var secret: String
+
     lateinit var otpTokenValidity: Duration
     lateinit var preAuthTokenValidity: Duration
+
     lateinit var accessTokenValidity: Duration
+
+    lateinit var refreshTokenValidity: Duration
+    lateinit var refreshTokenAbsoluteValidity: Duration
 }

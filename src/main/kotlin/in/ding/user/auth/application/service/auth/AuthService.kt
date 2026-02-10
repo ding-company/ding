@@ -2,6 +2,7 @@ package `in`.ding.user.auth.application.service.auth
 
 import `in`.ding.common.infra.http.ClientPlatform
 import `in`.ding.common.infra.security.jwt.TokenIssuer
+import `in`.ding.common.infra.security.jwt.model.TokenType
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.rest.response.PostAuthStatus
 import `in`.ding.user.auth.application.rest.response.PostAuthStatusResponse
@@ -47,6 +48,6 @@ class AuthService(
         return result
     }
     fun issueTokenForTest(userExKey: UUID): OtpVerifyResponse {
-        return OtpVerifyResponse(tokenIssuer.issueOtpToken(userExKey))
+        return OtpVerifyResponse(tokenIssuer.issue(userExKey, TokenType.OTP))
     }
 }
