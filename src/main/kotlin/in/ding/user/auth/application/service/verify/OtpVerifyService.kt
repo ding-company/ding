@@ -10,7 +10,7 @@ import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.service.policy.OtpAvailabilityGuard
 import `in`.ding.user.auth.application.service.policy.OtpFailureProcessor
 import `in`.ding.user.auth.application.service.support.VerifiedIdentityAppService
-import `in`.ding.user.auth.domain.exception.OtpNotFound
+import `in`.ding.user.auth.domain.exception.NotFoundOtpException
 import `in`.ding.user.auth.domain.policy.DomainLifetime
 import `in`.ding.user.auth.domain.repository.RedisOtpRepository
 import jakarta.transaction.Transactional
@@ -31,7 +31,7 @@ class OtpVerifyService(
     fun verify(command: OtpVerifyCommand): OtpVerifyResponse {
         availabilityGuard.check(command.contact)
         val otp = otpRepository.findOtp(command.contact)
-            ?: throw OtpNotFound()
+            ?: throw NotFoundOtpException()
 
         val updatedOtp = try {
             otp.verify(command.otpCode, command.nationality)

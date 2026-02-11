@@ -16,7 +16,7 @@ import java.time.Duration
 import java.time.LocalDateTime
 data class OtpSession(
     val contact: String,
-    val code: OtpCode,
+    var code: OtpCode,
     val issuedAt: LocalDateTime,
     val expiredAt: LocalDateTime,
     val tryCount: Int = 0,
@@ -75,6 +75,19 @@ data class OtpSession(
             )
         }
     }
+    fun reIssue(
+        code: OtpCode,
+        contactType: ContactType,
+    ) {
+        this.code = code
+        this.recordEvent(
+            OtpIssuedEvent.of(
+                otp = this,
+                contactType = contactType
+            )
+        )
+    }
+
     fun verify(otpCode: String, nationality: UserNationality): OtpSession {
         if (this.code.value != otpCode) throw InvalidOtpException()
         if (isExpired()) throw ExpiredOtpException()
