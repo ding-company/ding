@@ -3,6 +3,7 @@ package `in`.ding.user.auth.application.service.refresh
 import `in`.ding.common.infra.security.jwt.JwtTokenProvider
 import `in`.ding.common.infra.security.jwt.TokenIssuer
 import `in`.ding.common.infra.security.jwt.exception.InvalidTokenException
+import `in`.ding.common.infra.security.jwt.model.BaseTokenResponse
 import `in`.ding.common.infra.security.jwt.model.TokenType
 import `in`.ding.user.auth.application.rest.response.RefreshTokenResponse
 import `in`.ding.user.auth.domain.model.RefreshToken
@@ -54,6 +55,6 @@ class RefreshTokenAppService(
             )
         )
 
-        return RefreshTokenResponse(newAccess.token, newRefresh.token, newRefresh.expiresInSeconds)
+        return RefreshTokenResponse(BaseTokenResponse(newAccess.token, newRefresh.token, newRefresh.expiresInSeconds))
     }
 }

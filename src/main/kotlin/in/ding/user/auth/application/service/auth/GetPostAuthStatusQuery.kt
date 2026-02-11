@@ -6,7 +6,7 @@ import `in`.ding.user.term.domain.model.enumerate.PrincipalType
 import java.util.*
 
 data class GetPostAuthStatusQuery(
-    val userExKey: UUID,
+    val verifiedIdentityExKey: UUID,
     val principalType: PrincipalType,
     val clientPlatform: ClientPlatform?,
     val nationality: UserNationality

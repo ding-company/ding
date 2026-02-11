@@ -1,7 +1,7 @@
 package `in`.ding.user.auth.application.rest.response
 
+import `in`.ding.common.infra.security.jwt.model.BaseTokenResponse
+
 data class RefreshTokenResponse(
-    val accessToken: String,
-    val refreshToken: String?,
-    val expiresInSeconds: Long,
+    val token: BaseTokenResponse
 )
