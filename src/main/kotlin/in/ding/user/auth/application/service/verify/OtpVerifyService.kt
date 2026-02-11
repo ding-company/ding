@@ -3,6 +3,7 @@ package `in`.ding.user.auth.application.service.verify
 import `in`.ding.common.infra.event.EventPublisher
 import `in`.ding.common.infra.http.exception.BaseHttpException
 import `in`.ding.common.infra.security.jwt.TokenIssuer
+import `in`.ding.common.infra.security.jwt.model.BaseTokenResponse
 import `in`.ding.common.infra.security.jwt.model.TokenType
 import `in`.ding.user.auth.application.expiry.ExpiryResolver
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
@@ -51,8 +52,7 @@ class OtpVerifyService(
 
         updatedOtp.drainEvents().forEach(publisher::publish)
 
-        return OtpVerifyResponse(
-            tokenIssuer.issueAuthenticationToken(verifiedIdentity.exKey, tokenType = TokenType.OTP).token
-        )
+        val token = tokenIssuer.issueAuthenticationToken(verifiedIdentity.exKey, tokenType = TokenType.OTP)
+        return OtpVerifyResponse(BaseTokenResponse(token.token, null, token.expiresInSeconds))
     }
 }
