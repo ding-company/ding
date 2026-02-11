@@ -2,6 +2,7 @@ package `in`.ding.user.auth.application.rest
 
 import `in`.ding.common.infra.http.RequestId
 import `in`.ding.user.auth.application.rest.request.OtpIssueRequest
+import `in`.ding.user.auth.application.rest.request.OtpReIssueRequest
 import `in`.ding.user.auth.application.rest.request.OtpVerifyRequest
 import `in`.ding.user.auth.application.rest.response.OtpVerifyResponse
 import `in`.ding.user.auth.application.service.issue.OtpIssueCommand
@@ -25,6 +26,13 @@ class OtpController(
         @RequestId requestId: String
     ) {
         issueService.issue(OtpIssueCommand.of(body, requestId))
+    }
+
+    @PostMapping("/re-issue")
+    fun reIssueOtp(
+        @RequestBody body: OtpReIssueRequest,
+    ) {
+        issueService.reIssue(contact = body.contact, nationality = body.nationality)
     }
 
     @PostMapping("/verify")
