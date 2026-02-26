@@ -20,7 +20,6 @@ data class User(
             phoneNumber: PhoneNumber?,
             email: Email?,
             nationality: UserNationality,
-            registeredAt: LocalDateTime
         ): User {
             return User(
                 id = UserID.UNASSIGNED,
@@ -29,7 +28,7 @@ data class User(
                 email = email,
                 nationality = nationality,
                 status = UserStatus.REGISTERED,
-                registeredAt = registeredAt
+                registeredAt = LocalDateTime.now()
             )
         }
     }
