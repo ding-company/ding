@@ -52,7 +52,7 @@ class OtpVerifyService(
 
         updatedOtp.drainEvents().forEach(publisher::publish)
 
-        val token = tokenIssuer.issueAuthenticationToken(verifiedIdentity.exKey, tokenType = TokenType.OTP)
+        val token = tokenIssuer.issueAuthenticationToken(verifiedIdentity.exKey, tokenType = TokenType.PRE_AUTH)
         return OtpVerifyResponse(BaseTokenResponse(token.token, null, token.expiresInSeconds))
     }
 }
