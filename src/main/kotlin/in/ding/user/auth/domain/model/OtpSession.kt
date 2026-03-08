@@ -14,7 +14,10 @@ import `in`.ding.user.domain.enumerate.UserNationality
 import `in`.ding.user.user.domain.model.enumerate.ContactType
 import java.time.Duration
 import java.time.LocalDateTime
+import java.util.UUID
+
 data class OtpSession(
+    val sessionId: UUID,
     val contact: String,
     var code: OtpCode,
     val issuedAt: LocalDateTime,
@@ -38,6 +41,7 @@ data class OtpSession(
             expiredCondition: Duration,
         ): OtpSession {
             val session = OtpSession(
+                sessionId = UUID.randomUUID(),
                 contact = contact,
                 code = code,
                 issuedAt = now,
@@ -58,6 +62,7 @@ data class OtpSession(
         @JsonCreator
         @JvmStatic
         private fun jsonCreator(
+            sessionId: UUID,
             contact: String,
             code: String,
             issuedAt: LocalDateTime,
@@ -66,6 +71,7 @@ data class OtpSession(
             verified: Boolean
         ): OtpSession {
             return OtpSession(
+                sessionId = sessionId,
                 contact = contact,
                 code = OtpCode(code),
                 issuedAt = issuedAt,

@@ -1,7 +1,11 @@
 package `in`.ding.user.auth.application.service.issue
 
 import `in`.ding.common.infra.event.EventPublisher
+import `in`.ding.common.infra.security.jwt.TokenIssuer
+import `in`.ding.common.infra.security.jwt.model.BaseTokenResponse
+import `in`.ding.common.infra.security.jwt.model.TokenType
 import `in`.ding.user.auth.application.expiry.ExpiryResolver
+import `in`.ding.user.auth.application.rest.response.OtpIssueResponse
 import `in`.ding.user.auth.application.service.policy.OtpAvailabilityGuard
 import `in`.ding.user.auth.domain.exception.NotFoundOtpException
 import `in`.ding.user.auth.domain.model.OtpSession
@@ -16,6 +20,7 @@ import java.time.LocalDateTime
 
 @Service
 class OtpIssueService(
+    private val tokenIssuer: TokenIssuer,
     private val availabilityGuard: OtpAvailabilityGuard,
     private val contactPolicy: ContactPolicy,
     private val publisher: EventPublisher,
@@ -23,7 +28,7 @@ class OtpIssueService(
     private val expiryResolver: ExpiryResolver
 ) {
     @Transactional
-    fun issue(command: OtpIssueCommand) {
+    fun issue(command: OtpIssueCommand): OtpIssueResponse {
         availabilityGuard.check(command.contact)
         val now = LocalDateTime.now()
         val lifeTime = DomainLifetime.OTP_SESSION
@@ -37,7 +42,18 @@ class OtpIssueService(
         )
 
         otpRepository.saveOtp(otp.contact, otp, ttl)
+        val token = tokenIssuer.issueAuthenticationToken(
+            subject = otp.sessionId,
+            tokenType = TokenType.OTP
+        )
         otp.drainEvents().forEach(publisher::publish)
+        return OtpIssueResponse(
+            token = BaseTokenResponse(
+                authenticationToken = token.token,
+                refreshToken = null,
+                expiresInSeconds = token.expiresInSeconds
+            )
+        )
     }
 
     // TODO max reIssue카운트 어떻게 할지 고려
