@@ -17,6 +17,8 @@ group = "in.ding"
 version = Constant.VERSION
 java.sourceCompatibility = JavaVersion.toVersion(Dependency.targetJvmVersion)
 
+val snippetsDir by extra { file("build/generated-snippets") }
+
 repositories {
     mavenCentral()
 }
@@ -113,6 +115,7 @@ dependencies {
     testImplementation("com.h2database:h2")
     testImplementation("org.springframework.cloud:spring-cloud-contract-wiremock")
     testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.6.2")
+    testImplementation("io.kotest:kotest-assertions-core:${Dependency.kotestVersion}")
 
     // restdocs
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
@@ -131,6 +134,7 @@ tasks {
 
     withType<Test> {
         useJUnitPlatform()
+        outputs.dir(snippetsDir)
     }
     register<Copy>("copyDirectory") {
         from("skeleton/app")
@@ -176,6 +180,18 @@ tasks {
         }
     }
 
+}
+
+openapi3 {
+
+    title = "Ding API"
+    description = "Ding API Documentation"
+
+    version = Constant.VERSION
+
+    format = "json"
+
+    outputDirectory = "build/api-spec"
 }
 
 kapt {
