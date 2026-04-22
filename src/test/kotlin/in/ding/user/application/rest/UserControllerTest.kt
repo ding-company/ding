@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import java.util.UUID
 
+// 쓸모없는거 제거해야함
+
 @WebMvcTest(UserController::class)
 @ActiveProfiles("test")
 class UserControllerTest(
