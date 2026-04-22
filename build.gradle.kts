@@ -117,6 +117,9 @@ dependencies {
     testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring30x:4.6.2")
     testImplementation("io.kotest:kotest-assertions-core:${Dependency.kotestVersion}")
 
+    // coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependency.coroutineVersion}")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Dependency.coroutineVersion}")
     // restdocs
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("com.epages:restdocs-api-spec-mockmvc:${Dependency.restdocsapiSpecVersion}")

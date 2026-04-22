@@ -12,6 +12,7 @@ object Dependency {
     const val kotestSprintExtensions = "1.1.3"
     const val mockkVersion = "1.13.5"
     const val springMockkVersion = "4.0.2"
+    const val coroutineVersion = "1.7.3"
     const val openApiStarterWebMvcVersion = "2.0.2"
     const val logbackEncoderVersion = "7.2"
     const val mockitoKotlinVersion = "4.1.0"
